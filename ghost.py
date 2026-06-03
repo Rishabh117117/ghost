@@ -24,7 +24,6 @@ To make MULTIPLE skill ghosts: run this on different corpora -> different
 ghost checkpoints. That bank is what the router (Stage 2) selects from.
 """
 
-import glob
 import math
 import os
 import random
@@ -42,14 +41,16 @@ DEVICE     = "cuda" if torch.cuda.is_available() else "cpu"
 SEED       = 0                             # reproducibility
 
 # ---- corpus / training regime ----------------------------------------------
-CORPUS_DIR       = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
-MIN_CORPUS_LINES = 50      # below this, data/ holds only the placeholder stub -> refuse to train
+DATA_DIR         = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+CORPUS_PATH      = os.path.join(DATA_DIR, "voice.txt")  # the real skill corpus (one example per blank-line turn)
+MIN_CORPUS_LINES = 50      # below this we refuse to train (no faking a pass on a stub)
 VAL_FRAC         = 0.15    # same-distribution held-out split for PROBE 1
 LR               = 1e-4    # gentle: the ghost should generalize, not memorize
 WEIGHT_DECAY     = 0.01
-MAX_EPOCHS       = 8       # fast plumbing proof; raise for a longer real run
-PATIENCE         = 2       # early-stop after this many epochs without val improvement
+MAX_EPOCHS       = 50      # ceiling; early-stopping decides the real stop
+PATIENCE         = 3       # early-stop after this many epochs without val improvement
 MAX_LEN          = 256
+SAVE_PATH        = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ghosts", "ghost_voice_01.pt")
 
 
 class GhostBlock(nn.Module):
@@ -147,17 +148,22 @@ def mean_loss(model, tok, texts, use_ghost, max_len=MAX_LEN):
     return total / max(ntok, 1)
 
 
-def load_corpus(corpus_dir=CORPUS_DIR):
-    """Read every non-empty, non-comment line from all *.txt files under data/."""
-    lines = []
-    for path in sorted(glob.glob(os.path.join(corpus_dir, "*.txt"))):
-        with open(path, "r", encoding="utf-8") as f:
-            for raw in f:
-                s = raw.strip()
-                if not s or s.startswith("#"):
-                    continue
-                lines.append(s)
-    return lines
+def load_corpus(corpus_path=CORPUS_PATH):
+    """
+    Read the real skill corpus as blank-line-separated 'turns' (one training
+    example per turn). The corpus is ground truth: no filtering or cleaning -
+    we only split on blank lines, join multi-line turns, and drop empties.
+    """
+    if not os.path.isfile(corpus_path):
+        return []
+    with open(corpus_path, "r", encoding="utf-8") as f:
+        raw = f.read()
+    turns = []
+    for block in raw.split("\n\n"):
+        turn = "\n".join(ln.rstrip() for ln in block.splitlines()).strip()
+        if turn:
+            turns.append(turn)
+    return turns
 
 
 def split_corpus(lines, val_frac=VAL_FRAC, seed=SEED):
@@ -212,18 +218,17 @@ def train(model, tok, train_texts, val_texts, max_epochs=MAX_EPOCHS, lr=LR,
 if __name__ == "__main__":
     torch.manual_seed(SEED)               # reproducibility
 
-    # --- load the real skill corpus from data/ (fail fast before touching GPU) ---
+    # --- load the real skill corpus (fail fast before touching the GPU) ---
     corpus = load_corpus()
     if len(corpus) < MIN_CORPUS_LINES:
-        print(f"[STOP] data/ has only {len(corpus)} usable lines "
-              f"(the placeholder stub, need >= {MIN_CORPUS_LINES}).")
+        print(f"[STOP] {CORPUS_PATH} has only {len(corpus)} usable turns "
+              f"(need >= {MIN_CORPUS_LINES}).")
         print("PROBE 1 measures whether the ghost GENERALIZES, which needs a real")
-        print("corpus - a few hundred+ lines of your writing (a voice ghost) or a")
-        print(f"domain dump. Drop a .txt into {CORPUS_DIR}\\ and re-run.")
-        print("Refusing to fake a PROBE 1 pass on the 5-sentence stub.")
+        print("corpus - a few hundred+ turns of your writing (a voice ghost) or a")
+        print("domain dump. Add the corpus and re-run; not faking a pass on a stub.")
         sys.exit(2)
     train_texts, val_texts = split_corpus(corpus)
-    print(f"corpus: {len(corpus)} lines -> {len(train_texts)} train / {len(val_texts)} val")
+    print(f"corpus: {len(corpus)} turns -> {len(train_texts)} train / {len(val_texts)} val")
 
     print(f"loading {MODEL_NAME} on {DEVICE} ...")
     if DEVICE == "cuda":
@@ -257,5 +262,6 @@ if __name__ == "__main__":
         print(f"    alpha={a:.2f}  val ppl={math.exp(mean_loss(model, tok, val_texts, use_ghost=True)):.2f}")
 
     # save the ghost only - this single file IS one skill module in your bank
-    torch.save(model.ghost.state_dict(), "ghosts/ghost_skill_01.pt")
-    print("\nsaved ghosts/ghost_skill_01.pt  (base untouched; this is one entry in the bank)")
+    os.makedirs(os.path.dirname(SAVE_PATH), exist_ok=True)
+    torch.save(model.ghost.state_dict(), SAVE_PATH)
+    print(f"\nsaved {SAVE_PATH}  (base untouched; this is one entry in the bank)")

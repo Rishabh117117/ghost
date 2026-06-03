@@ -58,12 +58,12 @@ huggingface-cli login
 
 ### Data
 
-`ghost.py` trains on a **real corpus you provide** in `data/`: it reads every non-empty,
-non-comment line from all `*.txt` files there, then makes a seeded **85/15 train/val
-split**. Drop in a few hundred+ lines — your own writing (a *voice* ghost) or a domain
-dump (a *domain* ghost). The committed `data/sample.txt` is only a 7-line placeholder; if
-`data/` has fewer than 50 usable lines the script **stops and asks for a real corpus**
-rather than memorizing the stub and reporting a false PROBE 1.
+`ghost.py` trains on a **real corpus you provide** at `data/voice.txt` (set `CORPUS_PATH`
+to point elsewhere). The corpus is read as **blank-line-separated turns** — one training
+example per turn, no filtering or cleaning — then a seeded **85/15 train/val split** is
+made. Drop in a few hundred+ turns: your own writing (a *voice* ghost) or a domain dump
+(a *domain* ghost). If the corpus has fewer than 50 usable turns the script **stops and
+asks for a real corpus** rather than memorizing a stub and reporting a false PROBE 1.
 
 Your corpus is gitignored (`data/*`) — it stays local and is never committed.
 
@@ -73,9 +73,9 @@ Your corpus is gitignored (`data/*`) — it stays local and is never committed.
 python ghost.py
 ```
 
-It loads the base on CUDA in bf16, trains the ghost on your `data/` corpus with weight
-decay and **early-stopping on validation loss**, prints the four probes, and saves the
-ghost (only) to `ghosts/ghost_skill_01.pt`. That single file is one skill module — a
+It loads the base on CUDA in bf16, trains the ghost on your `data/voice.txt` corpus with
+weight decay and **early-stopping on validation loss**, prints the four probes, and saves
+the ghost (only) to `ghosts/ghost_voice_01.pt`. That single file is one skill module — a
 future "bank" the Stage 2 router selects from.
 
 ## The four probes (definition of done)
