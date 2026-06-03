@@ -36,7 +36,8 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 # ---- config -----------------------------------------------------------------
 MODEL_NAME = "Qwen/Qwen3-4B"               # thinking-capable base; SmolLM3-3B is the fallback
 D_GHOST    = 224                           # ghost width (tiny next to base d_model; keeps ghost <1% of Qwen3-4B)
-ALPHA_INIT = 0.1                           # initial gate value
+ALPHA_INIT = 1.0                           # operating/training alpha: neutral 1.0 — the compressor's
+                                           # learnable gain carries magnitude, so alpha is a clean inference dial
 DEVICE     = "cuda" if torch.cuda.is_available() else "cpu"
 SEED       = 0                             # reproducibility
 
@@ -50,7 +51,7 @@ WEIGHT_DECAY     = 0.01
 MAX_EPOCHS       = 50      # ceiling; early-stopping decides the real stop
 PATIENCE         = 3       # early-stop after this many epochs without val improvement
 MAX_LEN          = 256
-SAVE_PATH        = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ghosts", "ghost_voice_01.pt")
+SAVE_PATH        = os.path.join(os.path.dirname(os.path.abspath(__file__)), "ghosts", "ghost_voice_02_compressor.pt")
 
 
 class GhostBlock(nn.Module):
@@ -69,20 +70,32 @@ class GhostStream(nn.Module):
     """
     Reads the frozen base's hidden states (lateral connections) and emits an
     additive correction back in the base's d_model space.
+
+    Compressor on the output (decouples "how loud" from the alpha dial):
+        compressed = gain * rmsnorm(ghost_out)      # rmsnorm: affine off, strips magnitude
+        readout    = base_final_repr + alpha * compressed
+    rmsnorm caps how hard the ghost can push (it can no longer win by inflating
+    its output norm), the learnable `gain` restores a controlled, learned level,
+    and `alpha` rides on top as a clean fader. `alpha` is a fixed buffer (not a
+    trained parameter): held at the neutral operating value during training and
+    swept freely at inference.
     """
     def __init__(self, d_model, n_taps, d_ghost=D_GHOST, alpha_init=ALPHA_INIT):
         super().__init__()
-        self.down   = nn.ModuleList([nn.Linear(d_model, d_ghost) for _ in range(n_taps)])
-        self.blocks = nn.ModuleList([GhostBlock(d_ghost) for _ in range(n_taps)])
-        self.up     = nn.Linear(d_ghost, d_model)
-        self.alpha  = nn.Parameter(torch.tensor(float(alpha_init)))
+        self.down     = nn.ModuleList([nn.Linear(d_model, d_ghost) for _ in range(n_taps)])
+        self.blocks   = nn.ModuleList([GhostBlock(d_ghost) for _ in range(n_taps)])
+        self.up       = nn.Linear(d_ghost, d_model)
+        self.out_norm = nn.RMSNorm(d_model, elementwise_affine=False)  # compressor: magnitude off
+        self.gain     = nn.Parameter(torch.ones(d_model))              # learnable makeup gain (init ~1)
+        self.register_buffer("alpha", torch.tensor(float(alpha_init)))  # inference dial, NOT trained
 
     def forward(self, hidden_states):
         # hidden_states: tuple of [B, T, d_model], length == n_taps
         g = self.blocks[0](self.down[0](hidden_states[0]))
         for i in range(1, len(hidden_states)):
             g = self.blocks[i](g + self.down[i](hidden_states[i]))
-        return self.up(g)                              # [B, T, d_model]
+        out = self.up(g)                               # [B, T, d_model], raw ghost output
+        return self.gain * self.out_norm(out)          # compressed: bounded scale, learned level
 
 
 class GhostModel(nn.Module):
@@ -248,20 +261,25 @@ if __name__ == "__main__":
           f"early-stop patience={PATIENCE}) ...")
     best_epoch, best_val = train(model, tok, train_texts, val_texts)
 
-    # PROBE 1 is now VALIDATION perplexity on a same-distribution held-out slice.
+    # PROBE 1 is VALIDATION perplexity on a same-distribution held-out slice,
+    # measured at the operating alpha (the neutral value trained with).
+    model.ghost.alpha.fill_(ALPHA_INIT)
     ppl_base  = math.exp(mean_loss(model, tok, val_texts, use_ghost=False))
     ppl_ghost = math.exp(mean_loss(model, tok, val_texts, use_ghost=True))
     fp_after = base_fingerprint(model)
 
-    print(f"\nPROBE 1 (ghost works):  val ppl  base={ppl_base:.2f}  base+ghost={ppl_ghost:.2f}"
-          f"   ({'PASS' if ppl_ghost < ppl_base else 'FAIL'}; best epoch {best_epoch})")
+    print(f"\nPROBE 1 (ghost works):  val ppl @alpha={ALPHA_INIT:.2f}  base={ppl_base:.2f}  "
+          f"base+ghost={ppl_ghost:.2f}   ({'PASS' if ppl_ghost < ppl_base else 'FAIL'}; "
+          f"delta={ppl_ghost - ppl_base:+.2f}; best epoch {best_epoch})")
     print(f"PROBE 2 (base frozen):  fingerprint delta = {fp_after - fp_before:.6e}  (must be 0)")
-    print(f"PROBE 4 (alpha gate):   sweep ->")
-    for a in [0.0, 0.25, 0.5, 1.0, 2.0]:
-        model.ghost.alpha.data.fill_(a)
-        print(f"    alpha={a:.2f}  val ppl={math.exp(mean_loss(model, tok, val_texts, use_ghost=True)):.2f}")
+    print(f"PROBE 4 (alpha gate):   finer sweep (success = smooth & bounded) ->")
+    for a in [0.0, 0.05, 0.1, 0.25, 0.5, 1.0, 1.5, 2.0]:
+        model.ghost.alpha.fill_(float(a))
+        print(f"    alpha={a:<4}  val ppl={math.exp(mean_loss(model, tok, val_texts, use_ghost=True)):.2f}")
 
-    # save the ghost only - this single file IS one skill module in your bank
+    # save the ghost only - one skill module in the bank; restore the operating
+    # alpha so the checkpoint stores the neutral dial, not the last sweep value
+    model.ghost.alpha.fill_(ALPHA_INIT)
     os.makedirs(os.path.dirname(SAVE_PATH), exist_ok=True)
     torch.save(model.ghost.state_dict(), SAVE_PATH)
     print(f"\nsaved {SAVE_PATH}  (base untouched; this is one entry in the bank)")

@@ -3,24 +3,33 @@
 A tiny **trainable additive side-stream** ("ghost") over a **frozen** base language model.
 
 The ghost reads the base's per-layer hidden states (lateral connections) and emits an
-additive correction at the output:
+additive correction at the output. A **compressor** (RMSNorm with affine off, then a small
+learnable per-dim `gain`) controls the ghost's magnitude before the user-facing `alpha`:
 
 ```
-logits = lm_head( base_final_repr + alpha * ghost_out )
+compressed = gain * rmsnorm(ghost_out)
+logits     = lm_head( base_final_repr + alpha * compressed )
 ```
 
 Only the ghost trains. The base never changes — it stays bit-for-bit frozen, so the
 ghost is separable, deletable, and causes no catastrophic forgetting. The ghost learns
 only the *residual* the base gets wrong: a domain, or a writing style, via plain
-next-token prediction. `alpha` is a live gate — `alpha=0` recovers the base exactly.
+next-token prediction.
+
+The compressor decouples "how loud" the ghost pushes from the `alpha` dial: RMSNorm caps
+the output magnitude so the ghost can't win by inflating its norm, `gain` restores a
+controlled learned level, and `alpha` rides on top as a **clean, bounded fader** —
+`alpha=0` recovers the base exactly, and turning it up changes perplexity smoothly
+instead of exploding. The ghost trains at a neutral `alpha=1.0` (a fixed buffer, not a
+trained parameter); `alpha` is swept freely at inference.
 
 ## What's here (Stage 1)
 
 A single-ghost train + eval loop with four self-checking probes. That's the whole scope
 for now; the multi-ghost router and thinking-loop are roadmap (see below).
 
-- `ghost.py` — the core: `GhostModel` (frozen base + `GhostStream`), `train`, and the
-  four probes. **This is the verified reference architecture — do not redesign it.**
+- `ghost.py` — the core: `GhostModel` (frozen base + `GhostStream` with the output
+  compressor), `train`, and the four probes.
 - `data/sample.txt` — placeholder skill corpus (swap in your own text).
 - `ghosts/` — saved ghost checkpoints (gitignored; never committed).
 
@@ -75,8 +84,8 @@ python ghost.py
 
 It loads the base on CUDA in bf16, trains the ghost on your `data/voice.txt` corpus with
 weight decay and **early-stopping on validation loss**, prints the four probes, and saves
-the ghost (only) to `ghosts/ghost_voice_01.pt`. That single file is one skill module — a
-future "bank" the Stage 2 router selects from.
+the ghost (only) to `ghosts/ghost_voice_02_compressor.pt`. That single file is one skill
+module — a future "bank" the Stage 2 router selects from.
 
 ## The four probes (definition of done)
 
@@ -86,7 +95,10 @@ future "bank" the Stage 2 router selects from.
 2. **Base frozen** — base fingerprint delta `== 0` after training. If it isn't exactly 0,
    the base is being trained: every base param must have `requires_grad=False`.
 3. **Tiny ghost** — ghost params < 1% of base params.
-4. **Gate live** — the alpha sweep runs and perplexity changes with alpha.
+4. **Gate live & tame** — the alpha sweep is **smooth and bounded**: perplexity changes
+   gracefully across alpha (no runaway explosion), so `alpha` behaves like a real fader.
+   This is what the compressor buys; without it the ghost co-adapts to a small alpha and
+   perplexity blows up once alpha rises.
 
 ## Roadmap
 
