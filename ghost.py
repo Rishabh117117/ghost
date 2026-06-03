@@ -24,7 +24,11 @@ To make MULTIPLE skill ghosts: run this on different corpora -> different
 ghost checkpoints. That bank is what the router (Stage 2) selects from.
 """
 
+import glob
 import math
+import os
+import random
+import sys
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -32,9 +36,20 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 # ---- config -----------------------------------------------------------------
 MODEL_NAME = "Qwen/Qwen3-4B"               # thinking-capable base; SmolLM3-3B is the fallback
-D_GHOST    = 256                           # ghost width (tiny next to base d_model)
+D_GHOST    = 224                           # ghost width (tiny next to base d_model; keeps ghost <1% of Qwen3-4B)
 ALPHA_INIT = 0.1                           # initial gate value
 DEVICE     = "cuda" if torch.cuda.is_available() else "cpu"
+SEED       = 0                             # reproducibility
+
+# ---- corpus / training regime ----------------------------------------------
+CORPUS_DIR       = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+MIN_CORPUS_LINES = 50      # below this, data/ holds only the placeholder stub -> refuse to train
+VAL_FRAC         = 0.15    # same-distribution held-out split for PROBE 1
+LR               = 1e-4    # gentle: the ghost should generalize, not memorize
+WEIGHT_DECAY     = 0.01
+MAX_EPOCHS       = 50
+PATIENCE         = 3       # early-stop after this many epochs without val improvement
+MAX_LEN          = 256
 
 
 class GhostBlock(nn.Module):
@@ -79,6 +94,9 @@ class GhostModel(nn.Module):
         d_model = base.config.hidden_size
         n_taps  = base.config.num_hidden_layers + 1    # embeddings + each layer
         self.ghost = GhostStream(d_model, n_taps, d_ghost)
+        # match the frozen base's dtype (bf16) so the lateral taps feed the
+        # ghost without a dtype mismatch; the readout stays in bf16 throughout
+        self.ghost.to(dtype=self.base.dtype)
 
     def forward(self, input_ids, attention_mask=None, labels=None, use_ghost=True):
         with torch.no_grad():                          # base is frozen; no base grads
@@ -105,20 +123,6 @@ def param_counts(m):
     return base, ghost
 
 
-@torch.no_grad()
-def perplexity(model, tok, texts, use_ghost):
-    model.eval()
-    total, ntok = 0.0, 0
-    for t in texts:
-        ids = tok(t, return_tensors="pt").input_ids.to(DEVICE)
-        if ids.size(1) < 2:
-            continue
-        _, loss = model(ids, labels=ids, use_ghost=use_ghost)
-        total += loss.item() * (ids.size(1) - 1)
-        ntok  += ids.size(1) - 1
-    return math.exp(total / max(ntok, 1))
-
-
 def base_fingerprint(model):
     # cheap checksum over base params to prove they never moved
     h = 0.0
@@ -127,39 +131,100 @@ def base_fingerprint(model):
     return h
 
 
-def train(model, tok, corpus, steps=200, lr=1e-3, max_len=256):
-    opt = torch.optim.AdamW((p for p in model.parameters() if p.requires_grad), lr=lr)
-    model.train()
-    for step in range(steps):
-        text = corpus[step % len(corpus)]
-        ids = tok(text, return_tensors="pt", truncation=True,
+@torch.no_grad()
+def mean_loss(model, tok, texts, use_ghost, max_len=MAX_LEN):
+    """Token-weighted mean next-token loss (the log of perplexity)."""
+    model.eval()
+    total, ntok = 0.0, 0
+    for t in texts:
+        ids = tok(t, return_tensors="pt", truncation=True,
                   max_length=max_len).input_ids.to(DEVICE)
         if ids.size(1) < 2:
             continue
-        _, loss = model(ids, labels=ids)
-        opt.zero_grad(); loss.backward(); opt.step()
-        if step % 50 == 0:
-            print(f"step {step:4d} | loss {loss.item():.4f} | alpha {model.ghost.alpha.item():.3f}")
+        _, loss = model(ids, labels=ids, use_ghost=use_ghost)
+        total += loss.item() * (ids.size(1) - 1)
+        ntok  += ids.size(1) - 1
+    return total / max(ntok, 1)
 
 
-# a tiny placeholder "skill" corpus - swap in YOUR text (your writing = a
-# voice ghost; a domain corpus = a domain ghost; etc.)
-SAMPLE_CORPUS = [
-    "The river does not hurry, yet it arrives.",
-    "Build the smallest thing that proves the idea, then look.",
-    "A loop without a reason to fire is only a clock.",
-    "Memory is cheap; knowing what to forget is the work.",
-    "The base does the lifting. The ghost fills the gap.",
-] * 8
+def load_corpus(corpus_dir=CORPUS_DIR):
+    """Read every non-empty, non-comment line from all *.txt files under data/."""
+    lines = []
+    for path in sorted(glob.glob(os.path.join(corpus_dir, "*.txt"))):
+        with open(path, "r", encoding="utf-8") as f:
+            for raw in f:
+                s = raw.strip()
+                if not s or s.startswith("#"):
+                    continue
+                lines.append(s)
+    return lines
 
-HELD_OUT = [
-    "The wind does not argue, yet the trees bend.",
-    "Ship the small proof first, then widen it.",
-]
+
+def split_corpus(lines, val_frac=VAL_FRAC, seed=SEED):
+    """Shuffle once (seeded) and carve off a same-distribution validation slice."""
+    shuffled = lines[:]
+    random.Random(seed).shuffle(shuffled)
+    n_val = max(1, int(round(len(shuffled) * val_frac)))
+    return shuffled[n_val:], shuffled[:n_val]      # (train, val)
+
+
+def train(model, tok, train_texts, val_texts, max_epochs=MAX_EPOCHS, lr=LR,
+          weight_decay=WEIGHT_DECAY, patience=PATIENCE, max_len=MAX_LEN, seed=SEED):
+    """
+    Train the ghost (only) with weight decay and early-stopping on validation
+    loss. Returns (best_epoch, best_val_loss) and leaves the ghost holding the
+    best-val weights, not the last-epoch weights.
+    """
+    opt = torch.optim.AdamW((p for p in model.parameters() if p.requires_grad),
+                            lr=lr, weight_decay=weight_decay)
+    rng = random.Random(seed)
+    best_val, best_epoch, best_state, bad = float("inf"), -1, None, 0
+    order = train_texts[:]
+    for epoch in range(max_epochs):
+        model.train()
+        rng.shuffle(order)
+        running, nb = 0.0, 0
+        for text in order:
+            ids = tok(text, return_tensors="pt", truncation=True,
+                      max_length=max_len).input_ids.to(DEVICE)
+            if ids.size(1) < 2:
+                continue
+            _, loss = model(ids, labels=ids)
+            opt.zero_grad(); loss.backward(); opt.step()
+            running += loss.item(); nb += 1
+        vl = mean_loss(model, tok, val_texts, use_ghost=True, max_len=max_len)
+        print(f"epoch {epoch:3d} | train loss {running/max(nb,1):.4f} | "
+              f"val loss {vl:.4f} | alpha {model.ghost.alpha.item():.3f}")
+        if vl < best_val - 1e-4:
+            best_val, best_epoch, bad = vl, epoch, 0
+            best_state = {k: v.detach().clone() for k, v in model.ghost.state_dict().items()}
+        else:
+            bad += 1
+            if bad >= patience:
+                print(f"early stop at epoch {epoch} "
+                      f"(best epoch {best_epoch}, val loss {best_val:.4f})")
+                break
+    if best_state is not None:
+        model.ghost.load_state_dict(best_state)
+    return best_epoch, best_val
 
 
 if __name__ == "__main__":
-    torch.manual_seed(0)                  # reproducibility
+    torch.manual_seed(SEED)               # reproducibility
+
+    # --- load the real skill corpus from data/ (fail fast before touching GPU) ---
+    corpus = load_corpus()
+    if len(corpus) < MIN_CORPUS_LINES:
+        print(f"[STOP] data/ has only {len(corpus)} usable lines "
+              f"(the placeholder stub, need >= {MIN_CORPUS_LINES}).")
+        print("PROBE 1 measures whether the ghost GENERALIZES, which needs a real")
+        print("corpus - a few hundred+ lines of your writing (a voice ghost) or a")
+        print(f"domain dump. Drop a .txt into {CORPUS_DIR}\\ and re-run.")
+        print("Refusing to fake a PROBE 1 pass on the 5-sentence stub.")
+        sys.exit(2)
+    train_texts, val_texts = split_corpus(corpus)
+    print(f"corpus: {len(corpus)} lines -> {len(train_texts)} train / {len(val_texts)} val")
+
     print(f"loading {MODEL_NAME} on {DEVICE} ...")
     if DEVICE == "cuda":
         print(f"GPU: {torch.cuda.get_device_name(0)}")
@@ -174,20 +239,22 @@ if __name__ == "__main__":
     b, g = param_counts(model)
     print(f"\nPROBE 3 (tiny ghost): base={b:,}  ghost={g:,}  ghost/base={100*g/b:.3f}%")
 
-    ppl_base_before = perplexity(model, tok, HELD_OUT, use_ghost=False)
-    print(f"\ntraining the ghost ...")
-    train(model, tok, SAMPLE_CORPUS, steps=200)
+    print(f"\ntraining the ghost (lr={LR}, weight_decay={WEIGHT_DECAY}, "
+          f"early-stop patience={PATIENCE}) ...")
+    best_epoch, best_val = train(model, tok, train_texts, val_texts)
 
-    ppl_base = perplexity(model, tok, HELD_OUT, use_ghost=False)
-    ppl_ghost = perplexity(model, tok, HELD_OUT, use_ghost=True)
+    # PROBE 1 is now VALIDATION perplexity on a same-distribution held-out slice.
+    ppl_base  = math.exp(mean_loss(model, tok, val_texts, use_ghost=False))
+    ppl_ghost = math.exp(mean_loss(model, tok, val_texts, use_ghost=True))
     fp_after = base_fingerprint(model)
 
-    print(f"\nPROBE 1 (ghost works):  held-out ppl  base={ppl_base:.2f}  base+ghost={ppl_ghost:.2f}")
+    print(f"\nPROBE 1 (ghost works):  val ppl  base={ppl_base:.2f}  base+ghost={ppl_ghost:.2f}"
+          f"   ({'PASS' if ppl_ghost < ppl_base else 'FAIL'}; best epoch {best_epoch})")
     print(f"PROBE 2 (base frozen):  fingerprint delta = {fp_after - fp_before:.6e}  (must be 0)")
     print(f"PROBE 4 (alpha gate):   sweep ->")
     for a in [0.0, 0.25, 0.5, 1.0, 2.0]:
         model.ghost.alpha.data.fill_(a)
-        print(f"    alpha={a:.2f}  held-out ppl={perplexity(model, tok, HELD_OUT, use_ghost=True):.2f}")
+        print(f"    alpha={a:.2f}  val ppl={math.exp(mean_loss(model, tok, val_texts, use_ghost=True)):.2f}")
 
     # save the ghost only - this single file IS one skill module in your bank
     torch.save(model.ghost.state_dict(), "ghosts/ghost_skill_01.pt")

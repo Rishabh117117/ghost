@@ -56,19 +56,33 @@ If a model is gated on Hugging Face, log in first:
 huggingface-cli login
 ```
 
+### Data
+
+`ghost.py` trains on a **real corpus you provide** in `data/`: it reads every non-empty,
+non-comment line from all `*.txt` files there, then makes a seeded **85/15 train/val
+split**. Drop in a few hundred+ lines — your own writing (a *voice* ghost) or a domain
+dump (a *domain* ghost). The committed `data/sample.txt` is only a 7-line placeholder; if
+`data/` has fewer than 50 usable lines the script **stops and asks for a real corpus**
+rather than memorizing the stub and reporting a false PROBE 1.
+
+Your corpus is gitignored (`data/*`) — it stays local and is never committed.
+
 ## Run
 
 ```powershell
 python ghost.py
 ```
 
-It loads the base on CUDA in bf16, trains the ghost on the sample corpus, prints the four
-probes, and saves the ghost (only) to `ghosts/ghost_skill_01.pt`. That single file is one
-skill module — a future "bank" the Stage 2 router selects from.
+It loads the base on CUDA in bf16, trains the ghost on your `data/` corpus with weight
+decay and **early-stopping on validation loss**, prints the four probes, and saves the
+ghost (only) to `ghosts/ghost_skill_01.pt`. That single file is one skill module — a
+future "bank" the Stage 2 router selects from.
 
 ## The four probes (definition of done)
 
-1. **Ghost works** — held-out perplexity *with* the ghost < *without* it.
+1. **Ghost works** — **validation** perplexity (on the held-out 15%) *with* the ghost
+   < *without* it. Measured on the same distribution as training, so it tests
+   generalization, not memorization.
 2. **Base frozen** — base fingerprint delta `== 0` after training. If it isn't exactly 0,
    the base is being trained: every base param must have `requires_grad=False`.
 3. **Tiny ghost** — ghost params < 1% of base params.

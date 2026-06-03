@@ -1,7 +1,9 @@
 # Install the CUDA build of torch separately, matched to your CUDA version, e.g.:
 #   pip install torch --index-url https://download.pytorch.org/whl/cu124
-# (the version below is whatever the CUDA wheel resolves to; pinned after install)
-torch==2.8.0+cu124
-transformers==4.57.1
-accelerate==1.10.1
-safetensors==0.6.2
+# Then: pip install -r requirements.txt
+# (pinned to the versions verified on an RTX 4080 Laptop GPU, CUDA driver 13.0)
+torch==2.6.0+cu124
+transformers==5.9.0
+accelerate==1.13.0
+safetensors==0.7.0
+numpy==2.4.6
