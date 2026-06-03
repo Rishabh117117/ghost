@@ -47,8 +47,8 @@ MIN_CORPUS_LINES = 50      # below this, data/ holds only the placeholder stub -
 VAL_FRAC         = 0.15    # same-distribution held-out split for PROBE 1
 LR               = 1e-4    # gentle: the ghost should generalize, not memorize
 WEIGHT_DECAY     = 0.01
-MAX_EPOCHS       = 50
-PATIENCE         = 3       # early-stop after this many epochs without val improvement
+MAX_EPOCHS       = 8       # fast plumbing proof; raise for a longer real run
+PATIENCE         = 2       # early-stop after this many epochs without val improvement
 MAX_LEN          = 256
 
 
