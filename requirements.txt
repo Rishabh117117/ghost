@@ -1,0 +1,7 @@
+# Install the CUDA build of torch separately, matched to your CUDA version, e.g.:
+#   pip install torch --index-url https://download.pytorch.org/whl/cu124
+# (the version below is whatever the CUDA wheel resolves to; pinned after install)
+torch==2.8.0+cu124
+transformers==4.57.1
+accelerate==1.10.1
+safetensors==0.6.2
