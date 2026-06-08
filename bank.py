@@ -284,17 +284,19 @@ if __name__ == "__main__":
         return [domain_under_B[i] if routes[i] == 1 else domain_under_A[i]
                 for i in range(len(routes))]
 
-    # voice domain: oracle=A, wrong=B ; tool domain: oracle=B, wrong=A
+    # naming: {A_ex=voice | B_ex=tool}_under{A|B}.  voice domain uses voice examples
+    # (A_underA oracle, A_underB wrong); tool domain uses tool examples (B_underB
+    # oracle, B_underA wrong). routed selects voice/tool examples under the routed ghost.
     voice_tbl = {
         "base":   agg_ppl(base_A),
-        "wrong":  agg_ppl(B_underA),
-        "routed": agg_ppl(routed(A_underA, B_underA, routesA[:len(A_ex)])),
+        "wrong":  agg_ppl(A_underB),
+        "routed": agg_ppl(routed(A_underA, A_underB, routesA[:len(A_ex)])),
         "oracle": agg_ppl(A_underA),
     }
     tool_tbl = {
         "base":   agg_ppl(base_B),
-        "wrong":  agg_ppl(A_underB),
-        "routed": agg_ppl(routed(A_underB, B_underB, routesB[:len(B_ex)])),
+        "wrong":  agg_ppl(B_underA),
+        "routed": agg_ppl(routed(B_underA, B_underB, routesB[:len(B_ex)])),
         "oracle": agg_ppl(B_underB),
     }
 
@@ -323,4 +325,4 @@ if __name__ == "__main__":
         verdict = "FAIL"
     print(f"\nVERDICT: {verdict}")
     print(f"  (mechanism: B routes >=80%? {mech} | routing matters: oracle<<wrong? {matters})")
-    print(f"  voice routed poorly is the EXPECTED 'voice = style, not topic' finding.")
+    print(f"  per domain, expect oracle ~= routed << wrong <= base when routing helps.")

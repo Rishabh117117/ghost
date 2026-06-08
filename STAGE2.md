@@ -38,31 +38,35 @@ compressor are imported from `ghost.py`.
 
 Worked example (one): a held-out tool trace → cosine(A_voice)=0.654, cosine(B_tool)=0.957 → picked **B_tool** (correct).
 
-**Four-way perplexity** (chat-masked, assistant tokens only):
+**Four-way perplexity** (chat-masked, assistant tokens only) — *corrected*:
 
 | domain | base | wrong ghost | routed | oracle |
 |---|---|---|---|---|
-| voice | 473.58 | 43.49 | 122.80 | 148.07 |
-| tool  | 59.51 | 402.91 | 16.48 | 14.61 |
+| voice | 473.58 | 402.91 | 148.69 | 148.07 |
+| tool  | 59.51 | 43.49 | 17.54 | 14.61 |
 
 - **PROBE 2 (base frozen):** fingerprint delta after loading A and after loading B = `0.000000e+00`.
 - **PROBE 3 (tiny ghost):** ghost/base = **0.913%**.
 
-## Verdict: **PASS (mechanism)** — with one real caveat
+> **Correction:** the first version of this table (commit `d123da3`) had a variable swap in
+> `bank.py`'s four-way `wrong`/`routed` columns (voice-domain `wrong` used tool-examples-under-A,
+> tool-domain `wrong` used voice-examples-under-B; `base`/`oracle` and the routing-accuracy numbers
+> were unaffected). The generic-vs-specific diagnostic caught it. Numbers above are the corrected run.
 
-- **Router discriminates** well above chance both ways (88% / 96%).
-- **Routing matters — decisively on the tool domain:** routed (16.48) ≈ oracle (14.61) ≪ base
-  (59.51), and the *wrong* (voice) ghost is catastrophic on tool data (402.91). Picking right is essential.
-- **Caveat — voice domain inverts:** the *wrong* tool ghost (43.49) actually **beats** the
-  domain-matched voice ghost (148.07). So on voice, routing-to-domain is *not* optimal. Likely
-  cause: Ghost B trained on a larger/more diverse corpus (1136 turns, raw full-token, ~13 epochs)
-  → a stronger *general* corrector, while Ghost A (chat-masked, ~700 turns, early-stopped epoch 7)
-  is a weaker specialist. Here **ghost strength, not domain-match, dominates** on the voice side.
-  This is the expected "are the ghosts specialized enough?" granularity finding — surfaced honestly,
-  not hidden.
+## Verdict: **PASS**
+
+- **Router discriminates** well above chance both ways (tool→B 88%, voice→A 96%).
+- **Routing matters in BOTH domains** — oracle ≈ routed ≪ wrong ≤ base:
+  - voice: oracle 148.07 ≈ routed 148.69 ≪ wrong (tool ghost) 402.91 < base 473.58.
+  - tool:  oracle 14.61 ≈ routed 17.54 ≪ wrong (voice ghost) 43.49 < base 59.51.
+  Routing to the domain-matched ghost is clearly best in each domain; the earlier
+  "wrong-beats-oracle on voice" anomaly was the bug, not a real effect.
+- Note: on tool, the *wrong* (voice) ghost still beats base (43.49 < 59.51) — because the voice
+  ghost partially generalizes (see `GENERIC_TEST.md`: +27% on tool, +22% on unrelated wikitext).
+  Oracle still ≪ wrong, so routing matters; but the voice ghost is not a pure specialist.
 
 ## What's next
-The bank+router mechanism works; the honest gap is **specialization/strength parity** — bring
-Ghost A's training budget/objective up to Ghost B's (or add more, better-matched topical entries)
-before trusting "route-to-domain = best", and a **style-aware** signal (not a semantic centroid)
-remains the eventual need for voice.
+The bank+router mechanism works and routing-to-domain helps in both domains. The honest gap
+(from the generic-vs-specific test) is **specialization parity**: Ghost B (tool) is a clean
+specialist, Ghost A (voice) a partial generalist. Next: parity-train A toward B's budget, add
+more topical entries to test routing among specialists, and a **style-aware** signal for voice.
