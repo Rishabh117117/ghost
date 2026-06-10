@@ -1,0 +1,19 @@
+{
+ "i": 0,
+ "lam": 0.0,
+ "neg": "none",
+ "ppl": {
+  "A_target": 175.25083329426943,
+  "B_seen": 183.71222920189894,
+  "C_unseen": 187.44766490140825,
+  "D_wikitext": 180.56057193643852
+ },
+ "train": {
+  "best_val": 5.129056215286255,
+  "epochs_run": 2
+ },
+ "seconds": 0.2,
+ "fp_delta": 0.0,
+ "hub_push": "skipped (smoke)",
+ "ckpt": "/home/user/ghost/ghosts/sweep_smoke/arm_0_0_none.pt"
+}

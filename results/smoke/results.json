@@ -1,0 +1,152 @@
+{
+ "meta": {
+  "smoke": true,
+  "model": "tiny-random-llama",
+  "device": "cpu",
+  "alpha_serve": 0.5,
+  "seed": 0
+ },
+ "base_rows": {
+  "base": {
+   "A_target": 181.27142936596977,
+   "B_seen": 183.96812864822448,
+   "C_unseen": 187.1997343398601,
+   "D_wikitext": 181.47973235902523
+  },
+  "style_prompt": {
+   "A_target": 182.45392387347337,
+   "B_seen": 181.70584817945868,
+   "C_unseen": 184.77577681294073,
+   "D_wikitext": 185.59484687747016
+  },
+  "n_examples": {
+   "A_target": 6,
+   "B_seen": 6,
+   "C_unseen": 6,
+   "D_wikitext": 6
+  }
+ },
+ "analysis": {
+  "arms": [
+   {
+    "i": 0,
+    "lam": 0.0,
+    "neg": "none",
+    "ppl": {
+     "A_target": 175.25083329426943,
+     "B_seen": 183.71222920189894,
+     "C_unseen": 187.44766490140825,
+     "D_wikitext": 180.56057193643852
+    },
+    "train": {
+     "best_val": 5.129056215286255,
+     "epochs_run": 2
+    },
+    "seconds": 0.2,
+    "fp_delta": 0.0,
+    "hub_push": "skipped (smoke)",
+    "ckpt": "/home/user/ghost/ghosts/sweep_smoke/arm_0_0_none.pt",
+    "own_win": 3.3213154950884887,
+    "leak_b": 0.041880959601851654,
+    "leak_c": -0.03987628619916281,
+    "retention": 1.0,
+    "rel": {
+     "A_target": 3.3213154950884887,
+     "B_seen": 0.13909988007480492,
+     "C_unseen": -0.1324417272398627,
+     "D_wikitext": 0.5064810326964331
+    },
+    "bars": null,
+    "b_pass": null,
+    "c_pass": null,
+    "verdict": "anchor"
+   },
+   {
+    "i": 12,
+    "lam": 4.0,
+    "neg": "both",
+    "ppl": {
+     "A_target": 178.1726893788423,
+     "B_seen": 184.10268618727568,
+     "C_unseen": 189.96537676993236,
+     "D_wikitext": 183.67314879455026
+    },
+    "train": {
+     "best_val": 5.2242631912231445,
+     "epochs_run": 2
+    },
+    "seconds": 0.4,
+    "fp_delta": 0.0,
+    "hub_push": "skipped (smoke)",
+    "ckpt": "/home/user/ghost/ghosts/sweep_smoke/arm_12_4_both.pt",
+    "own_win": 1.7094475384046306,
+    "leak_b": -0.04278678627774998,
+    "leak_c": -0.8642413156157428,
+    "retention": 0.5146898995089554,
+    "rel": {
+     "A_target": 1.7094475384046306,
+     "B_seen": -0.07314176647874474,
+     "C_unseen": -1.477375189566911,
+     "D_wikitext": -1.2086288683662705
+    },
+    "bars": {
+     "abs_leak": true,
+     "rel_leak": true,
+     "retention": false
+    },
+    "b_pass": false,
+    "c_pass": true,
+    "verdict": "FAIL"
+   }
+  ],
+  "arm0_own": 3.3213154950884887,
+  "arm0_leak_b": 0.041880959601851654,
+  "arm0_leak_c": -0.03987628619916281,
+  "passers": [],
+  "best": null
+ },
+ "main_effects": {
+  "by_lambda": {
+   "0.5": null,
+   "1": null,
+   "2": null,
+   "4": {
+    "leak_b": -0.04278678627774998,
+    "leak_c": -0.8642413156157428,
+    "retention": 0.5146898995089554
+   }
+  },
+  "by_neg": {
+   "self": null,
+   "author": null,
+   "both": {
+    "leak_b": -0.04278678627774998,
+    "leak_c": -0.8642413156157428,
+    "retention": 0.5146898995089554
+   }
+  },
+  "cells": {
+   "0.5/self": null,
+   "0.5/author": null,
+   "0.5/both": null,
+   "1/self": null,
+   "1/author": null,
+   "1/both": null,
+   "2/self": null,
+   "2/author": null,
+   "2/both": null,
+   "4/self": null,
+   "4/author": null,
+   "4/both": {
+    "leak_b": -0.04278678627774998,
+    "leak_c": -0.8642413156157428,
+    "retention": 0.5146898995089554
+   }
+  }
+ },
+ "pass_bars": {
+  "abs_leak": 0.1,
+  "rel_leak_x_arm0": 0.5,
+  "retention_of_arm0": 0.7
+ }
+}
