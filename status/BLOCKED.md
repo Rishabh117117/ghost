@@ -1,10 +1,20 @@
-# Status: Phase 0–1 COMPLETE — handoff to updated cloud environment
+# Status: Phase 2 BLOCKED at step 1 — RunPod/HF hosts still not in allowlist
 
-2026-06-11 — environment was updated (network allowlist + secrets); this
-session predates the update and stays blocked, so Phase 2 moves to a fresh
-session. Full runbook: `HANDOFF.md` at the repo root.
+2026-06-11 — new session ran HANDOFF.md Phase 2 step 1 (live secret verification).
+Results (values never printed):
 
-History: this file previously documented the Phase-2 blockers (sandbox 403 on
-api.runpod.io / huggingface.co; no GIT_PUSH_TOKEN for pod-side pushes). Those
-are expected to be resolved in the new environment — the handoff's step 1
-re-verifies all three before any spend.
+- GIT_PUSH_TOKEN: OK — GitHub API confirms push=True, admin=True on
+  Rishabh117117/ghost. Pod-side push path is good.
+- RUNPOD_API_KEY: could NOT be verified — POST api.runpod.io/graphql returns
+  HTTP 403 "Host not in allowlist".
+- HF_TOKEN: could NOT be verified — GET huggingface.co/api/whoami-v2 returns
+  HTTP 403 "Host not in allowlist".
+
+The environment network policy still blocks api.runpod.io and huggingface.co.
+`runpod_launch.py create` needs api.runpod.io; the pod needs huggingface.co
+(checkpoint home) — so the GPU run cannot start. Stopped here per the handoff's
+step-1 rule ("stop and report, don't improvise").
+
+Unblock: add api.runpod.io and huggingface.co (and the pod also needs
+archive.ics.uci.edu for the CCAT50 zip) to the environment's network allowlist,
+then re-run HANDOFF.md from Phase 2 step 1.
