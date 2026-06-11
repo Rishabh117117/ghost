@@ -1,0 +1,11 @@
+{
+ "arm": "A0",
+ "verbatim": 0.0,
+ "qa": 0.0,
+ "confab": 1.0,
+ "wiki_ppl": 35271.026,
+ "drift": 0.0,
+ "slots": {},
+ "params_trainable": 0,
+ "params_base": 8848512
+}

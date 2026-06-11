@@ -1,7 +1,7 @@
 {
- "pod_id": "ncvccznwvhujyd",
- "gpu": "A100 SXM",
- "cost_per_hr": 1.49,
+ "pod_id": "omwglwbueuqqab",
+ "gpu": "A100 PCIe",
+ "cost_per_hr": 1.39,
  "image": "runpod/pytorch:1.0.3-cu1281-torch280-ubuntu2204",
- "branch": "contrastive-sweep"
+ "branch": "engram-v1"
 }

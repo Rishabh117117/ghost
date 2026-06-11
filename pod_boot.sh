@@ -5,7 +5,7 @@
 # any server-side splitting of the start command. This script does the real
 # shell work: clone the branch and hand off to the pipeline (or the probe).
 set -u
-BRANCH=contrastive-sweep
+BRANCH=engram-v1
 WORK=/workspace/ghost
 
 if [ ! -d "$WORK/.git" ]; then
