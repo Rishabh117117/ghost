@@ -35,7 +35,9 @@ def gql(query, variables=None):
     key = os.environ["RUNPOD_API_KEY"]
     body = json.dumps({"query": query, "variables": variables or {}}).encode()
     req = urllib.request.Request(API, data=body, headers={
-        "Content-Type": "application/json", "Authorization": f"Bearer {key}"})
+        "Content-Type": "application/json", "Authorization": f"Bearer {key}",
+        # RunPod's Cloudflare edge 403s the default Python-urllib User-Agent.
+        "User-Agent": "ghost-sweep/1.0"})
     with urllib.request.urlopen(req, timeout=60) as r:
         out = json.loads(r.read())
     if out.get("errors"):
