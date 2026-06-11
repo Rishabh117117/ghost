@@ -1,16 +1,21 @@
 {
  "meta": {
   "smoke": true,
-  "model": "Qwen/Qwen3-4B",
-  "report_only": true
+  "model": "tiny-random-llama",
+  "device": "cpu",
+  "seed": 0,
+  "K": 32768,
+  "d_key": 128,
+  "topk": 4,
+  "tap_layer": 18
  },
  "arms": [
   {
    "arm": "A0",
    "verbatim": 0.0,
    "qa": 0.0,
-   "confab": 0.8,
-   "wiki_ppl": 33568.744,
+   "confab": 1.0,
+   "wiki_ppl": 35271.026,
    "drift": 0.0,
    "slots": {},
    "params_trainable": 0,
@@ -20,8 +25,8 @@
    "arm": "A1",
    "verbatim": 0.0,
    "qa": 0.0,
-   "confab": 0.8,
-   "wiki_ppl": 33568.744,
+   "confab": 1.0,
+   "wiki_ppl": 35271.026,
    "drift": 0.0,
    "slots": {},
    "params_trainable": 0,
@@ -31,24 +36,24 @@
    "arm": "A2",
    "verbatim": 0.0,
    "qa": 0.0,
-   "confab": 0.0,
-   "wiki_ppl": 29182.274,
-   "drift": -0.1307,
+   "confab": 1.0,
+   "wiki_ppl": 39806.586,
+   "drift": 0.1286,
    "slots": {},
    "params_trainable": 2188288,
    "params_base": 8848512
   },
   {
    "arm": "A3",
-   "verbatim": 0.1,
+   "verbatim": 0.02,
    "qa": 0.0,
    "confab": 1.0,
-   "wiki_ppl": 35368.542,
-   "drift": 0.0536,
+   "wiki_ppl": 33341.726,
+   "drift": -0.0547,
    "slots": {
     "fired_tokens": 2970,
-    "unique_slots": 166,
-    "frac_unique": 0.05589225589225589
+    "unique_slots": 258,
+    "frac_unique": 0.08686868686868687
    },
    "params_trainable": 4210817,
    "params_base": 8848512
@@ -57,13 +62,13 @@
    "arm": "A4",
    "verbatim": 0.0,
    "qa": 0.0,
-   "confab": 0.6,
-   "wiki_ppl": 31075.809,
-   "drift": -0.0743,
+   "confab": 1.0,
+   "wiki_ppl": 31465.207,
+   "drift": -0.1079,
    "slots": {
     "fired_tokens": 2970,
-    "unique_slots": 52,
-    "frac_unique": 0.017508417508417508
+    "unique_slots": 82,
+    "frac_unique": 0.027609427609427608
    },
    "params_trainable": 4210817,
    "params_base": 8848512
@@ -73,8 +78,8 @@
   "arm": "A0",
   "verbatim": 0.0,
   "qa": 0.0,
-  "confab": 0.8,
-  "wiki_ppl": 33568.744,
+  "confab": 1.0,
+  "wiki_ppl": 35271.026,
   "drift": 0.0,
   "slots": {},
   "params_trainable": 0,
@@ -82,11 +87,11 @@
  },
  "interference": {
   "arm": "A3",
-  "before": 0.04,
+  "before": 0.0,
   "after": 0.0,
-  "drop": 0.04
+  "drop": 0.0
  },
- "verdict": "SMOKE RUN \u2014 plumbing only, numbers meaningless. **ENGRAM FAIL \u2014 verbatim, paraphrased-QA, wiki-drift** (best A3)",
+ "verdict": "SMOKE RUN \u2014 plumbing only, numbers meaningless. **ENGRAM FAIL \u2014 verbatim, paraphrased-QA** (best A3)",
  "best": "A3",
  "pass_bars": {
   "a0": 0.05,

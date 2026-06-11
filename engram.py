@@ -51,7 +51,7 @@ PI64      = ("3141592653589793238462643383279502884197169399375105820974944592")
 ATTRS       = ["birth_year", "city", "profession", "employer", "quirk"]
 LR          = 2e-3
 WEIGHT_DECAY = 0.0
-MAX_STEPS   = 4000       # real run; smoke overrides
+MAX_STEPS   = 2500       # real run; ~3 epochs over 12.5k facts, fits 2h budget
 BATCH       = 16
 MAX_LEN     = 64
 LAMBDA_CONTRAST = 1.0    # A4: the sweep recipe transplanted
@@ -607,10 +607,13 @@ def run(smoke=False, only=None, out_root=None):
     # ---- interference on best of A3/A4 ----
     interference = None
     eng = [a for a in arms if a["arm"] in ("A3", "A4")]
-    if eng and ("A3" in want or "A4" in want):
+    want_interference = bool(eng) and ("A3" in want or "A4" in want)
+    if want_interference:
         ipath = os.path.join(out_root, "interference.json")
         if os.path.exists(ipath):
             interference = json.load(open(ipath))
+        elif time.time() - t0 > budget:
+            pass  # out of budget; leave for a resumed pod
         else:
             STATUS["phase"] = "interference"
             best = max(eng, key=lambda a: a["verbatim"])
@@ -631,6 +634,18 @@ def run(smoke=False, only=None, out_root=None):
             interference = {"arm": best["arm"], "before": round(before, 4),
                             "after": round(after, 4), "drop": round(before - after, 4)}
             json.dump(interference, open(ipath, "w"), indent=1)
+
+    # Only emit the FINAL report when every requested arm (+ interference) is
+    # done. A budget-truncated pod returns non-zero so the supervisor relaunches
+    # and resumes the missing arms from the published JSONs - it must NOT write
+    # ENGRAM_V1.md early or the supervisor would call a partial run "done".
+    have = {a["arm"] for a in arms}
+    complete = want.issubset(have) and (interference is not None
+                                        or not want_interference)
+    if not complete:
+        print(f"incomplete (have {sorted(have)}, interference="
+              f"{interference is not None}); exiting for resume", flush=True)
+        return 2
 
     cost = f"wall {int((time.time()-t0)/60)} min"
     a0 = next((a for a in arms if a["arm"] == "A0"), {"verbatim": 0.0})
