@@ -27,7 +27,10 @@ terminate_pod() {
 
 commit_push() {  # $1 = message; tolerant: empty commits and races must not kill the trap
   cd "$WORK" 2>/dev/null || return 0
-  git add -A status results results.json SWEEP_CCAT50.md 2>/dev/null || true
+  # NB: one `git add` with a missing pathspec stages NOTHING (exit 128) - the
+  # first pod died leaving zero trace partly because of that. *.pt and
+  # *.safetensors are gitignored, so a blanket add is safe (no fat checkpoints).
+  git add -A 2>/dev/null || true
   git commit -m "$1" >/dev/null 2>&1 || true
   for i in 1 2 3 4; do
     git push -u origin "$BRANCH" >/dev/null 2>&1 && return 0
@@ -44,22 +47,38 @@ on_exit() {
 }
 trap on_exit EXIT
 
-# ---- preflight: all secrets present, tokens actually work --------------------
-: "${RUNPOD_API_KEY:?missing}" "${HF_TOKEN:?missing}" \
-  "${GIT_PUSH_TOKEN:?missing}" "${RUNPOD_POD_ID:?missing}"
-
+# ---- boot: clone (public repo, no token), wire authed push, leave a marker ---
 if [ ! -d "$WORK/.git" ]; then
-  git clone --branch "$BRANCH" \
-    "https://x-access-token:${GIT_PUSH_TOKEN}@${REPO}.git" "$WORK"
+  git clone --branch "$BRANCH" "https://${REPO}.git" "$WORK"
 fi
 cd "$WORK"
 git config user.email "pod@runpod.local"
 git config user.name "sweep pod"
+# pushes need auth even though the repo is public; token never hits the branch
+git remote set-url origin \
+  "https://x-access-token:${GIT_PUSH_TOKEN:-}@${REPO}.git"
 mkdir -p status results
 
-python -m pip install -q -r requirements_pod.txt
+# Boot marker FIRST: if anything later dies, the branch still shows the pod
+# booted and which env vars existed (names only, never values).
+MISSING=""
+for v in RUNPOD_API_KEY HF_TOKEN GIT_PUSH_TOKEN RUNPOD_POD_ID; do
+  eval "val=\${$v:-}"
+  [ -n "$val" ] || MISSING="$MISSING $v"
+done
+echo "$(date -u +%FT%TZ) pod ${RUNPOD_POD_ID:-unknown} boot; missing env:${MISSING:-' none'}" \
+  >> status/boot.log
+commit_push "sweep: pod boot marker"
+if [ -n "$MISSING" ]; then
+  echo "[pod_run] FATAL: missing env:${MISSING}" >&2
+  exit 9
+fi
 
-python - <<'EOF'   # HF token must be live before any GPU time is spent
+python -m pip install -r requirements_pod.txt > status/pip.log 2>&1 \
+  || { tail -5 status/pip.log >&2; echo "[pod_run] FATAL: pip install failed" >&2; exit 10; }
+
+python - <<'EOF' \
+  || { echo "[pod_run] FATAL: HF preflight failed" >&2; exit 11; }
 import os
 from huggingface_hub import HfApi
 api = HfApi(token=os.environ["HF_TOKEN"])

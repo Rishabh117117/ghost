@@ -24,9 +24,13 @@ BRANCH = "contrastive-sweep"
 IMAGE = "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04"
 GPU_PREFERRED = ["NVIDIA A100 80GB PCIe", "NVIDIA A100-SXM4-80GB"]
 GPU_FALLBACK = ["NVIDIA H100 80GB HBM3", "NVIDIA H100 PCIe"]
+# Repo is public: clone anonymously so dockerArgs needs no secret expansion
+# (a ${VAR} inside the nested quotes was the prime suspect for the first pod
+# dying in ~90s with no trace). pod_run.sh sets the authenticated push URL
+# itself from GIT_PUSH_TOKEN.
 DOCKER_ARGS = (
     "bash -c 'git clone --branch " + BRANCH +
-    " https://x-access-token:${GIT_PUSH_TOKEN}@github.com/Rishabh117117/ghost.git"
+    " https://github.com/Rishabh117117/ghost.git"
     " /workspace/ghost && bash /workspace/ghost/pod_run.sh'"
 )
 
