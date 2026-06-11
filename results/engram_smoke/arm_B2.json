@@ -1,0 +1,16 @@
+{
+ "arm": "B2",
+ "verbatim": 0.0,
+ "qa": 0.0,
+ "confab": 1.0,
+ "wiki_ppl": 31781.95,
+ "drift": -0.0008,
+ "slots": {
+  "fired_tokens": 600,
+  "unique_slots": 131,
+  "max_share": 0.08333333333333333
+ },
+ "params_trainable": 4210689,
+ "params_base": 8848512,
+ "collapsed": false
+}

@@ -20,7 +20,7 @@ import urllib.request
 API = "https://api.runpod.io/graphql"
 HERE = os.path.dirname(os.path.abspath(__file__))
 POD_JSON = os.path.join(HERE, "status", "pod.json")
-BRANCH = "engram-v1"
+BRANCH = "engram-v2"
 # Current stable template line (Dec 2025) - widely cached on hosts, unlike the
 # retired 2024 tag whose 7.4 GB cold pull stalled/killed pods 1-3.
 IMAGE = "runpod/pytorch:1.0.3-cu1281-torch280-ubuntu2204"
@@ -101,7 +101,7 @@ def create():
         "cloudType": "SECURE",
         "gpuCount": 1,
         "gpuTypeId": gpu,
-        "name": "ghost-engram-v1",
+        "name": "ghost-engram-v2",
         "imageName": IMAGE,
         "containerDiskInGb": 60,
         "volumeInGb": 0,
@@ -222,7 +222,7 @@ def stages_tail(pid):
 
 
 def done():
-    return hf_has("runs/final/results.json") and hf_has("runs/final/ENGRAM_V1.md")
+    return hf_has("runs/final/results.json") and hf_has("runs/final/ENGRAM_V2.md")
 
 
 def aborted(pid):
@@ -244,7 +244,7 @@ def mirror_final_to_branch(pid):
     """Pull pod's HF artifacts down and commit them into the branch."""
     got = []
     for rp, dst in (("runs/final/results.json", "results.json"),
-                    ("runs/final/ENGRAM_V1.md", "ENGRAM_V1.md"),
+                    ("runs/final/ENGRAM_V2.md", "ENGRAM_V2.md"),
                     (f"runs/{pid}/stages.log", "status/stages.log"),
                     (f"runs/{pid}/run.log", "status/run.log")):
         try:
@@ -264,7 +264,7 @@ def mirror_final_to_branch(pid):
                 pass
     if got:
         safe_push(f"engram results mirrored from HF (pod {pid})",
-                  "results.json", "ENGRAM_V1.md", "status", "results")
+                  "results.json", "ENGRAM_V2.md", "status", "results")
     return got
 
 

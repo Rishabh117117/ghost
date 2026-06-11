@@ -5,9 +5,13 @@
   "device": "cpu",
   "seed": 0,
   "K": 32768,
+  "n_null": 64,
   "d_key": 128,
-  "topk": 4,
-  "tap_layer": 18
+  "topk": 32,
+  "tap_layer": 18,
+  "replay": 2000,
+  "kl_w": 1.0,
+  "lb_w": 0.01
  },
  "arms": [
   {
@@ -15,7 +19,7 @@
    "verbatim": 0.0,
    "qa": 0.0,
    "confab": 1.0,
-   "wiki_ppl": 35271.026,
+   "wiki_ppl": 31807.105,
    "drift": 0.0,
    "slots": {},
    "params_trainable": 0,
@@ -26,52 +30,172 @@
    "verbatim": 0.0,
    "qa": 0.0,
    "confab": 1.0,
-   "wiki_ppl": 35271.026,
+   "wiki_ppl": 31807.105,
    "drift": 0.0,
    "slots": {},
    "params_trainable": 0,
    "params_base": 8848512
   },
   {
-   "arm": "A2",
-   "verbatim": 0.0,
+   "arm": "A2'",
+   "verbatim": 0.02,
    "qa": 0.0,
    "confab": 1.0,
-   "wiki_ppl": 39806.586,
-   "drift": 0.1286,
+   "wiki_ppl": 30184.125,
+   "drift": -0.051,
    "slots": {},
    "params_trainable": 2188288,
    "params_base": 8848512
   },
   {
-   "arm": "A3",
-   "verbatim": 0.02,
-   "qa": 0.0,
-   "confab": 1.0,
-   "wiki_ppl": 33341.726,
-   "drift": -0.0547,
-   "slots": {
-    "fired_tokens": 2970,
-    "unique_slots": 258,
-    "frac_unique": 0.08686868686868687
-   },
-   "params_trainable": 4210817,
-   "params_base": 8848512
-  },
-  {
-   "arm": "A4",
+   "arm": "B1",
    "verbatim": 0.0,
    "qa": 0.0,
    "confab": 1.0,
-   "wiki_ppl": 31465.207,
-   "drift": -0.1079,
+   "wiki_ppl": 31847.539,
+   "drift": 0.0013,
    "slots": {
-    "fired_tokens": 2970,
-    "unique_slots": 82,
-    "frac_unique": 0.027609427609427608
+    "fired_tokens": 600,
+    "unique_slots": 111,
+    "max_share": 0.08333333333333333
    },
-   "params_trainable": 4210817,
-   "params_base": 8848512
+   "params_trainable": 4210689,
+   "params_base": 8848512,
+   "collapsed": false,
+   "slot_alignment": [
+    {
+     "entity_id": 8,
+     "attr": "employer",
+     "dominant_slot": 20070
+    },
+    {
+     "entity_id": 0,
+     "attr": "city",
+     "dominant_slot": 20070
+    },
+    {
+     "entity_id": 5,
+     "attr": "employer",
+     "dominant_slot": 29913
+    },
+    {
+     "entity_id": 2,
+     "attr": "quirk",
+     "dominant_slot": 28649
+    },
+    {
+     "entity_id": 7,
+     "attr": "city",
+     "dominant_slot": 28392
+    },
+    {
+     "entity_id": 2,
+     "attr": "profession",
+     "dominant_slot": 20070
+    },
+    {
+     "entity_id": 0,
+     "attr": "birth_year",
+     "dominant_slot": 681
+    },
+    {
+     "entity_id": 5,
+     "attr": "profession",
+     "dominant_slot": 29913
+    },
+    {
+     "entity_id": 9,
+     "attr": "profession",
+     "dominant_slot": 3924
+    },
+    {
+     "entity_id": 1,
+     "attr": "profession",
+     "dominant_slot": 20070
+    },
+    {
+     "entity_id": 6,
+     "attr": "employer",
+     "dominant_slot": 20070
+    },
+    {
+     "entity_id": 6,
+     "attr": "quirk",
+     "dominant_slot": 22987
+    },
+    {
+     "entity_id": 4,
+     "attr": "birth_year",
+     "dominant_slot": 3686
+    },
+    {
+     "entity_id": 9,
+     "attr": "quirk",
+     "dominant_slot": 28649
+    },
+    {
+     "entity_id": 1,
+     "attr": "birth_year",
+     "dominant_slot": 8645
+    },
+    {
+     "entity_id": 7,
+     "attr": "employer",
+     "dominant_slot": 28392
+    },
+    {
+     "entity_id": 2,
+     "attr": "city",
+     "dominant_slot": 20070
+    },
+    {
+     "entity_id": 4,
+     "attr": "employer",
+     "dominant_slot": 20070
+    },
+    {
+     "entity_id": 8,
+     "attr": "birth_year",
+     "dominant_slot": 10534
+    },
+    {
+     "entity_id": 3,
+     "attr": "birth_year",
+     "dominant_slot": 15411
+    }
+   ]
+  },
+  {
+   "arm": "B2",
+   "verbatim": 0.0,
+   "qa": 0.0,
+   "confab": 1.0,
+   "wiki_ppl": 31781.95,
+   "drift": -0.0008,
+   "slots": {
+    "fired_tokens": 600,
+    "unique_slots": 131,
+    "max_share": 0.08333333333333333
+   },
+   "params_trainable": 4210689,
+   "params_base": 8848512,
+   "collapsed": false
+  },
+  {
+   "arm": "B3",
+   "verbatim": 0.0,
+   "qa": 0.0,
+   "confab": 1.0,
+   "wiki_ppl": 31869.542,
+   "drift": 0.002,
+   "slots": {
+    "fired_tokens": 600,
+    "unique_slots": 13,
+    "max_share": 0.3
+   },
+   "params_trainable": 4210689,
+   "params_base": 8848512,
+   "collapsed": false
   }
  ],
  "a0": {
@@ -79,25 +203,22 @@
   "verbatim": 0.0,
   "qa": 0.0,
   "confab": 1.0,
-  "wiki_ppl": 35271.026,
+  "wiki_ppl": 31807.105,
   "drift": 0.0,
   "slots": {},
   "params_trainable": 0,
   "params_base": 8848512
  },
- "interference": {
-  "arm": "A3",
-  "before": 0.0,
-  "after": 0.0,
-  "drop": 0.0
- },
- "verdict": "SMOKE RUN \u2014 plumbing only, numbers meaningless. **ENGRAM FAIL \u2014 verbatim, paraphrased-QA** (best A3)",
- "best": "A3",
- "pass_bars": {
+ "interference": null,
+ "a1_qa_verbatim_ratio": null,
+ "verdict": "SMOKE RUN \u2014 plumbing only, numbers meaningless. **ENGRAM-V2 FAIL \u2014 verbatim, QA, slot-coverage, slot-share**",
+ "passed": false,
+ "bars": {
   "a0": 0.05,
   "verbatim": 0.8,
   "qa": 0.6,
   "drift": 0.02,
-  "interference": 0.1
+  "unique": 1024,
+  "share": 0.05
  }
 }
