@@ -26,14 +26,31 @@ BRANCH = "contrastive-sweep"
 IMAGE = "runpod/pytorch:1.0.3-cu1281-torch280-ubuntu2204"
 GPU_PREFERRED = ["NVIDIA A100 80GB PCIe", "NVIDIA A100-SXM4-80GB"]
 GPU_FALLBACK = ["NVIDIA H100 80GB HBM3", "NVIDIA H100 PCIe"]
-# Repo is public: clone anonymously so dockerArgs needs no secret expansion
-# (a ${VAR} inside the nested quotes was the prime suspect for the first pod
-# dying in ~90s with no trace). pod_run.sh sets the authenticated push URL
-# itself from GIT_PUSH_TOKEN.
+# Boot command, hardened by the T-series probes (see status/ notes):
+#  - crumb FIRST: pure-curl file commit to the private HF repo proves the
+#    container started even if everything after dies (2nd evidence channel).
+#  - clone is IDEMPOTENT (T7d: on container restart a bare `clone && run`
+#    fails "already exists" and crash-loops forever without ever re-running
+#    the script).
+#  - repo is public: anonymous clone, no secret expansion in dockerArgs;
+#    pod_run.sh wires the authenticated push URL from GIT_PUSH_TOKEN.
+_CRUMB = (
+    'B64=$(echo "crumb pod=$RUNPOD_POD_ID stage=dockerargs-start '
+    'date=$(date -u +%FT%TZ)" | base64 -w0); '
+    'printf "{\\"key\\":\\"header\\",\\"value\\":{\\"summary\\":\\"crumb '
+    '$RUNPOD_POD_ID dockerargs-start\\"}}\\n{\\"key\\":\\"file\\",\\"value\\":'
+    '{\\"path\\":\\"crumbs/${RUNPOD_POD_ID}_dockerargs-start.txt\\",'
+    '\\"content\\":\\"$B64\\",\\"encoding\\":\\"base64\\"}}\\n" '
+    '| curl -s -m 25 -X POST '
+    'https://huggingface.co/api/models/Spartan117Ri/ghost-ckpts/commit/main '
+    '-H "Authorization: Bearer $HF_TOKEN" '
+    '-H "Content-Type: application/x-ndjson" --data-binary @- >/dev/null 2>&1'
+)
 DOCKER_ARGS = (
-    "bash -c 'git clone --branch " + BRANCH +
-    " https://github.com/Rishabh117117/ghost.git"
-    " /workspace/ghost && bash /workspace/ghost/pod_run.sh'"
+    "bash -c '" + _CRUMB + "; "
+    "[ -d /workspace/ghost/.git ] || git clone --branch " + BRANCH +
+    " https://github.com/Rishabh117117/ghost.git /workspace/ghost; "
+    "bash /workspace/ghost/pod_run.sh'"
 )
 
 

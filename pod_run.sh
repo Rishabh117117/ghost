@@ -12,7 +12,7 @@
 # Required pod env, passed via the RunPod API at pod creation (NEVER committed,
 # never echoed):
 #   RUNPOD_API_KEY   - for self-termination
-#   HF_TOKEN         - checkpoint second home (Rishabh117117/ghost-ckpts, private)
+#   HF_TOKEN         - checkpoint second home (Spartan117Ri/ghost-ckpts, private)
 #   GIT_PUSH_TOKEN   - GitHub token with push access to Rishabh117117/ghost
 #   RUNPOD_POD_ID    - set automatically by RunPod
 set -u -o pipefail
@@ -52,10 +52,22 @@ stage() {  # $1 = name; marker on the branch so the supervisor can see progress
   commit_push "sweep pod: stage $1"
 }
 
+crumb() {  # $1 = stage; SECOND evidence channel: pure-curl file commit to the
+           # private HF repo - works even when the git-push path is broken.
+  B64=$(echo "crumb pod=${RUNPOD_POD_ID:-unknown} stage=$1 date=$(date -u +%FT%TZ)" | base64 -w0)
+  printf '{"key":"header","value":{"summary":"crumb %s %s"}}\n{"key":"file","value":{"path":"crumbs/%s_%s.txt","content":"%s","encoding":"base64"}}\n' \
+    "${RUNPOD_POD_ID:-unknown}" "$1" "${RUNPOD_POD_ID:-unknown}" "$1" "$B64" \
+  | curl -s -m 25 -X POST \
+      "https://huggingface.co/api/models/Spartan117Ri/ghost-ckpts/commit/main" \
+      -H "Authorization: Bearer ${HF_TOKEN:-}" \
+      -H "Content-Type: application/x-ndjson" --data-binary @- >/dev/null 2>&1 || true
+}
+
 on_exit() {
   code=$?
   kill "${PUSHER_PID:-0}" 2>/dev/null || true
   echo "$(date -u +%FT%TZ) exit code ${code}" >> "$WORK/status/stages.log" 2>/dev/null || true
+  crumb "exit-code-${code}"
   commit_push "sweep: artifacts at exit (code ${code})"
   terminate_pod
 }
@@ -82,6 +94,7 @@ for v in RUNPOD_API_KEY HF_TOKEN GIT_PUSH_TOKEN RUNPOD_POD_ID; do
 done
 echo "$(date -u +%FT%TZ) pod ${RUNPOD_POD_ID:-unknown} boot; missing env:${MISSING:-' none'}" \
   >> status/boot.log
+crumb "podrun-start"
 stage "boot"
 if [ -n "$MISSING" ]; then
   echo "[pod_run] FATAL: missing env:${MISSING}" >&2
@@ -100,7 +113,7 @@ import os
 from huggingface_hub import HfApi
 api = HfApi(token=os.environ["HF_TOKEN"])
 print("HF auth ok:", api.whoami()["name"], flush=True)
-api.create_repo("Rishabh117117/ghost-ckpts", private=True, exist_ok=True)
+api.create_repo("Spartan117Ri/ghost-ckpts", private=True, exist_ok=True)
 EOF
 stage "hf"
 

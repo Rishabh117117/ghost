@@ -59,7 +59,7 @@ LAMBDAS          = (0.5, 1.0, 2.0, 4.0)
 NEG_TYPES        = ("self", "author", "both")
 N_NEG_PER_AUTHOR = 5          # author-negative docs sampled per seen author
 NEG_SAMPLE_SEED  = 42
-HUB_REPO         = "Rishabh117117/ghost-ckpts"
+HUB_REPO         = "Spartan117Ri/ghost-ckpts"  # HF namespace = HF username, not GitHub one
 HUB_PREFIX       = "sweep-ccat50"
 BUDGET_SECONDS   = 13 * 10 * 60   # ~10 min/arm on A100 -> ~2.2 h
 COST_GUARD_X     = 3              # abort if projection > 3x budget ...
