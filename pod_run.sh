@@ -11,7 +11,7 @@
 #   runs/<pod>/stages.log|*.log     stage trail + log tails
 #   runs/<pod>/DONE                 exit code, written by the EXIT trap
 #   runs/arms/arm_*.json            per-arm results (resume keys, shared)
-#   runs/final/                     results.json + SWEEP_CCAT50.md + plots
+#   runs/final/                     results.json + ENGRAM_V1.md + per-arm JSONs
 #   sweep-ccat50/arm_*/ghost.pt     checkpoints (uploaded by sweep itself)
 #
 # Stages: boot -> deps -> hf -> gpu -> smoke-gate -> sweep -> DONE.
