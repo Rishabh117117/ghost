@@ -1,0 +1,19 @@
+{
+ "i": 0,
+ "lam": 0.0,
+ "neg": "none",
+ "ppl": {
+  "A_target": 35.086356674023875,
+  "B_seen": 48.758754246585504,
+  "C_unseen": 49.360770389768774,
+  "D_wikitext": 72.4995302654441
+ },
+ "train": {
+  "best_val": 3.0255126953125,
+  "epochs_run": 14
+ },
+ "seconds": 80.0,
+ "fp_delta": 0.0,
+ "hub_push": "ok",
+ "ckpt": "/workspace/ghost/ghosts/sweep/arm_0_0_none.pt"
+}

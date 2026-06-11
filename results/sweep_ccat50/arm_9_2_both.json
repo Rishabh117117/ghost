@@ -1,0 +1,19 @@
+{
+ "i": 9,
+ "lam": 2.0,
+ "neg": "both",
+ "ppl": {
+  "A_target": 37.943290886976435,
+  "B_seen": 56.239898257218265,
+  "C_unseen": 55.963979371724605,
+  "D_wikitext": 76.87637264871269
+ },
+ "train": {
+  "best_val": 3.360107421875,
+  "epochs_run": 15
+ },
+ "seconds": 169.8,
+ "fp_delta": 0.0,
+ "hub_push": "ok",
+ "ckpt": "/workspace/ghost/ghosts/sweep/arm_9_2_both.pt"
+}
