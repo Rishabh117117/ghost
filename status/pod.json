@@ -1,5 +1,5 @@
 {
- "pod_id": "ao2uyrctwyphqb",
+ "pod_id": "bxn9q01tzvzzdr",
  "gpu": "A100 PCIe",
  "cost_per_hr": 1.39,
  "image": "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04",
