@@ -557,6 +557,7 @@ def run(smoke=False, only=None, out_root=None):
         if a is None:
             STATUS["phase"] = "A2_train"
             gm = GhostModel(base, d_ghost=D_GHOST)
+            gm.ghost.to(DEVICE)        # GhostModel sets dtype but NOT device
             train_model(gm, tok, fact_texts, steps=steps, bs=bs, is_ghost=True)
             gp = sum(p.numel() for p in gm.ghost.parameters())
             def gfwd(ids):

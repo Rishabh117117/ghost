@@ -63,8 +63,8 @@ publish_evidence() {  # logs + arm results; cheap enough to call often
   done
   # per-arm results are the resume keys - publish to the SHARED prefix
   if ls results/engram/arm_*.json >/dev/null 2>&1; then
-    python pod_hf.py updir results/engram runs/arms >/dev/null 2>&1 || \
-      for f in results/engram/arm_*.json; do hf_curl_up "$f" "runs/arms/$(basename "$f")"; done
+    python pod_hf.py updir results/engram runs/arms_engram >/dev/null 2>&1 || \
+      for f in results/engram/arm_*.json; do hf_curl_up "$f" "runs/arms_engram/$(basename "$f")"; done
   fi
   [ -f status/ABORT.json ] && hf_curl_up status/ABORT.json "runs/${POD}/ABORT.json"
 }
@@ -122,7 +122,7 @@ print("HF auth ok:", api.whoami()["name"], flush=True)
 api.create_repo("Spartan117Ri/ghost-ckpts", private=True, exist_ok=True)
 EOF
 mkdir -p results/engram
-python pod_hf.py down runs/arms results/engram || true   # completed arms skip
+python pod_hf.py down runs/arms_engram results/engram || true   # completed arms skip
 
 # ---- data: regenerate the synthetic biographies (deterministic, gitignored) --
 python engram_data.py > status/data.log 2>&1 \
