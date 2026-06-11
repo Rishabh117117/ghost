@@ -1,8 +1,8 @@
 # Sweep: contrastive lambda x negative-type factorial on CCAT50
 
-**CURE PASS (arm 8: lambda=2, neg=author)**
+**CURE PASS (arm 5: lambda=1, neg=author)**
 
-_Generated 2026-06-11T15:15:09.011149+00:00 | arms completed: 13/13 | meta: {"smoke": false, "model": "Qwen/Qwen3-4B", "device": "cuda", "alpha_serve": 0.5, "seed": 0}_
+_Generated 2026-06-11T19:54:21.986652+00:00 (verdict regenerated: min|leak_b| banded by retention) | arms completed: 13/13 | meta: {"smoke": false, "model": "Qwen/Qwen3-4B", "device": "cuda", "alpha_serve": 0.5, "seed": 0}_
 
 ## Verdict table (chat-masked held-out ppl; rel% vs base)
 

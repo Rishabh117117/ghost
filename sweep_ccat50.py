@@ -373,7 +373,15 @@ def analyze(base_rows, arm_results):
             d.update(bars=bars, b_pass=b_pass, c_pass=c_pass, verdict=verdict)
         out.append(d)
     passers = [d for d in out if d["verdict"] == "PASS"]
-    best = min(passers, key=lambda d: d["leak_b"]) if passers else None
+    # Winner = neutrality on others' text, not hostility. Leaks within the
+    # +/-BAR_ABS_LEAK pass-band are statistically tied (all already below the
+    # bar), so rank those by retention; only outside the band does raw |leak_b|
+    # decide. Band-then-retention picks the cleanest cure, not the most
+    # overcorrected one.
+    def _rank(d):
+        band = abs(d["leak_b"]) > BAR_ABS_LEAK
+        return (band, abs(d["leak_b"]) if band else 0.0, -d["retention"])
+    best = min(passers, key=_rank) if passers else None
     return {"arms": out, "arm0_own": a0_own, "arm0_leak_b": a0_leak_b,
             "arm0_leak_c": a0_leak_c, "passers": [p["i"] for p in passers],
             "best": best["i"] if best else None}
