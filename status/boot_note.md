@@ -10,3 +10,11 @@ container still hasn't started by ~01:55Z.
 
 # 01:58Z — pod 2 never started its container (35 min, uptime stuck ≤0); terminated.
 # Attempt 3: pod bxn9q01tzvzzdr on a fresh host. Balance $9.09.
+
+# 04:45Z — ROOT CAUSE FOUND: GIT_PUSH_TOKEN cannot git-push (fine-grained PAT
+# missing Contents: Read & Write). Proven by dry-run push 403 from sandbox and
+# by HF crumbs showing every pod boots, clones and runs pod_run.sh fine
+# (dockerargs-start -> podrun-start -> exit crumbs) while zero git markers land.
+# This silenced every pod since launch 1. All earlier fixes (idempotent clone,
+# image refresh, HF namespace) were real but secondary. Waiting on regenerated
+# PAT, then: supervise -> boot marker -> smoke gate -> 13-arm sweep.
