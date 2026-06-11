@@ -20,7 +20,7 @@ import urllib.request
 API = "https://api.runpod.io/graphql"
 HERE = os.path.dirname(os.path.abspath(__file__))
 POD_JSON = os.path.join(HERE, "status", "pod.json")
-BRANCH = "contrastive-sweep"
+BRANCH = "engram-v1"
 # Current stable template line (Dec 2025) - widely cached on hosts, unlike the
 # retired 2024 tag whose 7.4 GB cold pull stalled/killed pods 1-3.
 IMAGE = "runpod/pytorch:1.0.3-cu1281-torch280-ubuntu2204"
@@ -101,7 +101,7 @@ def create():
         "cloudType": "SECURE",
         "gpuCount": 1,
         "gpuTypeId": gpu,
-        "name": "ghost-sweep-ccat50",
+        "name": "ghost-engram-v1",
         "imageName": IMAGE,
         "containerDiskInGb": 60,
         "volumeInGb": 0,
@@ -222,7 +222,7 @@ def stages_tail(pid):
 
 
 def done():
-    return hf_has("runs/final/results.json") and hf_has("runs/final/SWEEP_CCAT50.md")
+    return hf_has("runs/final/results.json") and hf_has("runs/final/ENGRAM_V1.md")
 
 
 def aborted(pid):
@@ -244,7 +244,7 @@ def mirror_final_to_branch(pid):
     """Pull pod's HF artifacts down and commit them into the branch."""
     got = []
     for rp, dst in (("runs/final/results.json", "results.json"),
-                    ("runs/final/SWEEP_CCAT50.md", "SWEEP_CCAT50.md"),
+                    ("runs/final/ENGRAM_V1.md", "ENGRAM_V1.md"),
                     (f"runs/{pid}/stages.log", "status/stages.log"),
                     (f"runs/{pid}/run.log", "status/run.log")):
         try:
@@ -252,19 +252,19 @@ def mirror_final_to_branch(pid):
             got.append(dst)
         except Exception:
             pass
-    # plots/per-arm JSONs, best effort
-    for f in hf_tree("runs/final/sweep_ccat50"):
+    # per-arm JSONs / interference, best effort
+    for f in hf_tree("runs/final/engram"):
         p = f.get("path", "")
-        if p.endswith((".png", ".csv", ".json")):
+        if p.endswith((".json", ".png", ".csv")):
             try:
-                hf_to_file(p, os.path.join(HERE, "results", "sweep_ccat50",
+                hf_to_file(p, os.path.join(HERE, "results", "engram",
                                            os.path.basename(p)))
                 got.append(p)
             except Exception:
                 pass
     if got:
-        safe_push(f"sweep results mirrored from HF (pod {pid})",
-                  "results.json", "SWEEP_CCAT50.md", "status", "results")
+        safe_push(f"engram results mirrored from HF (pod {pid})",
+                  "results.json", "ENGRAM_V1.md", "status", "results")
     return got
 
 
