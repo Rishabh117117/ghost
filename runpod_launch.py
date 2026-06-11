@@ -135,12 +135,21 @@ def terminate():
 
 
 # ---- supervise: own the whole lifecycle, no human babysitting ----------------
+# Transport is HF-ONLY (the pod's PAT can't git-push). The pod publishes crumbs,
+# stage logs, arm JSONs and final artifacts to the private HF repo; the
+# supervisor (sandbox, which CAN git-push) detects state there and mirrors the
+# final results into the branch.
+import datetime
 import subprocess
 import time
 
-BOOT_DEADLINE_S = 12 * 60      # boot-marker commit must appear on the branch
-STALL_RELAUNCH_S = 40 * 60     # alive pod but no commits this long -> replace
-DEAD_GRACE_S = 3 * 60          # pod gone + no commits this long -> relaunch
+HF_REPO = "Spartan117Ri/ghost-ckpts"
+HF_API = f"https://huggingface.co/api/models/{HF_REPO}"
+HF_RESOLVE = f"https://huggingface.co/{HF_REPO}/resolve/main"
+
+BOOT_DEADLINE_S = 12 * 60      # podrun-start crumb must land on HF by now
+STALL_RELAUNCH_S = 40 * 60     # alive pod, no HF commit this long -> replace
+DEAD_GRACE_S = 3 * 60          # pod gone + no HF commit this long -> relaunch
 MAX_LAUNCHES = 4
 MAX_ALLOC_FAILS = 8
 WALL_CLOCK_S = 5 * 3600
@@ -156,27 +165,68 @@ def log(msg):
     print(f"[{time.strftime('%H:%M:%S')}] {msg}", flush=True)
 
 
-def fetch():
-    sh("git", "fetch", "-q", "origin", BRANCH)
+def hf_req(url, raw=False):
+    req = urllib.request.Request(url, headers={
+        "Authorization": f"Bearer {os.environ['HF_TOKEN']}",
+        "User-Agent": "ghost-sweep/1.0"})
+    with urllib.request.urlopen(req, timeout=40) as r:
+        data = r.read()
+    return data if raw else json.loads(data)
 
 
-def tip():
-    return sh("git", "rev-parse", f"origin/{BRANCH}")[1][:9]
+def hf_tree(path=""):
+    url = HF_API + "/tree/main" + (f"/{path}" if path else "")
+    try:
+        return hf_req(url)
+    except Exception:
+        return []
 
 
-def last_commit_age_s():
-    _, ct = sh("git", "log", "-1", "--format=%ct", f"origin/{BRANCH}")
-    return time.time() - int(ct)
+def hf_has(path):
+    parent = path.rsplit("/", 1)[0] if "/" in path else ""
+    return any(f.get("path") == path for f in hf_tree(parent))
 
 
-def tree_has(path):
-    _, out = sh("git", "ls-tree", "--name-only", f"origin/{BRANCH}", path)
-    return out.strip() == path
+def hf_text(path):
+    try:
+        return hf_req(f"{HF_RESOLVE}/{path}", raw=True).decode()
+    except Exception:
+        return ""
 
 
-def stages_tail():
-    code, out = sh("git", "show", f"origin/{BRANCH}:status/stages.log")
-    return out.splitlines()[-1] if code == 0 and out else ""
+def hf_to_file(path, dst):
+    data = hf_req(f"{HF_RESOLVE}/{path}", raw=True)
+    os.makedirs(os.path.dirname(dst) or ".", exist_ok=True)
+    with open(dst, "wb") as f:
+        f.write(data)
+
+
+def hf_last_commit_age_s():
+    """Seconds since the HF repo's most recent commit = last pod activity."""
+    try:
+        c = hf_req(f"https://huggingface.co/api/models/{HF_REPO}/commits/main")
+        when = c[0]["date"] if isinstance(c, list) else c["commits"][0]["date"]
+        dt = datetime.datetime.fromisoformat(when.replace("Z", "+00:00"))
+        return (datetime.datetime.now(datetime.timezone.utc) - dt).total_seconds()
+    except Exception:
+        return 1e9
+
+
+def booted(pid):
+    return hf_has(f"crumbs/{pid}_podrun-start.txt") or hf_has(f"runs/{pid}/stages.log")
+
+
+def stages_tail(pid):
+    t = hf_text(f"runs/{pid}/stages.log").strip()
+    return t.splitlines()[-1] if t else ""
+
+
+def done():
+    return hf_has("runs/final/results.json") and hf_has("runs/final/SWEEP_CCAT50.md")
+
+
+def aborted(pid):
+    return hf_has(f"runs/{pid}/ABORT.json")
 
 
 def safe_push(msg, *paths):
@@ -188,6 +238,34 @@ def safe_push(msg, *paths):
             return
         time.sleep(2 ** i)
     log("WARN: sandbox push failed after retries")
+
+
+def mirror_final_to_branch(pid):
+    """Pull pod's HF artifacts down and commit them into the branch."""
+    got = []
+    for rp, dst in (("runs/final/results.json", "results.json"),
+                    ("runs/final/SWEEP_CCAT50.md", "SWEEP_CCAT50.md"),
+                    (f"runs/{pid}/stages.log", "status/stages.log"),
+                    (f"runs/{pid}/run.log", "status/run.log")):
+        try:
+            hf_to_file(rp, os.path.join(HERE, dst))
+            got.append(dst)
+        except Exception:
+            pass
+    # plots/per-arm JSONs, best effort
+    for f in hf_tree("runs/final/sweep_ccat50"):
+        p = f.get("path", "")
+        if p.endswith((".png", ".csv", ".json")):
+            try:
+                hf_to_file(p, os.path.join(HERE, "results", "sweep_ccat50",
+                                           os.path.basename(p)))
+                got.append(p)
+            except Exception:
+                pass
+    if got:
+        safe_push(f"sweep results mirrored from HF (pod {pid})",
+                  "results.json", "SWEEP_CCAT50.md", "status", "results")
+    return got
 
 
 def pod_state(pid):
@@ -209,18 +287,9 @@ def balance():
     return gql("query { myself { clientBalance } }")["myself"]["clientBalance"]
 
 
-def done():
-    return tree_has("SWEEP_CCAT50.md") and tree_has("results.json")
-
-
-def aborted():
-    return tree_has("status/ABORT.json")
-
-
 def supervise():
     t0, launches, alloc_fails = time.time(), 0, 0
     while time.time() - t0 < WALL_CLOCK_S:
-        fetch()
         if done():
             break
         bal = balance()
@@ -242,46 +311,43 @@ def supervise():
         launches += 1
         pid = pod_id()
         safe_push(f"supervise: launch {launches} pod {pid}", "status/pod.json")
-        fetch()
-        base = tip()
-        log(f"launch {launches}: pod {pid}, balance ${bal:.2f}, waiting on boot marker")
+        log(f"launch {launches}: pod {pid}, balance ${bal:.2f}, waiting on HF boot crumb")
 
-        # ---- boot watch: marker commit must land within the deadline --------
+        # ---- boot watch: podrun-start crumb must land on HF -----------------
         boot_t = time.time()
-        booted = False
+        is_booted = False
         while time.time() - boot_t < BOOT_DEADLINE_S:
             time.sleep(45)
-            fetch()
-            if tip() != base:
-                booted = True
+            if booted(pid):
+                is_booted = True
                 break
             if pod_state(pid) == "no-pod":
                 log("pod vanished pre-boot")
                 break
-        if not booted:
-            log(f"no boot marker in {int(time.time()-boot_t)}s - replacing host")
+        if not is_booted:
+            log(f"no HF boot crumb in {int(time.time()-boot_t)}s - replacing host")
             try:
                 terminate()
             except Exception:
                 pass
             time.sleep(20)
             continue
-        log(f"booted: branch moved {base} -> {tip()}")
+        log(f"booted: HF crumb present for {pid} (stage: '{stages_tail(pid)}')")
 
         # ---- progress watch --------------------------------------------------
         while time.time() - t0 < WALL_CLOCK_S:
             time.sleep(60)
-            fetch()
             if done():
-                log("results landed: SWEEP_CCAT50.md + results.json on branch")
+                log("final artifacts on HF: results.json + SWEEP_CCAT50.md")
                 break
-            if aborted():
-                log("cost-guard ABORT.json on branch - stopping (no relaunch)")
+            if aborted(pid):
+                log("cost-guard ABORT.json on HF - stopping (no relaunch)")
+                mirror_final_to_branch(pid)
                 return 1
-            gap, st = last_commit_age_s(), pod_state(pid)
+            gap, st = hf_last_commit_age_s(), pod_state(pid)
             if st == "no-pod" and gap > DEAD_GRACE_S:
-                log(f"pod gone, last commit {int(gap/60)}m ago "
-                    f"(last stage: '{stages_tail()}') - relaunching, arms resume")
+                log(f"pod gone, last HF commit {int(gap/60)}m ago "
+                    f"(stage: '{stages_tail(pid)}') - relaunching, arms resume")
                 break
             if gap > STALL_RELAUNCH_S:
                 log(f"stalled {int(gap/60)}m with pod {st} - replacing pod")
@@ -294,19 +360,20 @@ def supervise():
         if done():
             break
 
-    fetch()
     if not done():
         log("STOP: wall clock exhausted without completion")
         return 3
-    # ---- completion: make sure nothing is still billing ----------------------
-    if pod_state(pod_id()) != "no-pod":
+    # ---- completion: mirror to branch + make sure nothing is still billing ---
+    pid = pod_id()
+    got = mirror_final_to_branch(pid)
+    if pod_state(pid) != "no-pod":
         log("results in but pod still alive - terminating")
         try:
             terminate()
         except Exception:
             pass
     log(f"DONE in {int((time.time()-t0)/60)} min over {launches} launch(es); "
-        f"final balance ${balance():.2f}; last stage: '{stages_tail()}'")
+        f"final balance ${balance():.2f}; mirrored: {got}")
     return 0
 
 

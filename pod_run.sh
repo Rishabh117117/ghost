@@ -1,126 +1,134 @@
 #!/usr/bin/env bash
 # pod_run.sh - RunPod startup for the CCAT50 contrastive sweep.
 #
-# Staged, self-evidencing, self-gating:
-#   boot -> deps -> hf -> gpu -> SMOKE GATE (on this GPU) -> sweep -> push -> die
-# Every stage pushes a marker commit to the branch; every fatal exit goes
-# through the EXIT trap which pushes all evidence (stages.log, pip.log,
-# run.log, partial results) and then SELF-TERMINATES the pod. A pod never
-# disappears silently and never burns GPU-hours on a pipeline that would
-# fail at push time - the cheap stages prove clone/pip/HF/CUDA/push first.
+# TRANSPORT: Hugging Face ONLY. The GitHub PAT in this environment cannot push
+# (fine-grained token without Contents:write - proven 2026-06-11), so the pod
+# publishes ALL evidence and results to the private HF repo
+# Spartan117Ri/ghost-ckpts. The sandbox supervisor mirrors them into git.
 #
-# Required pod env, passed via the RunPod API at pod creation (NEVER committed,
-# never echoed):
-#   RUNPOD_API_KEY   - for self-termination
-#   HF_TOKEN         - checkpoint second home (Spartan117Ri/ghost-ckpts, private)
-#   GIT_PUSH_TOKEN   - GitHub token with push access to Rishabh117117/ghost
-#   RUNPOD_POD_ID    - set automatically by RunPod
+# Layout in the HF repo:
+#   crumbs/<pod>_<stage>.txt        breadcrumbs (curl-only, work pre-deps)
+#   runs/<pod>/stages.log|*.log     stage trail + log tails
+#   runs/<pod>/DONE                 exit code, written by the EXIT trap
+#   runs/arms/arm_*.json            per-arm results (resume keys, shared)
+#   runs/final/                     results.json + SWEEP_CCAT50.md + plots
+#   sweep-ccat50/arm_*/ghost.pt     checkpoints (uploaded by sweep itself)
+#
+# Stages: boot -> deps -> hf -> gpu -> smoke-gate -> sweep -> DONE.
+# Every fatal path uploads its log tail first; the pod always self-terminates.
 set -u -o pipefail
 
 BRANCH=contrastive-sweep
-REPO=github.com/Rishabh117117/ghost
 WORK=/workspace/ghost
+HFREPO=Spartan117Ri/ghost-ckpts
+POD="${RUNPOD_POD_ID:-unknown}"
 
 terminate_pod() {
-  echo "[pod_run] terminating pod ${RUNPOD_POD_ID:-unknown}" >&2
+  echo "[pod_run] terminating pod ${POD}" >&2
   curl -s -X POST "https://api.runpod.io/graphql" \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer ${RUNPOD_API_KEY:-}" \
-    -d "{\"query\":\"mutation { podTerminate(input: {podId: \\\"${RUNPOD_POD_ID:-}\\\"}) }\"}" \
+    -d "{\"query\":\"mutation { podTerminate(input: {podId: \\\"${POD}\\\"}) }\"}" \
     >/dev/null || true
 }
 
-commit_push() {  # $1 = message; tolerant: empty commits and races must not kill the trap
-  cd "$WORK" 2>/dev/null || return 0
-  # NB: one `git add` with a missing pathspec stages NOTHING (exit 128) - the
-  # first pod died leaving zero trace partly because of that. *.pt and
-  # *.safetensors are gitignored, so a blanket add is safe (no fat checkpoints).
-  git add -A 2>/dev/null || true
-  git commit -m "$1" >/dev/null 2>&1 || true
-  for i in 1 2 3 4; do
-    # rebase first: the sandbox supervisor may have pushed between-pod notes;
-    # without this one sandbox push would wedge every pod push forever (non-FF)
-    git pull --rebase origin "$BRANCH" >/dev/null 2>&1 || true
-    git push -u origin "$BRANCH" >/dev/null 2>&1 && return 0
-    sleep $((2 ** i))
-  done
-  echo "[pod_run] WARN: git push failed after retries" >&2
-}
-
-stage() {  # $1 = name; marker on the branch so the supervisor can see progress
-  echo "$(date -u +%FT%TZ) stage: $1" >> "$WORK/status/stages.log" 2>/dev/null || true
-  commit_push "sweep pod: stage $1"
-}
-
-crumb() {  # $1 = stage; SECOND evidence channel: pure-curl file commit to the
-           # private HF repo - works even when the git-push path is broken.
-  B64=$(echo "crumb pod=${RUNPOD_POD_ID:-unknown} stage=$1 date=$(date -u +%FT%TZ)" | base64 -w0)
-  printf '{"key":"header","value":{"summary":"crumb %s %s"}}\n{"key":"file","value":{"path":"crumbs/%s_%s.txt","content":"%s","encoding":"base64"}}\n' \
-    "${RUNPOD_POD_ID:-unknown}" "$1" "${RUNPOD_POD_ID:-unknown}" "$1" "$B64" \
-  | curl -s -m 25 -X POST \
-      "https://huggingface.co/api/models/Spartan117Ri/ghost-ckpts/commit/main" \
+hf_curl_up() {  # $1 = local file, $2 = repo path; curl-only (works pre-deps)
+  [ -f "$1" ] || return 0
+  B64=$(base64 -w0 < "$1")
+  printf '{"key":"header","value":{"summary":"pod %s: %s"}}\n{"key":"file","value":{"path":"%s","content":"%s","encoding":"base64"}}\n' \
+    "$POD" "$2" "$2" "$B64" \
+  | curl -s -m 30 -X POST \
+      "https://huggingface.co/api/models/${HFREPO}/commit/main" \
       -H "Authorization: Bearer ${HF_TOKEN:-}" \
       -H "Content-Type: application/x-ndjson" --data-binary @- >/dev/null 2>&1 || true
+}
+
+crumb() {  # $1 = stage tag; tiny existence marker
+  echo "crumb pod=$POD stage=$1 date=$(date -u +%FT%TZ)" > /tmp/crumb.txt
+  hf_curl_up /tmp/crumb.txt "crumbs/${POD}_$1.txt"
+}
+
+stage() {  # $1 = stage name; append trail + publish it
+  echo "$(date -u +%FT%TZ) stage: $1" >> "$WORK/status/stages.log" 2>/dev/null || true
+  hf_curl_up "$WORK/status/stages.log" "runs/${POD}/stages.log"
+}
+
+publish_evidence() {  # logs + arm results; cheap enough to call often
+  cd "$WORK" 2>/dev/null || return 0
+  for f in status/boot.log status/gpu.txt status/heartbeat.log; do
+    hf_curl_up "$f" "runs/${POD}/$(basename "$f")"
+  done
+  for f in status/pip.log status/smoke.log status/run.log; do
+    [ -f "$f" ] && { tail -c 200000 "$f" > /tmp/tail.txt; hf_curl_up /tmp/tail.txt "runs/${POD}/$(basename "$f")"; }
+  done
+  # per-arm results are the resume keys - publish to the SHARED prefix
+  if ls results/sweep_ccat50/arm_*.json >/dev/null 2>&1; then
+    python pod_hf.py updir results/sweep_ccat50 runs/arms >/dev/null 2>&1 || \
+      for f in results/sweep_ccat50/arm_*.json; do hf_curl_up "$f" "runs/arms/$(basename "$f")"; done
+  fi
+  [ -f status/ABORT.json ] && hf_curl_up status/ABORT.json "runs/${POD}/ABORT.json"
 }
 
 on_exit() {
   code=$?
   kill "${PUSHER_PID:-0}" 2>/dev/null || true
   echo "$(date -u +%FT%TZ) exit code ${code}" >> "$WORK/status/stages.log" 2>/dev/null || true
-  crumb "exit-code-${code}"
-  commit_push "sweep: artifacts at exit (code ${code})"
+  publish_evidence
+  hf_curl_up "$WORK/status/stages.log" "runs/${POD}/stages.log"
+  # final artifacts (real run writes them at repo root)
+  cd "$WORK" 2>/dev/null && {
+    [ -f results.json ]     && python pod_hf.py up results.json "runs/final/results.json" 2>/dev/null
+    [ -f SWEEP_CCAT50.md ]  && python pod_hf.py up SWEEP_CCAT50.md "runs/final/SWEEP_CCAT50.md" 2>/dev/null
+    ls results/sweep_ccat50/*.png >/dev/null 2>&1 && python pod_hf.py updir results/sweep_ccat50 runs/final/sweep_ccat50 2>/dev/null
+  }
+  echo "$code" > /tmp/done.txt; hf_curl_up /tmp/done.txt "runs/${POD}/DONE"
   terminate_pod
 }
 trap on_exit EXIT
 
-# ---- boot: clone (public repo, no token), wire authed push, leave a marker ---
+# ---- boot (clone happened in dockerArgs; make sure, idempotently) -------------
 if [ ! -d "$WORK/.git" ]; then
-  git clone --branch "$BRANCH" "https://${REPO}.git" "$WORK"
+  git clone --branch "$BRANCH" "https://github.com/Rishabh117117/ghost.git" "$WORK"
 fi
 cd "$WORK"
-git config user.email "pod@runpod.local"
-git config user.name "sweep pod"
-# pushes need auth even though the repo is public; token never hits the branch
-git remote set-url origin \
-  "https://x-access-token:${GIT_PUSH_TOKEN:-}@${REPO}.git"
 mkdir -p status results
 
-# Boot marker FIRST: if anything later dies, the branch still shows the pod
-# booted and which env vars existed (names only, never values).
 MISSING=""
-for v in RUNPOD_API_KEY HF_TOKEN GIT_PUSH_TOKEN RUNPOD_POD_ID; do
+for v in RUNPOD_API_KEY HF_TOKEN RUNPOD_POD_ID; do
   eval "val=\${$v:-}"
   [ -n "$val" ] || MISSING="$MISSING $v"
 done
-echo "$(date -u +%FT%TZ) pod ${RUNPOD_POD_ID:-unknown} boot; missing env:${MISSING:-' none'}" \
-  >> status/boot.log
+echo "$(date -u +%FT%TZ) pod ${POD} boot; missing env:${MISSING:-' none'}" >> status/boot.log
 crumb "podrun-start"
 stage "boot"
+hf_curl_up status/boot.log "runs/${POD}/boot.log"
 if [ -n "$MISSING" ]; then
   echo "[pod_run] FATAL: missing env:${MISSING}" >&2
   exit 9
 fi
 
-# ---- deps: logged, fatal-with-evidence ---------------------------------------
+# ---- deps ---------------------------------------------------------------------
 python -m pip install -r requirements_pod.txt > status/pip.log 2>&1 \
-  || { tail -5 status/pip.log >&2; stage "deps FAILED"; exit 10; }
+  || { tail -5 status/pip.log >&2; stage "deps-FAILED"; exit 10; }
 stage "deps"
 
-# ---- HF preflight: token live + ckpt repo exists BEFORE any GPU time ---------
+# ---- HF preflight + arm-resume restore -----------------------------------------
 python - <<'EOF' \
-  || { echo "[pod_run] FATAL: HF preflight failed" >&2; stage "hf FAILED"; exit 11; }
+  || { echo "[pod_run] FATAL: HF preflight failed" >&2; stage "hf-FAILED"; exit 11; }
 import os
 from huggingface_hub import HfApi
 api = HfApi(token=os.environ["HF_TOKEN"])
 print("HF auth ok:", api.whoami()["name"], flush=True)
 api.create_repo("Spartan117Ri/ghost-ckpts", private=True, exist_ok=True)
 EOF
+mkdir -p results/sweep_ccat50
+python pod_hf.py down runs/arms results/sweep_ccat50 || true   # completed arms skip
 stage "hf"
 
-# ---- GPU check: driver, torch CUDA, bf16 matmul ------------------------------
+# ---- GPU check ------------------------------------------------------------------
 nvidia-smi --query-gpu=name,memory.total --format=csv,noheader | tee status/gpu.txt
 python - <<'EOF' \
-  || { echo "[pod_run] FATAL: GPU check failed" >&2; stage "gpu FAILED"; exit 12; }
+  || { echo "[pod_run] FATAL: GPU check failed" >&2; stage "gpu-FAILED"; exit 12; }
 import torch
 assert torch.cuda.is_available(), "torch sees no CUDA"
 x = torch.randn(64, 64, dtype=torch.bfloat16, device="cuda")
@@ -129,22 +137,21 @@ print("CUDA ok:", torch.cuda.get_device_name(0), "| torch", torch.__version__, f
 EOF
 stage "gpu"
 
-# ---- background: push status/ + results/ to the branch every 15 min ----------
+# ---- background evidence pusher (every 10 min) ----------------------------------
 (
   while true; do
-    sleep 900
-    commit_push "sweep: status heartbeat"
+    sleep 600
+    publish_evidence
   done
 ) &
 PUSHER_PID=$!
 
-# ---- SMOKE GATE: full train/eval/report plumbing on THIS pod's GPU -----------
-# (tiny random base + fake data, ~2 min; isolated outputs in results/smoke/.)
-# Proves end-to-end: python deps, CUDA training step, report writer, git push.
+# ---- SMOKE GATE on this GPU ------------------------------------------------------
 python sweep_ccat50.py --smoke > status/smoke.log 2>&1 \
-  || { tail -15 status/smoke.log >&2; stage "smoke-gate FAILED"; exit 13; }
-stage "smoke-gate GREEN - pipeline proven, starting real sweep"
+  || { tail -15 status/smoke.log >&2; stage "smoke-gate-FAILED"; exit 13; }
+stage "smoke-gate-GREEN"
 
-# ---- the real sweep -----------------------------------------------------------
+# ---- the real sweep ---------------------------------------------------------------
+stage "sweep-start"
 python sweep_ccat50.py 2>&1 | tee -a status/run.log
-exit "${PIPESTATUS[0]}"   # EXIT trap commits artifacts + terminates the pod
+exit "${PIPESTATUS[0]}"   # EXIT trap publishes artifacts + DONE + terminates
