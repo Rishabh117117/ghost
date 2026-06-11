@@ -3,626 +3,101 @@
   "smoke": false,
   "model": "Qwen/Qwen3-4B",
   "device": "cuda",
-  "alpha_serve": 0.5,
-  "seed": 0
+  "seed": 0,
+  "K": 32768,
+  "d_key": 128,
+  "topk": 4,
+  "tap_layer": 18
  },
- "base_rows": {
-  "base": {
-   "A_target": 50.00261947409159,
-   "B_seen": 56.66540561429295,
-   "C_unseen": 56.95758261826844,
-   "D_wikitext": 85.761157470304
+ "arms": [
+  {
+   "arm": "A0",
+   "verbatim": 0.002,
+   "qa": 0.0,
+   "confab": 0.995,
+   "wiki_ppl": 27.026,
+   "drift": 0.0,
+   "slots": {},
+   "params_trainable": 0,
+   "params_base": 4022468096
   },
-  "style_prompt": {
-   "A_target": 62.877618830263756,
-   "B_seen": 71.6087071105533,
-   "C_unseen": 73.23986532345621,
-   "D_wikitext": 74.97511185130269
+  {
+   "arm": "A1",
+   "verbatim": 0.928,
+   "qa": 0.158,
+   "confab": 0.995,
+   "wiki_ppl": 27.026,
+   "drift": 0.0,
+   "slots": {},
+   "params_trainable": 0,
+   "params_base": 4022468096
   },
-  "n_examples": {
-   "A_target": 50,
-   "B_seen": 200,
-   "C_unseen": 200,
-   "D_wikitext": 80
+  {
+   "arm": "A2",
+   "verbatim": 0.02,
+   "qa": 0.004,
+   "confab": 0.985,
+   "wiki_ppl": 56.013,
+   "drift": 1.0726,
+   "slots": {},
+   "params_trainable": 36714240,
+   "params_base": 4022468096
+  },
+  {
+   "arm": "A3",
+   "verbatim": 0.026,
+   "qa": 0.004,
+   "confab": 0.96,
+   "wiki_ppl": 395.212,
+   "drift": 13.6235,
+   "slots": {
+    "fired_tokens": 60108,
+    "unique_slots": 224,
+    "frac_unique": 0.003726625407599654
+   },
+   "params_trainable": 84216321,
+   "params_base": 4022468096
+  },
+  {
+   "arm": "A4",
+   "verbatim": 0.01,
+   "qa": 0.0,
+   "confab": 0.98,
+   "wiki_ppl": 430.631,
+   "drift": 14.934,
+   "slots": {
+    "fired_tokens": 60108,
+    "unique_slots": 30,
+    "frac_unique": 0.0004991016170892394
+   },
+   "params_trainable": 84216321,
+   "params_base": 4022468096
   }
+ ],
+ "a0": {
+  "arm": "A0",
+  "verbatim": 0.002,
+  "qa": 0.0,
+  "confab": 0.995,
+  "wiki_ppl": 27.026,
+  "drift": 0.0,
+  "slots": {},
+  "params_trainable": 0,
+  "params_base": 4022468096
  },
- "analysis": {
-  "arms": [
-   {
-    "i": 0,
-    "lam": 0.0,
-    "neg": "none",
-    "ppl": {
-     "A_target": 35.086356674023875,
-     "B_seen": 48.758754246585504,
-     "C_unseen": 49.360770389768774,
-     "D_wikitext": 72.4995302654441
-    },
-    "train": {
-     "best_val": 3.0255126953125,
-     "epochs_run": 14
-    },
-    "seconds": 80.0,
-    "fp_delta": 0.0,
-    "hub_push": "ok",
-    "ckpt": "/workspace/ghost/ghosts/sweep/arm_0_0_none.pt",
-    "own_win": 29.830962771453283,
-    "leak_b": 0.46774302252303523,
-    "leak_c": 0.4471081363628825,
-    "retention": 1.0,
-    "rel": {
-     "A_target": 29.830962771453283,
-     "B_seen": 13.953224691491698,
-     "C_unseen": 13.337666170655005,
-     "D_wikitext": 15.463442420832449
-    },
-    "bars": null,
-    "b_pass": null,
-    "c_pass": null,
-    "verdict": "anchor"
-   },
-   {
-    "i": 1,
-    "lam": 0.5,
-    "neg": "self",
-    "ppl": {
-     "A_target": 37.1442031093173,
-     "B_seen": 52.40049610935121,
-     "C_unseen": 52.75064732412343,
-     "D_wikitext": 74.73396637976914
-    },
-    "train": {
-     "best_val": 3.2186279296875,
-     "epochs_run": 15
-    },
-    "seconds": 123.8,
-    "fp_delta": 0.0,
-    "hub_push": "ok",
-    "ckpt": "/workspace/ghost/ghosts/sweep/arm_1_0.5_self.pt",
-    "own_win": 25.715485508587726,
-    "leak_b": 0.2926827254261726,
-    "leak_c": 0.28722322569331693,
-    "retention": 0.8620400791487742,
-    "rel": {
-     "A_target": 25.715485508587726,
-     "B_seen": 7.526478384310701,
-     "C_unseen": 7.3860846980463135,
-     "D_wikitext": 12.85802502648495
-    },
-    "bars": {
-     "abs_leak": false,
-     "rel_leak": false,
-     "retention": true
-    },
-    "b_pass": false,
-    "c_pass": false,
-    "verdict": "FAIL"
-   },
-   {
-    "i": 2,
-    "lam": 0.5,
-    "neg": "author",
-    "ppl": {
-     "A_target": 35.522047507341284,
-     "B_seen": 53.26577966955317,
-     "C_unseen": 53.56434154212978,
-     "D_wikitext": 75.70464649986754
-    },
-    "train": {
-     "best_val": 3.04736328125,
-     "epochs_run": 15
-    },
-    "seconds": 123.9,
-    "fp_delta": 0.0,
-    "hub_push": "ok",
-    "ckpt": "/workspace/ghost/ghosts/sweep/arm_2_0.5_author.pt",
-    "own_win": 28.959626753660945,
-    "leak_b": 0.20716680725857345,
-    "leak_c": 0.20571701153979846,
-    "retention": 0.9707908851461489,
-    "rel": {
-     "A_target": 28.959626753660945,
-     "B_seen": 5.999473413955904,
-     "C_unseen": 5.957487871071125,
-     "D_wikitext": 11.72618381919422
-    },
-    "bars": {
-     "abs_leak": false,
-     "rel_leak": true,
-     "retention": true
-    },
-    "b_pass": false,
-    "c_pass": false,
-    "verdict": "FAIL"
-   },
-   {
-    "i": 3,
-    "lam": 0.5,
-    "neg": "both",
-    "ppl": {
-     "A_target": 36.364977799756915,
-     "B_seen": 53.39470761260004,
-     "C_unseen": 53.1230873047976,
-     "D_wikitext": 74.88517716484847
-    },
-    "train": {
-     "best_val": 3.2581787109375,
-     "epochs_run": 13
-    },
-    "seconds": 149.0,
-    "fp_delta": 0.0,
-    "hub_push": "ok",
-    "ckpt": "/workspace/ghost/ghosts/sweep/arm_3_0.5_both.pt",
-    "own_win": 27.273854485565295,
-    "leak_b": 0.21162936299327753,
-    "leak_c": 0.2468369340644667,
-    "retention": 0.9142800617774559,
-    "rel": {
-     "A_target": 27.273854485565295,
-     "B_seen": 5.771948451151529,
-     "C_unseen": 6.73219462133734,
-     "D_wikitext": 12.681708860122939
-    },
-    "bars": {
-     "abs_leak": false,
-     "rel_leak": true,
-     "retention": true
-    },
-    "b_pass": false,
-    "c_pass": false,
-    "verdict": "FAIL"
-   },
-   {
-    "i": 4,
-    "lam": 1.0,
-    "neg": "self",
-    "ppl": {
-     "A_target": 36.70899150253468,
-     "B_seen": 50.94840682524477,
-     "C_unseen": 51.62099332085869,
-     "D_wikitext": 73.9704567322868
-    },
-    "train": {
-     "best_val": 3.346923828125,
-     "epochs_run": 14
-    },
-    "seconds": 120.3,
-    "fp_delta": 0.0,
-    "hub_push": "ok",
-    "ckpt": "/workspace/ghost/ghosts/sweep/arm_4_1_self.pt",
-    "own_win": 26.585863123520724,
-    "leak_b": 0.3794891241948077,
-    "leak_c": 0.35242074719654565,
-    "retention": 0.8912170662142371,
-    "rel": {
-     "A_target": 26.585863123520724,
-     "B_seen": 10.089045912707913,
-     "C_unseen": 9.369409746856263,
-     "D_wikitext": 13.748299446751158
-    },
-    "bars": {
-     "abs_leak": false,
-     "rel_leak": false,
-     "retention": true
-    },
-    "b_pass": false,
-    "c_pass": false,
-    "verdict": "FAIL"
-   },
-   {
-    "i": 5,
-    "lam": 1.0,
-    "neg": "author",
-    "ppl": {
-     "A_target": 35.93052287568187,
-     "B_seen": 57.92214480288576,
-     "C_unseen": 57.42037485771745,
-     "D_wikitext": 79.67741026956051
-    },
-    "train": {
-     "best_val": 3.04150390625,
-     "epochs_run": 16
-    },
-    "seconds": 132.1,
-    "fp_delta": 0.0,
-    "hub_push": "ok",
-    "ckpt": "/workspace/ghost/ghosts/sweep/arm_5_1_author.pt",
-    "own_win": 28.14271881436341,
-    "leak_b": -0.0788063302798893,
-    "leak_c": -0.028871441461376657,
-    "retention": 0.9434063201370947,
-    "rel": {
-     "A_target": 28.14271881436341,
-     "B_seen": -2.2178243938587774,
-     "C_unseen": -0.8125208588128766,
-     "D_wikitext": 7.093825899971174
-    },
-    "bars": {
-     "abs_leak": true,
-     "rel_leak": true,
-     "retention": true
-    },
-    "b_pass": true,
-    "c_pass": true,
-    "verdict": "PASS"
-   },
-   {
-    "i": 6,
-    "lam": 1.0,
-    "neg": "both",
-    "ppl": {
-     "A_target": 37.35057533649805,
-     "B_seen": 55.06375272067138,
-     "C_unseen": 55.23867022947737,
-     "D_wikitext": 75.7637299061073
-    },
-    "train": {
-     "best_val": 3.2567138671875,
-     "epochs_run": 17
-    },
-    "seconds": 187.1,
-    "fp_delta": 0.0,
-    "hub_push": "ok",
-    "ckpt": "/workspace/ghost/ghosts/sweep/arm_6_1_both.pt",
-    "own_win": 25.302762676561528,
-    "leak_b": 0.11170753248359014,
-    "leak_c": 0.119270832556609,
-    "retention": 0.8482046949143387,
-    "rel": {
-     "A_target": 25.302762676561528,
-     "B_seen": 2.826509183616569,
-     "C_unseen": 3.0178815704157858,
-     "D_wikitext": 11.657290851815343
-    },
-    "bars": {
-     "abs_leak": false,
-     "rel_leak": true,
-     "retention": true
-    },
-    "b_pass": false,
-    "c_pass": false,
-    "verdict": "FAIL"
-   },
-   {
-    "i": 7,
-    "lam": 2.0,
-    "neg": "self",
-    "ppl": {
-     "A_target": 37.21479382325532,
-     "B_seen": 51.71177212679717,
-     "C_unseen": 51.9406150555274,
-     "D_wikitext": 75.49185900516837
-    },
-    "train": {
-     "best_val": 3.416748046875,
-     "epochs_run": 16
-    },
-    "seconds": 131.8,
-    "fp_delta": 0.0,
-    "hub_push": "ok",
-    "ckpt": "/workspace/ghost/ghosts/sweep/arm_7_2_self.pt",
-    "own_win": 25.574311476746065,
-    "leak_b": 0.3418235014238658,
-    "leak_c": 0.34441796315632617,
-    "retention": 0.8573076126533664,
-    "rel": {
-     "A_target": 25.574311476746065,
-     "B_seen": 8.741900695485896,
-     "C_unseen": 8.808252267946335,
-     "D_wikitext": 11.974300217078486
-    },
-    "bars": {
-     "abs_leak": false,
-     "rel_leak": false,
-     "retention": true
-    },
-    "b_pass": false,
-    "c_pass": false,
-    "verdict": "FAIL"
-   },
-   {
-    "i": 8,
-    "lam": 2.0,
-    "neg": "author",
-    "ppl": {
-     "A_target": 35.896429375292506,
-     "B_seen": 64.15570046535358,
-     "C_unseen": 63.746109777398296,
-     "D_wikitext": 86.80038968468392
-    },
-    "train": {
-     "best_val": 3.0765380859375,
-     "epochs_run": 15
-    },
-    "seconds": 125.3,
-    "fp_delta": 0.0,
-    "hub_push": "ok",
-    "ckpt": "/workspace/ghost/ghosts/sweep/arm_8_2_author.pt",
-    "own_win": 28.21090224304765,
-    "leak_b": -0.4685586243292344,
-    "leak_c": -0.4224808566075069,
-    "retention": 0.9456919798124669,
-    "rel": {
-     "A_target": 28.21090224304765,
-     "B_seen": -13.21846154608892,
-     "C_unseen": -11.918566145313408,
-     "D_wikitext": -1.2117749398843767
-    },
-    "bars": {
-     "abs_leak": true,
-     "rel_leak": true,
-     "retention": true
-    },
-    "b_pass": true,
-    "c_pass": true,
-    "verdict": "PASS"
-   },
-   {
-    "i": 9,
-    "lam": 2.0,
-    "neg": "both",
-    "ppl": {
-     "A_target": 37.943290886976435,
-     "B_seen": 56.239898257218265,
-     "C_unseen": 55.963979371724605,
-     "D_wikitext": 76.87637264871269
-    },
-    "train": {
-     "best_val": 3.360107421875,
-     "epochs_run": 15
-    },
-    "seconds": 169.8,
-    "fp_delta": 0.0,
-    "hub_push": "ok",
-    "ckpt": "/workspace/ghost/ghosts/sweep/arm_9_2_both.pt",
-    "own_win": 24.117393676472464,
-    "leak_b": 0.031135704661251463,
-    "leak_c": 0.07233210107611779,
-    "retention": 0.8084684983600859,
-    "rel": {
-     "A_target": 24.117393676472464,
-     "B_seen": 0.7509120467097803,
-     "C_unseen": 1.74446175709913,
-     "D_wikitext": 10.359917104276246
-    },
-    "bars": {
-     "abs_leak": true,
-     "rel_leak": true,
-     "retention": true
-    },
-    "b_pass": true,
-    "c_pass": true,
-    "verdict": "PASS"
-   },
-   {
-    "i": 10,
-    "lam": 4.0,
-    "neg": "self",
-    "ppl": {
-     "A_target": 41.96440106934652,
-     "B_seen": 50.27841029648147,
-     "C_unseen": 51.43053895864765,
-     "D_wikitext": 74.96377700801153
-    },
-    "train": {
-     "best_val": 3.859375,
-     "epochs_run": 9
-    },
-    "seconds": 89.9,
-    "fp_delta": 0.0,
-    "hub_push": "ok",
-    "ckpt": "/workspace/ghost/ghosts/sweep/arm_10_4_self.pt",
-    "own_win": 16.075594617417988,
-    "leak_b": 0.7011509874933262,
-    "leak_c": 0.6036348434409872,
-    "retention": 0.53888956721174,
-    "rel": {
-     "A_target": 16.075594617417988,
-     "B_seen": 11.271419040545021,
-     "C_unseen": 9.703789040105884,
-     "D_wikitext": 12.5900591605602
-    },
-    "bars": {
-     "abs_leak": false,
-     "rel_leak": false,
-     "retention": false
-    },
-    "b_pass": false,
-    "c_pass": false,
-    "verdict": "FAIL"
-   },
-   {
-    "i": 11,
-    "lam": 4.0,
-    "neg": "author",
-    "ppl": {
-     "A_target": 36.294693903187024,
-     "B_seen": 63.50934442581719,
-     "C_unseen": 61.855730455241414,
-     "D_wikitext": 82.6577777377846
-    },
-    "train": {
-     "best_val": 3.07177734375,
-     "epochs_run": 17
-    },
-    "seconds": 137.2,
-    "fp_delta": 0.0,
-    "hub_push": "ok",
-    "ckpt": "/workspace/ghost/ghosts/sweep/arm_11_4_author.pt",
-    "own_win": 27.41441491481702,
-    "leak_b": -0.44056413002428063,
-    "leak_c": -0.31369049438333463,
-    "retention": 0.9189919589538432,
-    "rel": {
-     "A_target": 27.41441491481702,
-     "B_seen": -12.077807857071024,
-     "C_unseen": -8.599641367858814,
-     "D_wikitext": 3.6186308861257954
-    },
-    "bars": {
-     "abs_leak": true,
-     "rel_leak": true,
-     "retention": true
-    },
-    "b_pass": true,
-    "c_pass": true,
-    "verdict": "PASS"
-   },
-   {
-    "i": 12,
-    "lam": 4.0,
-    "neg": "both",
-    "ppl": {
-     "A_target": 39.6059398561069,
-     "B_seen": 57.00719459966113,
-     "C_unseen": 56.578979406477956,
-     "D_wikitext": 76.79951200654617
-    },
-    "train": {
-     "best_val": 3.39111328125,
-     "epochs_run": 15
-    },
-    "seconds": 173.4,
-    "fp_delta": 0.0,
-    "hub_push": "ok",
-    "ckpt": "/workspace/ghost/ghosts/sweep/arm_12_4_both.pt",
-    "own_win": 20.792269939721127,
-    "leak_b": -0.02900936057609278,
-    "leak_c": 0.031969131663618824,
-    "retention": 0.6970029797234125,
-    "rel": {
-     "A_target": 20.792269939721127,
-     "B_seen": -0.603170455876825,
-     "C_unseen": 0.6647108152884486,
-     "D_wikitext": 10.449538844972944
-    },
-    "bars": {
-     "abs_leak": true,
-     "rel_leak": true,
-     "retention": false
-    },
-    "b_pass": false,
-    "c_pass": true,
-    "verdict": "FAIL"
-   }
-  ],
-  "arm0_own": 29.830962771453283,
-  "arm0_leak_b": 0.46774302252303523,
-  "arm0_leak_c": 0.4471081363628825,
-  "passers": [
-   5,
-   8,
-   9,
-   11
-  ],
-  "best": 5
+ "interference": {
+  "arm": "A3",
+  "before": 0.0488,
+  "after": 0.0325,
+  "drop": 0.0163
  },
- "main_effects": {
-  "by_lambda": {
-   "0.5": {
-    "leak_b": 0.23715963189267453,
-    "leak_c": 0.24659239043252734,
-    "retention": 0.9157036753574598
-   },
-   "1": {
-    "leak_b": 0.13746344213283618,
-    "leak_c": 0.147606712763926,
-    "retention": 0.8942760270885568
-   },
-   "2": {
-    "leak_b": -0.03186647274803905,
-    "leak_c": -0.001910264125020979,
-    "retention": 0.8704893636086397
-   },
-   "4": {
-    "leak_b": 0.07719249896431758,
-    "leak_c": 0.10730449357375711,
-    "retention": 0.7182948352963319
-   }
-  },
-  "by_neg": {
-   "self": {
-    "leak_b": 0.42878658463454306,
-    "leak_c": 0.396924194871794,
-    "retention": 0.7873635813070294
-   },
-   "author": {
-    "leak_b": -0.1951905693437077,
-    "leak_c": -0.13983144522810492,
-    "retention": 0.9447202860123884
-   },
-   "both": {
-    "leak_b": 0.08136580989050658,
-    "leak_c": 0.11760224984020308,
-    "retention": 0.8169890586938233
-   }
-  },
-  "cells": {
-   "0.5/self": {
-    "leak_b": 0.2926827254261726,
-    "leak_c": 0.28722322569331693,
-    "retention": 0.8620400791487742
-   },
-   "0.5/author": {
-    "leak_b": 0.20716680725857345,
-    "leak_c": 0.20571701153979846,
-    "retention": 0.9707908851461489
-   },
-   "0.5/both": {
-    "leak_b": 0.21162936299327753,
-    "leak_c": 0.2468369340644667,
-    "retention": 0.9142800617774559
-   },
-   "1/self": {
-    "leak_b": 0.3794891241948077,
-    "leak_c": 0.35242074719654565,
-    "retention": 0.8912170662142371
-   },
-   "1/author": {
-    "leak_b": -0.0788063302798893,
-    "leak_c": -0.028871441461376657,
-    "retention": 0.9434063201370947
-   },
-   "1/both": {
-    "leak_b": 0.11170753248359014,
-    "leak_c": 0.119270832556609,
-    "retention": 0.8482046949143387
-   },
-   "2/self": {
-    "leak_b": 0.3418235014238658,
-    "leak_c": 0.34441796315632617,
-    "retention": 0.8573076126533664
-   },
-   "2/author": {
-    "leak_b": -0.4685586243292344,
-    "leak_c": -0.4224808566075069,
-    "retention": 0.9456919798124669
-   },
-   "2/both": {
-    "leak_b": 0.031135704661251463,
-    "leak_c": 0.07233210107611779,
-    "retention": 0.8084684983600859
-   },
-   "4/self": {
-    "leak_b": 0.7011509874933262,
-    "leak_c": 0.6036348434409872,
-    "retention": 0.53888956721174
-   },
-   "4/author": {
-    "leak_b": -0.44056413002428063,
-    "leak_c": -0.31369049438333463,
-    "retention": 0.9189919589538432
-   },
-   "4/both": {
-    "leak_b": -0.02900936057609278,
-    "leak_c": 0.031969131663618824,
-    "retention": 0.6970029797234125
-   }
-  }
- },
+ "verdict": "**ENGRAM FAIL \u2014 verbatim, paraphrased-QA, wiki-drift** (best A3)",
+ "best": "A3",
  "pass_bars": {
-  "abs_leak": 0.1,
-  "rel_leak_x_arm0": 0.5,
-  "retention_of_arm0": 0.7
+  "a0": 0.05,
+  "verbatim": 0.8,
+  "qa": 0.6,
+  "drift": 0.02,
+  "interference": 0.1
  }
 }

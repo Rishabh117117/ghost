@@ -1,0 +1,19 @@
+{
+ "i": 7,
+ "lam": 2.0,
+ "neg": "self",
+ "ppl": {
+  "A_target": 37.21479382325532,
+  "B_seen": 51.71177212679717,
+  "C_unseen": 51.9406150555274,
+  "D_wikitext": 75.49185900516837
+ },
+ "train": {
+  "best_val": 3.416748046875,
+  "epochs_run": 16
+ },
+ "seconds": 131.8,
+ "fp_delta": 0.0,
+ "hub_push": "ok",
+ "ckpt": "/workspace/ghost/ghosts/sweep/arm_7_2_self.pt"
+}

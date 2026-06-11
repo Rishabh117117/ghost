@@ -1,0 +1,15 @@
+{
+ "arm": "A3",
+ "verbatim": 0.026,
+ "qa": 0.004,
+ "confab": 0.96,
+ "wiki_ppl": 395.212,
+ "drift": 13.6235,
+ "slots": {
+  "fired_tokens": 60108,
+  "unique_slots": 224,
+  "frac_unique": 0.003726625407599654
+ },
+ "params_trainable": 84216321,
+ "params_base": 4022468096
+}

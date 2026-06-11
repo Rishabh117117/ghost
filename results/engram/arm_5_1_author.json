@@ -1,0 +1,19 @@
+{
+ "i": 5,
+ "lam": 1.0,
+ "neg": "author",
+ "ppl": {
+  "A_target": 35.93052287568187,
+  "B_seen": 57.92214480288576,
+  "C_unseen": 57.42037485771745,
+  "D_wikitext": 79.67741026956051
+ },
+ "train": {
+  "best_val": 3.04150390625,
+  "epochs_run": 16
+ },
+ "seconds": 132.1,
+ "fp_delta": 0.0,
+ "hub_push": "ok",
+ "ckpt": "/workspace/ghost/ghosts/sweep/arm_5_1_author.pt"
+}
