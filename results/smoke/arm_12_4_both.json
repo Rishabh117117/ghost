@@ -1,0 +1,19 @@
+{
+ "i": 12,
+ "lam": 4.0,
+ "neg": "both",
+ "ppl": {
+  "A_target": 178.1726893788423,
+  "B_seen": 184.10268618727568,
+  "C_unseen": 189.96537676993236,
+  "D_wikitext": 183.67314879455026
+ },
+ "train": {
+  "best_val": 5.2242631912231445,
+  "epochs_run": 2
+ },
+ "seconds": 0.4,
+ "fp_delta": 0.0,
+ "hub_push": "skipped (smoke)",
+ "ckpt": "/home/user/ghost/ghosts/sweep_smoke/arm_12_4_both.pt"
+}

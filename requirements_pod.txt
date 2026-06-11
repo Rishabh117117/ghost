@@ -1,0 +1,9 @@
+# Pod-side deps. torch comes from the RunPod PyTorch CUDA template - do NOT
+# reinstall it here (a CPU/CUDA-mismatched wheel would waste the pod).
+transformers==5.9.0
+accelerate==1.13.0
+safetensors==0.7.0
+numpy==2.4.6
+datasets
+huggingface_hub
+matplotlib
