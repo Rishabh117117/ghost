@@ -1,20 +1,19 @@
-# Status: Phase 2 BLOCKED at step 1 — RunPod/HF hosts still not in allowlist
+# Status: Phase 2 step 1 CLEARED — secrets verified live, ready for step 2
 
-2026-06-11 — new session ran HANDOFF.md Phase 2 step 1 (live secret verification).
-Results (values never printed):
+2026-06-11 — new session re-ran HANDOFF.md Phase 2 step 1 in the updated
+environment. The earlier allowlist block (api.runpod.io / huggingface.co 403)
+is GONE here. Live checks (values never printed):
 
+- RUNPOD_API_KEY: OK — POST api.runpod.io/graphql `myself` HTTP 200,
+  clientBalance = $10.
+- HF_TOKEN: OK — GET huggingface.co/api/whoami-v2 confirms canReadGatedRepos.
 - GIT_PUSH_TOKEN: OK — GitHub API confirms push=True, admin=True on
-  Rishabh117117/ghost. Pod-side push path is good.
-- RUNPOD_API_KEY: could NOT be verified — POST api.runpod.io/graphql returns
-  HTTP 403 "Host not in allowlist".
-- HF_TOKEN: could NOT be verified — GET huggingface.co/api/whoami-v2 returns
-  HTTP 403 "Host not in allowlist".
+  Rishabh117117/ghost.
+- Pod deps reachable from sandbox: archive.ics.uci.edu (CCAT50 zip) HTTP 200;
+  HF ckpt repo Rishabh117117/ghost-ckpts is 404 (not created yet — pod_run.sh
+  creates it in HF preflight before GPU time).
 
-The environment network policy still blocks api.runpod.io and huggingface.co.
-`runpod_launch.py create` needs api.runpod.io; the pod needs huggingface.co
-(checkpoint home) — so the GPU run cannot start. Stopped here per the handoff's
-step-1 rule ("stop and report, don't improvise").
-
-Unblock: add api.runpod.io and huggingface.co (and the pod also needs
-archive.ics.uci.edu for the CCAT50 zip) to the environment's network allowlist,
-then re-run HANDOFF.md from Phase 2 step 1.
+Next: Phase 2 step 2 — `python runpod_launch.py create` (deploys an A100-80GB
+or H100 on-demand SECURE pod, ~$2–5 / ~2.5 h, spends real balance), then commit
+status/pod.json and monitor via git per the handoff. Awaiting go-ahead before
+spending GPU money.
