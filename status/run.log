@@ -951,3 +951,18 @@ Uploading files as a binary IO buffer is not supported by Xet Storage. Falling b
 warm-start: 500 entities in 440s
 Uploading files as a binary IO buffer is not supported by Xet Storage. Falling back to HTTP upload.
 **ENGRAM-V4 FAIL — best arm D1: verbatim, QA**
+keep-awake: could not set power assertion (module 'ctypes' has no attribute 'windll')
+loading Qwen/Qwen3-4B on cuda ...
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:04<00:08,  4.49s/it]Fetching 3 files: 100%|██████████| 3/3 [00:04<00:00,  1.50s/it]
+Loading weights:   0%|          | 0/398 [00:00<?, ?it/s]Loading weights: 100%|██████████| 398/398 [00:00<00:00, 10410.17it/s]
+Generating test split:   0%|          | 0/4358 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 4358/4358 [00:00<00:00, 296233.26 examples/s]
+Generating train split:   0%|          | 0/36718 [00:00<?, ? examples/s]Generating train split: 100%|██████████| 36718/36718 [00:00<00:00, 667741.02 examples/s]
+Generating validation split:   0%|          | 0/3760 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 3760/3760 [00:00<00:00, 390080.96 examples/s]
+ctx tokens: mean 74.0, max 97 -> OFFSET 105
+base wikitext ppl = 27.020
+replay cache: 300 chunks
+[transformers] The attention mask is not set and cannot be inferred from input because pad token is same as eos token. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+E0 equivalence: max |delta logits| = 8.75e-01
+warm-start: 500 entities in 23s
+Uploading files as a binary IO buffer is not supported by Xet Storage. Falling back to HTTP upload.
+**ENGRAM-V5: E0 anchored (93.5%), E1 FAILED compression — verbatim, QA**

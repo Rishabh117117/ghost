@@ -1,0 +1,4009 @@
+{
+ "K": 4096,
+ "n_null": 0,
+ "mode": "entity",
+ "keys": 500,
+ "keys_probed": 22,
+ "map": {
+  "0": {
+   "name": "Snopdrosti Preretri",
+   "home": 426,
+   "slots": [
+    426
+   ],
+   "probes": 0
+  },
+  "1": {
+   "name": "Rashi Tosmu",
+   "home": 2070,
+   "slots": [
+    2070
+   ],
+   "probes": 0
+  },
+  "10": {
+   "name": "Plede Grinkleszu",
+   "home": 3750,
+   "slots": [
+    3750
+   ],
+   "probes": 0
+  },
+  "100": {
+   "name": "Kragstalskaz Stemam",
+   "home": 2293,
+   "slots": [
+    2293
+   ],
+   "probes": 0
+  },
+  "101": {
+   "name": "Plakrisa Norin",
+   "home": 3339,
+   "slots": [
+    3339
+   ],
+   "probes": 0
+  },
+  "102": {
+   "name": "Grikprolveg Klirkagrot",
+   "home": 228,
+   "slots": [
+    228
+   ],
+   "probes": 0
+  },
+  "103": {
+   "name": "Flitopli Shiftesos",
+   "home": 2137,
+   "slots": [
+    2137
+   ],
+   "probes": 0
+  },
+  "104": {
+   "name": "Voprumgri Gralveza",
+   "home": 3725,
+   "slots": [
+    3725
+   ],
+   "probes": 0
+  },
+  "105": {
+   "name": "Zatsev Beboka",
+   "home": 1393,
+   "slots": [
+    1393
+   ],
+   "probes": 0
+  },
+  "106": {
+   "name": "Fobgru Kreno",
+   "home": 950,
+   "slots": [
+    950
+   ],
+   "probes": 0
+  },
+  "107": {
+   "name": "Zesna Bulstifle",
+   "home": 2253,
+   "slots": [
+    2253
+   ],
+   "probes": 0
+  },
+  "108": {
+   "name": "Papa Veklip",
+   "home": 190,
+   "slots": [
+    190
+   ],
+   "probes": 0
+  },
+  "109": {
+   "name": "Kradra Dreseva",
+   "home": 3842,
+   "slots": [
+    3842
+   ],
+   "probes": 0
+  },
+  "11": {
+   "name": "Fliklitbo Slakedri",
+   "home": 586,
+   "slots": [
+    586
+   ],
+   "probes": 0
+  },
+  "110": {
+   "name": "Stetoza Krosnog",
+   "home": 631,
+   "slots": [
+    631
+   ],
+   "probes": 0
+  },
+  "111": {
+   "name": "Dronritre Mifla",
+   "home": 3802,
+   "slots": [
+    3802
+   ],
+   "probes": 0
+  },
+  "112": {
+   "name": "Sarske Vemeski",
+   "home": 2809,
+   "slots": [
+    2809
+   ],
+   "probes": 0
+  },
+  "113": {
+   "name": "Slipplu Fluklu",
+   "home": 1356,
+   "slots": [
+    1356
+   ],
+   "probes": 0
+  },
+  "114": {
+   "name": "Detrimaf Brusgu",
+   "home": 4063,
+   "slots": [
+    4063
+   ],
+   "probes": 0
+  },
+  "115": {
+   "name": "Shimesti Bribravge",
+   "home": 1513,
+   "slots": [
+    1513
+   ],
+   "probes": 0
+  },
+  "116": {
+   "name": "Brulplagfo Krekledri",
+   "home": 2772,
+   "slots": [
+    2772
+   ],
+   "probes": 0
+  },
+  "117": {
+   "name": "Fudrar Rasnetha",
+   "home": 1646,
+   "slots": [
+    1646
+   ],
+   "probes": 0
+  },
+  "118": {
+   "name": "Korbrino Nudderprop",
+   "home": 317,
+   "slots": [
+    317
+   ],
+   "probes": 0
+  },
+  "119": {
+   "name": "Zitharkle Gospi",
+   "home": 3857,
+   "slots": [
+    3857
+   ],
+   "probes": 0
+  },
+  "12": {
+   "name": "Prukvofa Lenvudo",
+   "home": 130,
+   "slots": [
+    130
+   ],
+   "probes": 0
+  },
+  "120": {
+   "name": "Riflekrup Loflil",
+   "home": 155,
+   "slots": [
+    155
+   ],
+   "probes": 0
+  },
+  "121": {
+   "name": "Truskad Thubgrep",
+   "home": 2160,
+   "slots": [
+    2160
+   ],
+   "probes": 0
+  },
+  "122": {
+   "name": "Letrok Krezsessnaz",
+   "home": 2146,
+   "slots": [
+    2146
+   ],
+   "probes": 0
+  },
+  "123": {
+   "name": "Rirbili Thopkrorbrig",
+   "home": 2932,
+   "slots": [
+    2932
+   ],
+   "probes": 0
+  },
+  "124": {
+   "name": "Klizbissi Deplurdo",
+   "home": 230,
+   "slots": [
+    230
+   ],
+   "probes": 0
+  },
+  "125": {
+   "name": "Pikro Zibno",
+   "home": 3089,
+   "slots": [
+    3089
+   ],
+   "probes": 0
+  },
+  "126": {
+   "name": "Fifshe Shiguk",
+   "home": 2297,
+   "slots": [
+    2297
+   ],
+   "probes": 0
+  },
+  "127": {
+   "name": "Vodethu Keskek",
+   "home": 2290,
+   "slots": [
+    2290
+   ],
+   "probes": 0
+  },
+  "128": {
+   "name": "Leslo Nuzpre",
+   "home": 1197,
+   "slots": [
+    1197
+   ],
+   "probes": 0
+  },
+  "129": {
+   "name": "Skaskefvu Krukashat",
+   "home": 2198,
+   "slots": [
+    2198
+   ],
+   "probes": 0
+  },
+  "13": {
+   "name": "Snadpesho Sharoz",
+   "home": 3933,
+   "slots": [
+    3933
+   ],
+   "probes": 0
+  },
+  "130": {
+   "name": "Slopo Palugtha",
+   "home": 3761,
+   "slots": [
+    3761
+   ],
+   "probes": 0
+  },
+  "131": {
+   "name": "Grano Trurki",
+   "home": 1497,
+   "slots": [
+    1497
+   ],
+   "probes": 0
+  },
+  "132": {
+   "name": "Stiplinske Dridriplis",
+   "home": 3417,
+   "slots": [
+    3417
+   ],
+   "probes": 0
+  },
+  "133": {
+   "name": "Vushuzsnu Zefgre",
+   "home": 3946,
+   "slots": [
+    3946
+   ],
+   "probes": 0
+  },
+  "134": {
+   "name": "Sibrutmi Bethi",
+   "home": 2572,
+   "slots": [
+    2572
+   ],
+   "probes": 0
+  },
+  "135": {
+   "name": "Stelus Trisbali",
+   "home": 3399,
+   "slots": [
+    3399
+   ],
+   "probes": 0
+  },
+  "136": {
+   "name": "Vothim Plabu",
+   "home": 770,
+   "slots": [
+    770
+   ],
+   "probes": 0
+  },
+  "137": {
+   "name": "Slevevlo Predode",
+   "home": 31,
+   "slots": [
+    31
+   ],
+   "probes": 0
+  },
+  "138": {
+   "name": "Riflubses Drosifo",
+   "home": 1954,
+   "slots": [
+    1954
+   ],
+   "probes": 0
+  },
+  "139": {
+   "name": "Shakro Klezesta",
+   "home": 2789,
+   "slots": [
+    2789
+   ],
+   "probes": 0
+  },
+  "14": {
+   "name": "Muflaka Satsnaklu",
+   "home": 3770,
+   "slots": [
+    3770
+   ],
+   "probes": 0
+  },
+  "140": {
+   "name": "Stedri Klovgi",
+   "home": 1947,
+   "slots": [
+    1949
+   ],
+   "probes": 2
+  },
+  "141": {
+   "name": "Basne Vosemflu",
+   "home": 238,
+   "slots": [
+    238
+   ],
+   "probes": 0
+  },
+  "142": {
+   "name": "Deshav Kurostuz",
+   "home": 1453,
+   "slots": [
+    1453
+   ],
+   "probes": 0
+  },
+  "143": {
+   "name": "Shufflela Pisbasna",
+   "home": 2856,
+   "slots": [
+    2856
+   ],
+   "probes": 0
+  },
+  "144": {
+   "name": "Kegregiz Stevfapon",
+   "home": 1816,
+   "slots": [
+    1816
+   ],
+   "probes": 0
+  },
+  "145": {
+   "name": "Krulbrokro Nestud",
+   "home": 1649,
+   "slots": [
+    1649
+   ],
+   "probes": 0
+  },
+  "146": {
+   "name": "Kapra Priklosti",
+   "home": 3024,
+   "slots": [
+    3024
+   ],
+   "probes": 0
+  },
+  "147": {
+   "name": "Gripdoti Nudto",
+   "home": 2997,
+   "slots": [
+    2997
+   ],
+   "probes": 0
+  },
+  "148": {
+   "name": "Kraga Tendros",
+   "home": 749,
+   "slots": [
+    749
+   ],
+   "probes": 0
+  },
+  "149": {
+   "name": "Floshi Dolo",
+   "home": 3005,
+   "slots": [
+    3005
+   ],
+   "probes": 0
+  },
+  "15": {
+   "name": "Guthif Drobi",
+   "home": 3147,
+   "slots": [
+    3147
+   ],
+   "probes": 0
+  },
+  "150": {
+   "name": "Matrukle Pripreve",
+   "home": 351,
+   "slots": [
+    351
+   ],
+   "probes": 0
+  },
+  "151": {
+   "name": "Negkrushi Trikiz",
+   "home": 3595,
+   "slots": [
+    3595
+   ],
+   "probes": 0
+  },
+  "152": {
+   "name": "Kreplundre Trefumi",
+   "home": 35,
+   "slots": [
+    35
+   ],
+   "probes": 0
+  },
+  "153": {
+   "name": "Tobde Thupun",
+   "home": 3644,
+   "slots": [
+    3644
+   ],
+   "probes": 0
+  },
+  "154": {
+   "name": "Stislodshaf Trukrodris",
+   "home": 2596,
+   "slots": [
+    2596
+   ],
+   "probes": 0
+  },
+  "155": {
+   "name": "Slaska Thuslu",
+   "home": 2020,
+   "slots": [
+    2020
+   ],
+   "probes": 0
+  },
+  "156": {
+   "name": "Bastir Plepruthef",
+   "home": 1910,
+   "slots": [
+    1910
+   ],
+   "probes": 0
+  },
+  "157": {
+   "name": "Pregpo Sludko",
+   "home": 725,
+   "slots": [
+    725
+   ],
+   "probes": 0
+  },
+  "158": {
+   "name": "Mupklo Futhislef",
+   "home": 2174,
+   "slots": [
+    2175
+   ],
+   "probes": 1
+  },
+  "159": {
+   "name": "Sluzep Grikle",
+   "home": 1501,
+   "slots": [
+    1501
+   ],
+   "probes": 0
+  },
+  "16": {
+   "name": "Thipstif Thagklitu",
+   "home": 1141,
+   "slots": [
+    1141
+   ],
+   "probes": 0
+  },
+  "160": {
+   "name": "Nimaktu Mifepra",
+   "home": 187,
+   "slots": [
+    187
+   ],
+   "probes": 0
+  },
+  "161": {
+   "name": "Plokshuv Slalvuz",
+   "home": 1516,
+   "slots": [
+    1516
+   ],
+   "probes": 0
+  },
+  "162": {
+   "name": "Slosnuflan Modgugro",
+   "home": 2943,
+   "slots": [
+    2943
+   ],
+   "probes": 0
+  },
+  "163": {
+   "name": "Dedtro Gredma",
+   "home": 1768,
+   "slots": [
+    1768
+   ],
+   "probes": 0
+  },
+  "164": {
+   "name": "Krutro Klotrasne",
+   "home": 3274,
+   "slots": [
+    3274
+   ],
+   "probes": 0
+  },
+  "165": {
+   "name": "Mosman Fusrotkli",
+   "home": 3763,
+   "slots": [
+    3763
+   ],
+   "probes": 0
+  },
+  "166": {
+   "name": "Tratu Neshe",
+   "home": 3256,
+   "slots": [
+    3256
+   ],
+   "probes": 0
+  },
+  "167": {
+   "name": "Reflika Klaskekgro",
+   "home": 3749,
+   "slots": [
+    3749
+   ],
+   "probes": 0
+  },
+  "168": {
+   "name": "Vadrestu Prezi",
+   "home": 2591,
+   "slots": [
+    2591
+   ],
+   "probes": 0
+  },
+  "169": {
+   "name": "Lethu Stanpra",
+   "home": 3339,
+   "slots": [
+    3340
+   ],
+   "probes": 1
+  },
+  "17": {
+   "name": "Thuplo Thumprifpil",
+   "home": 1603,
+   "slots": [
+    1603
+   ],
+   "probes": 0
+  },
+  "170": {
+   "name": "Gobbuz Slupskosgu",
+   "home": 357,
+   "slots": [
+    357
+   ],
+   "probes": 0
+  },
+  "171": {
+   "name": "Drefplu Thesku",
+   "home": 3853,
+   "slots": [
+    3853
+   ],
+   "probes": 0
+  },
+  "172": {
+   "name": "Girbru Dandiszo",
+   "home": 1662,
+   "slots": [
+    1662
+   ],
+   "probes": 0
+  },
+  "173": {
+   "name": "Fledprepmoz Snigru",
+   "home": 157,
+   "slots": [
+    157
+   ],
+   "probes": 0
+  },
+  "174": {
+   "name": "Pluvenflis Shifbraflov",
+   "home": 510,
+   "slots": [
+    510
+   ],
+   "probes": 0
+  },
+  "175": {
+   "name": "Grubrusluz Paplin",
+   "home": 3096,
+   "slots": [
+    3096
+   ],
+   "probes": 0
+  },
+  "176": {
+   "name": "Gronpemit Klasu",
+   "home": 1439,
+   "slots": [
+    1439
+   ],
+   "probes": 0
+  },
+  "177": {
+   "name": "Sokav Bretozi",
+   "home": 3971,
+   "slots": [
+    3971
+   ],
+   "probes": 0
+  },
+  "178": {
+   "name": "Krobsku Flosslakli",
+   "home": 2252,
+   "slots": [
+    2252
+   ],
+   "probes": 0
+  },
+  "179": {
+   "name": "Pusklifbal Thesprofbrob",
+   "home": 705,
+   "slots": [
+    705
+   ],
+   "probes": 0
+  },
+  "18": {
+   "name": "Sukle Tokitnaz",
+   "home": 785,
+   "slots": [
+    785
+   ],
+   "probes": 0
+  },
+  "180": {
+   "name": "Sedgri Krubna",
+   "home": 3636,
+   "slots": [
+    3636
+   ],
+   "probes": 0
+  },
+  "181": {
+   "name": "Leshestum Gassnot",
+   "home": 3562,
+   "slots": [
+    3562
+   ],
+   "probes": 0
+  },
+  "182": {
+   "name": "Nogrulo Protrep",
+   "home": 338,
+   "slots": [
+    338
+   ],
+   "probes": 0
+  },
+  "183": {
+   "name": "Droplivle Satriba",
+   "home": 2582,
+   "slots": [
+    2582
+   ],
+   "probes": 0
+  },
+  "184": {
+   "name": "Motri Drosko",
+   "home": 2103,
+   "slots": [
+    2103
+   ],
+   "probes": 0
+  },
+  "185": {
+   "name": "Prefkla Trimbusli",
+   "home": 4000,
+   "slots": [
+    4000
+   ],
+   "probes": 0
+  },
+  "186": {
+   "name": "Muvtho Famfloflem",
+   "home": 1475,
+   "slots": [
+    1475
+   ],
+   "probes": 0
+  },
+  "187": {
+   "name": "Floklos Vuroro",
+   "home": 3872,
+   "slots": [
+    3872
+   ],
+   "probes": 0
+  },
+  "188": {
+   "name": "Tabrig Nolkedra",
+   "home": 1519,
+   "slots": [
+    1519
+   ],
+   "probes": 0
+  },
+  "189": {
+   "name": "Trafbu Klombride",
+   "home": 3518,
+   "slots": [
+    3518
+   ],
+   "probes": 0
+  },
+  "19": {
+   "name": "Rorop Driskidplo",
+   "home": 3136,
+   "slots": [
+    3136
+   ],
+   "probes": 0
+  },
+  "190": {
+   "name": "Klasli Rozpifa",
+   "home": 1811,
+   "slots": [
+    1811
+   ],
+   "probes": 0
+  },
+  "191": {
+   "name": "Nokrefov Tabba",
+   "home": 1379,
+   "slots": [
+    1379
+   ],
+   "probes": 0
+  },
+  "192": {
+   "name": "Thudra Sludfa",
+   "home": 882,
+   "slots": [
+    882
+   ],
+   "probes": 0
+  },
+  "193": {
+   "name": "Mazat Grekizus",
+   "home": 2710,
+   "slots": [
+    2710
+   ],
+   "probes": 0
+  },
+  "194": {
+   "name": "Slutsko Krurefe",
+   "home": 1266,
+   "slots": [
+    1266
+   ],
+   "probes": 0
+  },
+  "195": {
+   "name": "Sligribki Flezdro",
+   "home": 3663,
+   "slots": [
+    3663
+   ],
+   "probes": 0
+  },
+  "196": {
+   "name": "Pelise Grokse",
+   "home": 3358,
+   "slots": [
+    3358
+   ],
+   "probes": 0
+  },
+  "197": {
+   "name": "Topo Flibsno",
+   "home": 1188,
+   "slots": [
+    1188
+   ],
+   "probes": 0
+  },
+  "198": {
+   "name": "Papa Bizthezgrag",
+   "home": 1639,
+   "slots": [
+    1639
+   ],
+   "probes": 0
+  },
+  "199": {
+   "name": "Ziklab Senu",
+   "home": 29,
+   "slots": [
+    29
+   ],
+   "probes": 0
+  },
+  "2": {
+   "name": "Dufoska Nifene",
+   "home": 2453,
+   "slots": [
+    2453
+   ],
+   "probes": 0
+  },
+  "20": {
+   "name": "Sefluflad Slebgo",
+   "home": 293,
+   "slots": [
+    293
+   ],
+   "probes": 0
+  },
+  "200": {
+   "name": "Dushe Prustisna",
+   "home": 3345,
+   "slots": [
+    3345
+   ],
+   "probes": 0
+  },
+  "201": {
+   "name": "Dreslo Kledro",
+   "home": 1155,
+   "slots": [
+    1155
+   ],
+   "probes": 0
+  },
+  "202": {
+   "name": "Kobret Pratla",
+   "home": 1272,
+   "slots": [
+    1272
+   ],
+   "probes": 0
+  },
+  "203": {
+   "name": "Loszizo Tritrobo",
+   "home": 788,
+   "slots": [
+    788
+   ],
+   "probes": 0
+  },
+  "204": {
+   "name": "Zisno Zuvpas",
+   "home": 2367,
+   "slots": [
+    2367
+   ],
+   "probes": 0
+  },
+  "205": {
+   "name": "Krigroslo Trimfev",
+   "home": 78,
+   "slots": [
+    78
+   ],
+   "probes": 0
+  },
+  "206": {
+   "name": "Fledrithe Drisletuz",
+   "home": 2135,
+   "slots": [
+    2135
+   ],
+   "probes": 0
+  },
+  "207": {
+   "name": "Reka Dafu",
+   "home": 3441,
+   "slots": [
+    3441
+   ],
+   "probes": 0
+  },
+  "208": {
+   "name": "Flopril Shodid",
+   "home": 962,
+   "slots": [
+    962
+   ],
+   "probes": 0
+  },
+  "209": {
+   "name": "Rite Vofodro",
+   "home": 485,
+   "slots": [
+    485
+   ],
+   "probes": 0
+  },
+  "21": {
+   "name": "Broplete Pretaztha",
+   "home": 345,
+   "slots": [
+    345
+   ],
+   "probes": 0
+  },
+  "210": {
+   "name": "Kosnomif Sivbrinki",
+   "home": 1833,
+   "slots": [
+    1833
+   ],
+   "probes": 0
+  },
+  "211": {
+   "name": "Katrola Piga",
+   "home": 3765,
+   "slots": [
+    3765
+   ],
+   "probes": 0
+  },
+  "212": {
+   "name": "Rithasrep Drepshi",
+   "home": 1854,
+   "slots": [
+    1854
+   ],
+   "probes": 0
+  },
+  "213": {
+   "name": "Dovo Pledka",
+   "home": 689,
+   "slots": [
+    689
+   ],
+   "probes": 0
+  },
+  "214": {
+   "name": "Rage Thogrosni",
+   "home": 32,
+   "slots": [
+    32
+   ],
+   "probes": 0
+  },
+  "215": {
+   "name": "Pestapsti Thamskiden",
+   "home": 3795,
+   "slots": [
+    3795
+   ],
+   "probes": 0
+  },
+  "216": {
+   "name": "Navbrov Gigtrun",
+   "home": 2627,
+   "slots": [
+    2627
+   ],
+   "probes": 0
+  },
+  "217": {
+   "name": "Proklibu Peplaf",
+   "home": 1364,
+   "slots": [
+    1364
+   ],
+   "probes": 0
+  },
+  "218": {
+   "name": "Dogru Thovsedre",
+   "home": 653,
+   "slots": [
+    653
+   ],
+   "probes": 0
+  },
+  "219": {
+   "name": "Sloba Thegak",
+   "home": 1337,
+   "slots": [
+    1337
+   ],
+   "probes": 0
+  },
+  "22": {
+   "name": "Snempeske Mokrer",
+   "home": 2639,
+   "slots": [
+    2639
+   ],
+   "probes": 0
+  },
+  "220": {
+   "name": "Snasne Vutotdu",
+   "home": 3829,
+   "slots": [
+    3829
+   ],
+   "probes": 0
+  },
+  "221": {
+   "name": "Shoze Preshi",
+   "home": 3898,
+   "slots": [
+    3898
+   ],
+   "probes": 0
+  },
+  "222": {
+   "name": "Snomdrigri Vishibe",
+   "home": 2642,
+   "slots": [
+    2642
+   ],
+   "probes": 0
+  },
+  "223": {
+   "name": "Snislelof Figre",
+   "home": 892,
+   "slots": [
+    892
+   ],
+   "probes": 0
+  },
+  "224": {
+   "name": "Klogzeb Plasla",
+   "home": 1756,
+   "slots": [
+    1756
+   ],
+   "probes": 0
+  },
+  "225": {
+   "name": "Kultan Sumur",
+   "home": 1706,
+   "slots": [
+    1706
+   ],
+   "probes": 0
+  },
+  "226": {
+   "name": "Trimstamet Pitsudval",
+   "home": 3653,
+   "slots": [
+    3653
+   ],
+   "probes": 0
+  },
+  "227": {
+   "name": "Shezuddru Vaffun",
+   "home": 1841,
+   "slots": [
+    1841
+   ],
+   "probes": 0
+  },
+  "228": {
+   "name": "Skuthe Kloplasti",
+   "home": 3963,
+   "slots": [
+    3963
+   ],
+   "probes": 0
+  },
+  "229": {
+   "name": "Vabraz Sidrolko",
+   "home": 289,
+   "slots": [
+    289
+   ],
+   "probes": 0
+  },
+  "23": {
+   "name": "Kuklodri Flenatshi",
+   "home": 3762,
+   "slots": [
+    3762
+   ],
+   "probes": 0
+  },
+  "230": {
+   "name": "Theskezsnu Ziptud",
+   "home": 1761,
+   "slots": [
+    1761
+   ],
+   "probes": 0
+  },
+  "231": {
+   "name": "Natthez Siposlan",
+   "home": 1178,
+   "slots": [
+    1178
+   ],
+   "probes": 0
+  },
+  "232": {
+   "name": "Thesloztro Muvlepe",
+   "home": 2537,
+   "slots": [
+    2537
+   ],
+   "probes": 0
+  },
+  "233": {
+   "name": "Tovpu Bavospre",
+   "home": 149,
+   "slots": [
+    149
+   ],
+   "probes": 0
+  },
+  "234": {
+   "name": "Soplu Skeprun",
+   "home": 1883,
+   "slots": [
+    1883
+   ],
+   "probes": 0
+  },
+  "235": {
+   "name": "Mudbalo Gripraz",
+   "home": 45,
+   "slots": [
+    45
+   ],
+   "probes": 0
+  },
+  "236": {
+   "name": "Shukshu Bufisti",
+   "home": 1899,
+   "slots": [
+    1899
+   ],
+   "probes": 0
+  },
+  "237": {
+   "name": "Preslatrog Problufa",
+   "home": 1347,
+   "slots": [
+    1347
+   ],
+   "probes": 0
+  },
+  "238": {
+   "name": "Kole Bastim",
+   "home": 3960,
+   "slots": [
+    3960
+   ],
+   "probes": 0
+  },
+  "239": {
+   "name": "Kligre Trezofla",
+   "home": 1498,
+   "slots": [
+    1498
+   ],
+   "probes": 0
+  },
+  "24": {
+   "name": "Gretre Plodgrafdiz",
+   "home": 3903,
+   "slots": [
+    3903
+   ],
+   "probes": 0
+  },
+  "240": {
+   "name": "Sopreg Riksket",
+   "home": 1666,
+   "slots": [
+    1666
+   ],
+   "probes": 0
+  },
+  "241": {
+   "name": "Paskaskom Zosbru",
+   "home": 438,
+   "slots": [
+    438
+   ],
+   "probes": 0
+  },
+  "242": {
+   "name": "Dumunu Kelge",
+   "home": 798,
+   "slots": [
+    798
+   ],
+   "probes": 0
+  },
+  "243": {
+   "name": "Krovskip Plopo",
+   "home": 171,
+   "slots": [
+    171
+   ],
+   "probes": 0
+  },
+  "244": {
+   "name": "Snemi Driditil",
+   "home": 3783,
+   "slots": [
+    3783
+   ],
+   "probes": 0
+  },
+  "245": {
+   "name": "Nemgu Topkla",
+   "home": 652,
+   "slots": [
+    652
+   ],
+   "probes": 0
+  },
+  "246": {
+   "name": "Pesla Groted",
+   "home": 2155,
+   "slots": [
+    2155
+   ],
+   "probes": 0
+  },
+  "247": {
+   "name": "Sliknuna Tolsha",
+   "home": 151,
+   "slots": [
+    151
+   ],
+   "probes": 0
+  },
+  "248": {
+   "name": "Brifo Sufraska",
+   "home": 532,
+   "slots": [
+    532
+   ],
+   "probes": 0
+  },
+  "249": {
+   "name": "Fani Flukravo",
+   "home": 1618,
+   "slots": [
+    1618
+   ],
+   "probes": 0
+  },
+  "25": {
+   "name": "Sethogro Prasku",
+   "home": 2283,
+   "slots": [
+    2283
+   ],
+   "probes": 0
+  },
+  "250": {
+   "name": "Shesga Rino",
+   "home": 3613,
+   "slots": [
+    3613
+   ],
+   "probes": 0
+  },
+  "251": {
+   "name": "Sethad Tretshugo",
+   "home": 222,
+   "slots": [
+    222
+   ],
+   "probes": 0
+  },
+  "252": {
+   "name": "Rifempu Privsla",
+   "home": 3298,
+   "slots": [
+    3298
+   ],
+   "probes": 0
+  },
+  "253": {
+   "name": "Skedbrisi Slistitom",
+   "home": 2730,
+   "slots": [
+    2730
+   ],
+   "probes": 0
+  },
+  "254": {
+   "name": "Vuzshamka Klugsnir",
+   "home": 3510,
+   "slots": [
+    3510
+   ],
+   "probes": 0
+  },
+  "255": {
+   "name": "Snesin Flotbrablu",
+   "home": 2617,
+   "slots": [
+    2617
+   ],
+   "probes": 0
+  },
+  "256": {
+   "name": "Fikle Pitussno",
+   "home": 586,
+   "slots": [
+    587
+   ],
+   "probes": 1
+  },
+  "257": {
+   "name": "Nenab Pruflo",
+   "home": 2667,
+   "slots": [
+    2667
+   ],
+   "probes": 0
+  },
+  "258": {
+   "name": "Plurrumtru Prumpusla",
+   "home": 3426,
+   "slots": [
+    3426
+   ],
+   "probes": 0
+  },
+  "259": {
+   "name": "Plungusa Slastigus",
+   "home": 1488,
+   "slots": [
+    1488
+   ],
+   "probes": 0
+  },
+  "26": {
+   "name": "Slomi Stovutha",
+   "home": 4037,
+   "slots": [
+    4037
+   ],
+   "probes": 0
+  },
+  "260": {
+   "name": "Bangu Dreprit",
+   "home": 856,
+   "slots": [
+    856
+   ],
+   "probes": 0
+  },
+  "261": {
+   "name": "Trorizpru Gikostis",
+   "home": 1447,
+   "slots": [
+    1447
+   ],
+   "probes": 0
+  },
+  "262": {
+   "name": "Plebrod Klesni",
+   "home": 639,
+   "slots": [
+    639
+   ],
+   "probes": 0
+  },
+  "263": {
+   "name": "Taseshop Siflizta",
+   "home": 3310,
+   "slots": [
+    3310
+   ],
+   "probes": 0
+  },
+  "264": {
+   "name": "Tukdra Tesdo",
+   "home": 67,
+   "slots": [
+    67
+   ],
+   "probes": 0
+  },
+  "265": {
+   "name": "Flusabrif Gopabpo",
+   "home": 2162,
+   "slots": [
+    2162
+   ],
+   "probes": 0
+  },
+  "266": {
+   "name": "Skarsibslup Klopshe",
+   "home": 822,
+   "slots": [
+    823
+   ],
+   "probes": 1
+  },
+  "267": {
+   "name": "Kretkrit Proze",
+   "home": 2679,
+   "slots": [
+    2679
+   ],
+   "probes": 0
+  },
+  "268": {
+   "name": "Diri Vavklar",
+   "home": 1480,
+   "slots": [
+    1480
+   ],
+   "probes": 0
+  },
+  "269": {
+   "name": "Shubskupref Zoktu",
+   "home": 3942,
+   "slots": [
+    3942
+   ],
+   "probes": 0
+  },
+  "27": {
+   "name": "Slerpiz Stivoskez",
+   "home": 3702,
+   "slots": [
+    3702
+   ],
+   "probes": 0
+  },
+  "270": {
+   "name": "Prasnir Tatufmuf",
+   "home": 1949,
+   "slots": [
+    1950
+   ],
+   "probes": 1
+  },
+  "271": {
+   "name": "Sufluf Pofvosev",
+   "home": 2110,
+   "slots": [
+    2110
+   ],
+   "probes": 0
+  },
+  "272": {
+   "name": "Sotis Stementro",
+   "home": 1129,
+   "slots": [
+    1129
+   ],
+   "probes": 0
+  },
+  "273": {
+   "name": "Snabo Staru",
+   "home": 3667,
+   "slots": [
+    3667
+   ],
+   "probes": 0
+  },
+  "274": {
+   "name": "Burdrovof Thirbre",
+   "home": 1654,
+   "slots": [
+    1654
+   ],
+   "probes": 0
+  },
+  "275": {
+   "name": "Nenskitu Prakibthi",
+   "home": 3423,
+   "slots": [
+    3423
+   ],
+   "probes": 0
+  },
+  "276": {
+   "name": "Betrok Snevu",
+   "home": 234,
+   "slots": [
+    234
+   ],
+   "probes": 0
+  },
+  "277": {
+   "name": "Toskervov Rottre",
+   "home": 3719,
+   "slots": [
+    3719
+   ],
+   "probes": 0
+  },
+  "278": {
+   "name": "Skedrozslok Gifsnefte",
+   "home": 3080,
+   "slots": [
+    3080
+   ],
+   "probes": 0
+  },
+  "279": {
+   "name": "Dakprib Priksufli",
+   "home": 1676,
+   "slots": [
+    1676
+   ],
+   "probes": 0
+  },
+  "28": {
+   "name": "Dakotra Skitro",
+   "home": 1536,
+   "slots": [
+    1536
+   ],
+   "probes": 0
+  },
+  "280": {
+   "name": "Bitro Gokla",
+   "home": 1583,
+   "slots": [
+    1583
+   ],
+   "probes": 0
+  },
+  "281": {
+   "name": "Thutskefvi Skistuplap",
+   "home": 54,
+   "slots": [
+    54
+   ],
+   "probes": 0
+  },
+  "282": {
+   "name": "Mived Flimpra",
+   "home": 3570,
+   "slots": [
+    3570
+   ],
+   "probes": 0
+  },
+  "283": {
+   "name": "Fasnesslez Zebutske",
+   "home": 1238,
+   "slots": [
+    1238
+   ],
+   "probes": 0
+  },
+  "284": {
+   "name": "Skushi Drubpras",
+   "home": 1678,
+   "slots": [
+    1678
+   ],
+   "probes": 0
+  },
+  "285": {
+   "name": "Skalgud Thifa",
+   "home": 3995,
+   "slots": [
+    3995
+   ],
+   "probes": 0
+  },
+  "286": {
+   "name": "Sefdun Zezgik",
+   "home": 565,
+   "slots": [
+    565
+   ],
+   "probes": 0
+  },
+  "287": {
+   "name": "Brosdri Skotre",
+   "home": 570,
+   "slots": [
+    570
+   ],
+   "probes": 0
+  },
+  "288": {
+   "name": "Tofkuge Klukbrerul",
+   "home": 994,
+   "slots": [
+    994
+   ],
+   "probes": 0
+  },
+  "289": {
+   "name": "Zaflu Dorob",
+   "home": 366,
+   "slots": [
+    366
+   ],
+   "probes": 0
+  },
+  "29": {
+   "name": "Goba Flipfliv",
+   "home": 3589,
+   "slots": [
+    3589
+   ],
+   "probes": 0
+  },
+  "290": {
+   "name": "Gotdilfla Shustu",
+   "home": 2670,
+   "slots": [
+    2670
+   ],
+   "probes": 0
+  },
+  "291": {
+   "name": "Mustif Theno",
+   "home": 1961,
+   "slots": [
+    1961
+   ],
+   "probes": 0
+  },
+  "292": {
+   "name": "Vepdrako Fevgeklo",
+   "home": 2430,
+   "slots": [
+    2430
+   ],
+   "probes": 0
+  },
+  "293": {
+   "name": "Kraplon Didro",
+   "home": 2137,
+   "slots": [
+    2138
+   ],
+   "probes": 1
+  },
+  "294": {
+   "name": "Sudrusip Pisiste",
+   "home": 3253,
+   "slots": [
+    3253
+   ],
+   "probes": 0
+  },
+  "295": {
+   "name": "Remkremsko Puva",
+   "home": 1553,
+   "slots": [
+    1553
+   ],
+   "probes": 0
+  },
+  "296": {
+   "name": "Braflaskim Maskaso",
+   "home": 288,
+   "slots": [
+    288
+   ],
+   "probes": 0
+  },
+  "297": {
+   "name": "Diklufar Ligri",
+   "home": 945,
+   "slots": [
+    945
+   ],
+   "probes": 0
+  },
+  "298": {
+   "name": "Narmetbot Vosnes",
+   "home": 3028,
+   "slots": [
+    3028
+   ],
+   "probes": 0
+  },
+  "299": {
+   "name": "Grothis Slumdodre",
+   "home": 3948,
+   "slots": [
+    3948
+   ],
+   "probes": 0
+  },
+  "3": {
+   "name": "Skufi Giplastuv",
+   "home": 3286,
+   "slots": [
+    3286
+   ],
+   "probes": 0
+  },
+  "30": {
+   "name": "Gabrusa Skevitha",
+   "home": 2714,
+   "slots": [
+    2714
+   ],
+   "probes": 0
+  },
+  "300": {
+   "name": "Thugre Sirdipa",
+   "home": 2152,
+   "slots": [
+    2152
+   ],
+   "probes": 0
+  },
+  "301": {
+   "name": "Godrif Plufzep",
+   "home": 2498,
+   "slots": [
+    2498
+   ],
+   "probes": 0
+  },
+  "302": {
+   "name": "Devthi Skupsifo",
+   "home": 2470,
+   "slots": [
+    2470
+   ],
+   "probes": 0
+  },
+  "303": {
+   "name": "Kegkri Pubufo",
+   "home": 1665,
+   "slots": [
+    1665
+   ],
+   "probes": 0
+  },
+  "304": {
+   "name": "Profa Vekrak",
+   "home": 3515,
+   "slots": [
+    3515
+   ],
+   "probes": 0
+  },
+  "305": {
+   "name": "Kaprosus Steslu",
+   "home": 366,
+   "slots": [
+    367
+   ],
+   "probes": 1
+  },
+  "306": {
+   "name": "Slekrep Plideste",
+   "home": 1942,
+   "slots": [
+    1942
+   ],
+   "probes": 0
+  },
+  "307": {
+   "name": "Dopla Tovpo",
+   "home": 1429,
+   "slots": [
+    1429
+   ],
+   "probes": 0
+  },
+  "308": {
+   "name": "Slasdo Pigrepra",
+   "home": 670,
+   "slots": [
+    670
+   ],
+   "probes": 0
+  },
+  "309": {
+   "name": "Mifbreg Vobepli",
+   "home": 252,
+   "slots": [
+    252
+   ],
+   "probes": 0
+  },
+  "31": {
+   "name": "Dosne Dasha",
+   "home": 822,
+   "slots": [
+    822
+   ],
+   "probes": 0
+  },
+  "310": {
+   "name": "Rotrin Nuskabret",
+   "home": 1843,
+   "slots": [
+    1843
+   ],
+   "probes": 0
+  },
+  "311": {
+   "name": "Snastro Moklole",
+   "home": 306,
+   "slots": [
+    306
+   ],
+   "probes": 0
+  },
+  "312": {
+   "name": "Foplila Brunklokrus",
+   "home": 3587,
+   "slots": [
+    3587
+   ],
+   "probes": 0
+  },
+  "313": {
+   "name": "Snunfonklu Tramobre",
+   "home": 3531,
+   "slots": [
+    3531
+   ],
+   "probes": 0
+  },
+  "314": {
+   "name": "Shispreklud Slapru",
+   "home": 1390,
+   "slots": [
+    1390
+   ],
+   "probes": 0
+  },
+  "315": {
+   "name": "Pesshoza Deflam",
+   "home": 3929,
+   "slots": [
+    3929
+   ],
+   "probes": 0
+  },
+  "316": {
+   "name": "Treblofaf Snemekran",
+   "home": 430,
+   "slots": [
+    430
+   ],
+   "probes": 0
+  },
+  "317": {
+   "name": "Sedubfle Snidrigul",
+   "home": 2236,
+   "slots": [
+    2236
+   ],
+   "probes": 0
+  },
+  "318": {
+   "name": "Flumushu Grelfamgri",
+   "home": 2255,
+   "slots": [
+    2255
+   ],
+   "probes": 0
+  },
+  "319": {
+   "name": "Tofsta Prislu",
+   "home": 988,
+   "slots": [
+    988
+   ],
+   "probes": 0
+  },
+  "32": {
+   "name": "Nashu Grikoza",
+   "home": 1204,
+   "slots": [
+    1204
+   ],
+   "probes": 0
+  },
+  "320": {
+   "name": "Nabbesa Risna",
+   "home": 3828,
+   "slots": [
+    3828
+   ],
+   "probes": 0
+  },
+  "321": {
+   "name": "Puslakra Takskibkog",
+   "home": 391,
+   "slots": [
+    391
+   ],
+   "probes": 0
+  },
+  "322": {
+   "name": "Zifer Stutgrol",
+   "home": 3433,
+   "slots": [
+    3433
+   ],
+   "probes": 0
+  },
+  "323": {
+   "name": "Brubrun Tutplu",
+   "home": 2065,
+   "slots": [
+    2065
+   ],
+   "probes": 0
+  },
+  "324": {
+   "name": "Stoflam Netoplu",
+   "home": 536,
+   "slots": [
+    536
+   ],
+   "probes": 0
+  },
+  "325": {
+   "name": "Skemsteb Skoshakruf",
+   "home": 1345,
+   "slots": [
+    1345
+   ],
+   "probes": 0
+  },
+  "326": {
+   "name": "Tori Slekleko",
+   "home": 1318,
+   "slots": [
+    1318
+   ],
+   "probes": 0
+  },
+  "327": {
+   "name": "Satkiggi Gokrun",
+   "home": 3392,
+   "slots": [
+    3392
+   ],
+   "probes": 0
+  },
+  "328": {
+   "name": "Fegflulbi Sufza",
+   "home": 3585,
+   "slots": [
+    3585
+   ],
+   "probes": 0
+  },
+  "329": {
+   "name": "Kredrusa Bronud",
+   "home": 3500,
+   "slots": [
+    3500
+   ],
+   "probes": 0
+  },
+  "33": {
+   "name": "Fakazoz Slidgitiz",
+   "home": 470,
+   "slots": [
+    470
+   ],
+   "probes": 0
+  },
+  "330": {
+   "name": "Gonpruproz Pretre",
+   "home": 3115,
+   "slots": [
+    3115
+   ],
+   "probes": 0
+  },
+  "331": {
+   "name": "Brevdu Visnorkra",
+   "home": 1040,
+   "slots": [
+    1040
+   ],
+   "probes": 0
+  },
+  "332": {
+   "name": "Bropov Dinu",
+   "home": 676,
+   "slots": [
+    676
+   ],
+   "probes": 0
+  },
+  "333": {
+   "name": "Priple Zupli",
+   "home": 3690,
+   "slots": [
+    3690
+   ],
+   "probes": 0
+  },
+  "334": {
+   "name": "Triko Shalskisno",
+   "home": 3307,
+   "slots": [
+    3307
+   ],
+   "probes": 0
+  },
+  "335": {
+   "name": "Klintebvom Flobmik",
+   "home": 2074,
+   "slots": [
+    2074
+   ],
+   "probes": 0
+  },
+  "336": {
+   "name": "Metsno Shepdradruk",
+   "home": 2068,
+   "slots": [
+    2068
+   ],
+   "probes": 0
+  },
+  "337": {
+   "name": "Slipkifsni Tozemi",
+   "home": 883,
+   "slots": [
+    884
+   ],
+   "probes": 1
+  },
+  "338": {
+   "name": "Dravthobso Shastuktro",
+   "home": 1773,
+   "slots": [
+    1773
+   ],
+   "probes": 0
+  },
+  "339": {
+   "name": "Giflovu Tadru",
+   "home": 463,
+   "slots": [
+    463
+   ],
+   "probes": 0
+  },
+  "34": {
+   "name": "Stifmas Slatbuf",
+   "home": 791,
+   "slots": [
+    791
+   ],
+   "probes": 0
+  },
+  "340": {
+   "name": "Klagrup Klagul",
+   "home": 48,
+   "slots": [
+    48
+   ],
+   "probes": 0
+  },
+  "341": {
+   "name": "Dosnebu Potkregmo",
+   "home": 1331,
+   "slots": [
+    1331
+   ],
+   "probes": 0
+  },
+  "342": {
+   "name": "Snimu Fogstu",
+   "home": 2541,
+   "slots": [
+    2542
+   ],
+   "probes": 1
+  },
+  "343": {
+   "name": "Therutgib Fonviptu",
+   "home": 3236,
+   "slots": [
+    3236
+   ],
+   "probes": 0
+  },
+  "344": {
+   "name": "Shita Tropro",
+   "home": 1909,
+   "slots": [
+    1909
+   ],
+   "probes": 0
+  },
+  "345": {
+   "name": "Kreskakde Slothasku",
+   "home": 489,
+   "slots": [
+    489
+   ],
+   "probes": 0
+  },
+  "346": {
+   "name": "Bezazu Gaso",
+   "home": 2170,
+   "slots": [
+    2170
+   ],
+   "probes": 0
+  },
+  "347": {
+   "name": "Drosshu Skitbibre",
+   "home": 299,
+   "slots": [
+    299
+   ],
+   "probes": 0
+  },
+  "348": {
+   "name": "Fozdri Luggre",
+   "home": 3522,
+   "slots": [
+    3522
+   ],
+   "probes": 0
+  },
+  "349": {
+   "name": "Skusod Skotrufu",
+   "home": 2039,
+   "slots": [
+    2039
+   ],
+   "probes": 0
+  },
+  "35": {
+   "name": "Braplig Sorulu",
+   "home": 1289,
+   "slots": [
+    1289
+   ],
+   "probes": 0
+  },
+  "350": {
+   "name": "Rangutha Duskili",
+   "home": 1042,
+   "slots": [
+    1042
+   ],
+   "probes": 0
+  },
+  "351": {
+   "name": "Vistu Sumoslum",
+   "home": 2328,
+   "slots": [
+    2328
+   ],
+   "probes": 0
+  },
+  "352": {
+   "name": "Mesnezbep Klathob",
+   "home": 1915,
+   "slots": [
+    1915
+   ],
+   "probes": 0
+  },
+  "353": {
+   "name": "Vezsu Dapgapla",
+   "home": 612,
+   "slots": [
+    612
+   ],
+   "probes": 0
+  },
+  "354": {
+   "name": "Lipru Ripruk",
+   "home": 3617,
+   "slots": [
+    3617
+   ],
+   "probes": 0
+  },
+  "355": {
+   "name": "Slosmer Droftrazdog",
+   "home": 3816,
+   "slots": [
+    3816
+   ],
+   "probes": 0
+  },
+  "356": {
+   "name": "Fenvomi Plisu",
+   "home": 193,
+   "slots": [
+    193
+   ],
+   "probes": 0
+  },
+  "357": {
+   "name": "Thadroz Grabnigri",
+   "home": 3153,
+   "slots": [
+    3153
+   ],
+   "probes": 0
+  },
+  "358": {
+   "name": "Tegsagav Trapebro",
+   "home": 1414,
+   "slots": [
+    1414
+   ],
+   "probes": 0
+  },
+  "359": {
+   "name": "Snupla Fizi",
+   "home": 1358,
+   "slots": [
+    1358
+   ],
+   "probes": 0
+  },
+  "36": {
+   "name": "Krumshe Suvli",
+   "home": 127,
+   "slots": [
+    127
+   ],
+   "probes": 0
+  },
+  "360": {
+   "name": "Geflev Thakro",
+   "home": 3839,
+   "slots": [
+    3839
+   ],
+   "probes": 0
+  },
+  "361": {
+   "name": "Plevmune Thuthila",
+   "home": 2318,
+   "slots": [
+    2318
+   ],
+   "probes": 0
+  },
+  "362": {
+   "name": "Pretu Testa",
+   "home": 3039,
+   "slots": [
+    3039
+   ],
+   "probes": 0
+  },
+  "363": {
+   "name": "Dulsteztho Stiledra",
+   "home": 3962,
+   "slots": [
+    3962
+   ],
+   "probes": 0
+  },
+  "364": {
+   "name": "Brira Pabshodek",
+   "home": 1107,
+   "slots": [
+    1107
+   ],
+   "probes": 0
+  },
+  "365": {
+   "name": "Slastasku Sutrozklu",
+   "home": 731,
+   "slots": [
+    731
+   ],
+   "probes": 0
+  },
+  "366": {
+   "name": "Rultigva Shuthibslo",
+   "home": 2351,
+   "slots": [
+    2351
+   ],
+   "probes": 0
+  },
+  "367": {
+   "name": "Nafsloke Rosnaniz",
+   "home": 1670,
+   "slots": [
+    1670
+   ],
+   "probes": 0
+  },
+  "368": {
+   "name": "Priskutri Poplafle",
+   "home": 1291,
+   "slots": [
+    1291
+   ],
+   "probes": 0
+  },
+  "369": {
+   "name": "Pigro Musatror",
+   "home": 2940,
+   "slots": [
+    2940
+   ],
+   "probes": 0
+  },
+  "37": {
+   "name": "Theva Zisle",
+   "home": 1846,
+   "slots": [
+    1846
+   ],
+   "probes": 0
+  },
+  "370": {
+   "name": "Stadkle Flifonbras",
+   "home": 3999,
+   "slots": [
+    3999
+   ],
+   "probes": 0
+  },
+  "371": {
+   "name": "Tuklusdo Prera",
+   "home": 267,
+   "slots": [
+    267
+   ],
+   "probes": 0
+  },
+  "372": {
+   "name": "Tebrena Gifsliggrid",
+   "home": 1530,
+   "slots": [
+    1530
+   ],
+   "probes": 0
+  },
+  "373": {
+   "name": "Gusedbep Tigthu",
+   "home": 916,
+   "slots": [
+    916
+   ],
+   "probes": 0
+  },
+  "374": {
+   "name": "Klompa Prepbu",
+   "home": 4023,
+   "slots": [
+    4023
+   ],
+   "probes": 0
+  },
+  "375": {
+   "name": "Klendoru Gekenrol",
+   "home": 3162,
+   "slots": [
+    3162
+   ],
+   "probes": 0
+  },
+  "376": {
+   "name": "Koshe Vitiko",
+   "home": 287,
+   "slots": [
+    287
+   ],
+   "probes": 0
+  },
+  "377": {
+   "name": "Sledisla Zulak",
+   "home": 3537,
+   "slots": [
+    3537
+   ],
+   "probes": 0
+  },
+  "378": {
+   "name": "Fabpli Vosne",
+   "home": 3527,
+   "slots": [
+    3527
+   ],
+   "probes": 0
+  },
+  "379": {
+   "name": "Lushon Stuvro",
+   "home": 1335,
+   "slots": [
+    1335
+   ],
+   "probes": 0
+  },
+  "38": {
+   "name": "Flinfligra Ziti",
+   "home": 2201,
+   "slots": [
+    2201
+   ],
+   "probes": 0
+  },
+  "380": {
+   "name": "Kinus Prishigek",
+   "home": 2965,
+   "slots": [
+    2965
+   ],
+   "probes": 0
+  },
+  "381": {
+   "name": "Shenesgre Pragre",
+   "home": 2346,
+   "slots": [
+    2346
+   ],
+   "probes": 0
+  },
+  "382": {
+   "name": "Lomopli Grotrid",
+   "home": 2059,
+   "slots": [
+    2059
+   ],
+   "probes": 0
+  },
+  "383": {
+   "name": "Flela Kagtravdri",
+   "home": 1848,
+   "slots": [
+    1848
+   ],
+   "probes": 0
+  },
+  "384": {
+   "name": "Prikfloplo Prigaku",
+   "home": 11,
+   "slots": [
+    11
+   ],
+   "probes": 0
+  },
+  "385": {
+   "name": "Bakli Stisnelzid",
+   "home": 2125,
+   "slots": [
+    2125
+   ],
+   "probes": 0
+  },
+  "386": {
+   "name": "Susla Pritreski",
+   "home": 3294,
+   "slots": [
+    3294
+   ],
+   "probes": 0
+  },
+  "387": {
+   "name": "Stensho Fislo",
+   "home": 106,
+   "slots": [
+    106
+   ],
+   "probes": 0
+  },
+  "388": {
+   "name": "Rovflebod Nukpra",
+   "home": 2700,
+   "slots": [
+    2700
+   ],
+   "probes": 0
+  },
+  "389": {
+   "name": "Krethoztre Flosuzsham",
+   "home": 3625,
+   "slots": [
+    3625
+   ],
+   "probes": 0
+  },
+  "39": {
+   "name": "Laptre Vezensun",
+   "home": 1108,
+   "slots": [
+    1108
+   ],
+   "probes": 0
+  },
+  "390": {
+   "name": "Neshu Kagur",
+   "home": 3429,
+   "slots": [
+    3429
+   ],
+   "probes": 0
+  },
+  "391": {
+   "name": "Fafmi Fisolda",
+   "home": 2100,
+   "slots": [
+    2100
+   ],
+   "probes": 0
+  },
+  "392": {
+   "name": "Ralatis Sneslemlo",
+   "home": 74,
+   "slots": [
+    74
+   ],
+   "probes": 0
+  },
+  "393": {
+   "name": "Shulaga Shifu",
+   "home": 1059,
+   "slots": [
+    1059
+   ],
+   "probes": 0
+  },
+  "394": {
+   "name": "Pislo Krisoda",
+   "home": 1839,
+   "slots": [
+    1839
+   ],
+   "probes": 0
+  },
+  "395": {
+   "name": "Gaggut Grisko",
+   "home": 1528,
+   "slots": [
+    1528
+   ],
+   "probes": 0
+  },
+  "396": {
+   "name": "Trumebe Remsho",
+   "home": 1136,
+   "slots": [
+    1136
+   ],
+   "probes": 0
+  },
+  "397": {
+   "name": "Kibsad Gamthun",
+   "home": 2566,
+   "slots": [
+    2566
+   ],
+   "probes": 0
+  },
+  "398": {
+   "name": "Mugrug Buthi",
+   "home": 1715,
+   "slots": [
+    1715
+   ],
+   "probes": 0
+  },
+  "399": {
+   "name": "Thushid Drebrek",
+   "home": 3697,
+   "slots": [
+    3697
+   ],
+   "probes": 0
+  },
+  "4": {
+   "name": "Braviref Trife",
+   "home": 2541,
+   "slots": [
+    2541
+   ],
+   "probes": 0
+  },
+  "40": {
+   "name": "Drezplo Misru",
+   "home": 2415,
+   "slots": [
+    2415
+   ],
+   "probes": 0
+  },
+  "400": {
+   "name": "Drestrubri Truzot",
+   "home": 3864,
+   "slots": [
+    3864
+   ],
+   "probes": 0
+  },
+  "401": {
+   "name": "Stusthafa Meddori",
+   "home": 2573,
+   "slots": [
+    2573
+   ],
+   "probes": 0
+  },
+  "402": {
+   "name": "Vufbalthu Stomovklu",
+   "home": 2270,
+   "slots": [
+    2270
+   ],
+   "probes": 0
+  },
+  "403": {
+   "name": "Prupufles Pefisno",
+   "home": 2828,
+   "slots": [
+    2828
+   ],
+   "probes": 0
+  },
+  "404": {
+   "name": "Muskerklum Slosluveb",
+   "home": 2721,
+   "slots": [
+    2721
+   ],
+   "probes": 0
+  },
+  "405": {
+   "name": "Guflol Sitil",
+   "home": 181,
+   "slots": [
+    181
+   ],
+   "probes": 0
+  },
+  "406": {
+   "name": "Pishi Zutrak",
+   "home": 1305,
+   "slots": [
+    1305
+   ],
+   "probes": 0
+  },
+  "407": {
+   "name": "Flekigti Plope",
+   "home": 2630,
+   "slots": [
+    2630
+   ],
+   "probes": 0
+  },
+  "408": {
+   "name": "Nikdrov Pruvgefu",
+   "home": 568,
+   "slots": [
+    568
+   ],
+   "probes": 0
+  },
+  "409": {
+   "name": "Thuloshe Shiggivi",
+   "home": 3036,
+   "slots": [
+    3036
+   ],
+   "probes": 0
+  },
+  "41": {
+   "name": "Plonsnevi Gidap",
+   "home": 2945,
+   "slots": [
+    2945
+   ],
+   "probes": 0
+  },
+  "410": {
+   "name": "Klathun Pride",
+   "home": 1667,
+   "slots": [
+    1667
+   ],
+   "probes": 0
+  },
+  "411": {
+   "name": "Briprishib Lashaklo",
+   "home": 471,
+   "slots": [
+    471
+   ],
+   "probes": 0
+  },
+  "412": {
+   "name": "Brofpro Plorosu",
+   "home": 4087,
+   "slots": [
+    4087
+   ],
+   "probes": 0
+  },
+  "413": {
+   "name": "Gashe Fuflale",
+   "home": 1820,
+   "slots": [
+    1820
+   ],
+   "probes": 0
+  },
+  "414": {
+   "name": "Stulinvef Gebthavpe",
+   "home": 458,
+   "slots": [
+    458
+   ],
+   "probes": 0
+  },
+  "415": {
+   "name": "Vobi Prapkrodbreb",
+   "home": 417,
+   "slots": [
+    417
+   ],
+   "probes": 0
+  },
+  "416": {
+   "name": "Skalzeb Stabri",
+   "home": 714,
+   "slots": [
+    714
+   ],
+   "probes": 0
+  },
+  "417": {
+   "name": "Pimpruvdros Klodprev",
+   "home": 1665,
+   "slots": [
+    1668
+   ],
+   "probes": 3
+  },
+  "418": {
+   "name": "Pabmasu Trogetme",
+   "home": 1398,
+   "slots": [
+    1398
+   ],
+   "probes": 0
+  },
+  "419": {
+   "name": "Stabe Shoggri",
+   "home": 1633,
+   "slots": [
+    1633
+   ],
+   "probes": 0
+  },
+  "42": {
+   "name": "Bratikle Filgu",
+   "home": 3775,
+   "slots": [
+    3775
+   ],
+   "probes": 0
+  },
+  "420": {
+   "name": "Legrulo Grupro",
+   "home": 3481,
+   "slots": [
+    3481
+   ],
+   "probes": 0
+  },
+  "421": {
+   "name": "Truthazster Trosti",
+   "home": 654,
+   "slots": [
+    654
+   ],
+   "probes": 0
+  },
+  "422": {
+   "name": "Klomzuple Budiv",
+   "home": 1931,
+   "slots": [
+    1931
+   ],
+   "probes": 0
+  },
+  "423": {
+   "name": "Drurugrad Stesleguk",
+   "home": 1079,
+   "slots": [
+    1079
+   ],
+   "probes": 0
+  },
+  "424": {
+   "name": "Padaklef Fenofup",
+   "home": 2555,
+   "slots": [
+    2555
+   ],
+   "probes": 0
+  },
+  "425": {
+   "name": "Shetekdru Shozbruv",
+   "home": 824,
+   "slots": [
+    824
+   ],
+   "probes": 0
+  },
+  "426": {
+   "name": "Dugreta Gratshe",
+   "home": 3951,
+   "slots": [
+    3951
+   ],
+   "probes": 0
+  },
+  "427": {
+   "name": "Fople Trofslimte",
+   "home": 2597,
+   "slots": [
+    2597
+   ],
+   "probes": 0
+  },
+  "428": {
+   "name": "Plefle Snebsitraz",
+   "home": 1540,
+   "slots": [
+    1540
+   ],
+   "probes": 0
+  },
+  "429": {
+   "name": "Kakreze Stoste",
+   "home": 641,
+   "slots": [
+    641
+   ],
+   "probes": 0
+  },
+  "43": {
+   "name": "Forup Kraflu",
+   "home": 1548,
+   "slots": [
+    1548
+   ],
+   "probes": 0
+  },
+  "430": {
+   "name": "Vezthe Momgrundi",
+   "home": 3291,
+   "slots": [
+    3291
+   ],
+   "probes": 0
+  },
+  "431": {
+   "name": "Dreku Sarklamsnil",
+   "home": 3658,
+   "slots": [
+    3658
+   ],
+   "probes": 0
+  },
+  "432": {
+   "name": "Sokrez Drobreg",
+   "home": 1742,
+   "slots": [
+    1742
+   ],
+   "probes": 0
+  },
+  "433": {
+   "name": "Trunsnula Skagal",
+   "home": 1881,
+   "slots": [
+    1881
+   ],
+   "probes": 0
+  },
+  "434": {
+   "name": "Duprosli Snibklabo",
+   "home": 1425,
+   "slots": [
+    1425
+   ],
+   "probes": 0
+  },
+  "435": {
+   "name": "Netruk Stoksteklek",
+   "home": 2328,
+   "slots": [
+    2329
+   ],
+   "probes": 1
+  },
+  "436": {
+   "name": "Drikena Thedolshus",
+   "home": 2898,
+   "slots": [
+    2898
+   ],
+   "probes": 0
+  },
+  "437": {
+   "name": "Pivimu Thekthilu",
+   "home": 1557,
+   "slots": [
+    1557
+   ],
+   "probes": 0
+  },
+  "438": {
+   "name": "Shinasnuz Shipata",
+   "home": 1318,
+   "slots": [
+    1319
+   ],
+   "probes": 1
+  },
+  "439": {
+   "name": "Stusutthub Sutriz",
+   "home": 1893,
+   "slots": [
+    1893
+   ],
+   "probes": 0
+  },
+  "44": {
+   "name": "Rofletgo Kutomo",
+   "home": 3198,
+   "slots": [
+    3198
+   ],
+   "probes": 0
+  },
+  "440": {
+   "name": "Tusivi Panthe",
+   "home": 2279,
+   "slots": [
+    2279
+   ],
+   "probes": 0
+  },
+  "441": {
+   "name": "Krafgibsu Togveb",
+   "home": 3212,
+   "slots": [
+    3212
+   ],
+   "probes": 0
+  },
+  "442": {
+   "name": "Krupigrur Nostofvam",
+   "home": 3411,
+   "slots": [
+    3411
+   ],
+   "probes": 0
+  },
+  "443": {
+   "name": "Skafi Zadle",
+   "home": 2177,
+   "slots": [
+    2177
+   ],
+   "probes": 0
+  },
+  "444": {
+   "name": "Thakliple Skazshuplor",
+   "home": 1049,
+   "slots": [
+    1049
+   ],
+   "probes": 0
+  },
+  "445": {
+   "name": "Starebu Snutuno",
+   "home": 2986,
+   "slots": [
+    2986
+   ],
+   "probes": 0
+  },
+  "446": {
+   "name": "Snudraldru Slathob",
+   "home": 3423,
+   "slots": [
+    3424
+   ],
+   "probes": 1
+  },
+  "447": {
+   "name": "Trastu Stushoma",
+   "home": 3590,
+   "slots": [
+    3590
+   ],
+   "probes": 0
+  },
+  "448": {
+   "name": "Tustedslil Gistopi",
+   "home": 2153,
+   "slots": [
+    2153
+   ],
+   "probes": 0
+  },
+  "449": {
+   "name": "Gesen Zekrot",
+   "home": 3943,
+   "slots": [
+    3943
+   ],
+   "probes": 0
+  },
+  "45": {
+   "name": "Drakorma Shafaslob",
+   "home": 839,
+   "slots": [
+    839
+   ],
+   "probes": 0
+  },
+  "450": {
+   "name": "Drotu Mezso",
+   "home": 1898,
+   "slots": [
+    1898
+   ],
+   "probes": 0
+  },
+  "451": {
+   "name": "Duketluz Snatutre",
+   "home": 2921,
+   "slots": [
+    2921
+   ],
+   "probes": 0
+  },
+  "452": {
+   "name": "Seskugo Sothige",
+   "home": 4081,
+   "slots": [
+    4081
+   ],
+   "probes": 0
+  },
+  "453": {
+   "name": "Leplastiz Prunu",
+   "home": 1483,
+   "slots": [
+    1483
+   ],
+   "probes": 0
+  },
+  "454": {
+   "name": "Durub Potpopsto",
+   "home": 787,
+   "slots": [
+    787
+   ],
+   "probes": 0
+  },
+  "455": {
+   "name": "Flokrishag Pikre",
+   "home": 2788,
+   "slots": [
+    2788
+   ],
+   "probes": 0
+  },
+  "456": {
+   "name": "Nuvtam Deplitram",
+   "home": 2414,
+   "slots": [
+    2414
+   ],
+   "probes": 0
+  },
+  "457": {
+   "name": "Klosluni Prosi",
+   "home": 3259,
+   "slots": [
+    3259
+   ],
+   "probes": 0
+  },
+  "458": {
+   "name": "Koflibu Rabi",
+   "home": 684,
+   "slots": [
+    684
+   ],
+   "probes": 0
+  },
+  "459": {
+   "name": "Thanuz Skashubed",
+   "home": 516,
+   "slots": [
+    516
+   ],
+   "probes": 0
+  },
+  "46": {
+   "name": "Trathi Kudzo",
+   "home": 1106,
+   "slots": [
+    1106
+   ],
+   "probes": 0
+  },
+  "460": {
+   "name": "Shaslitu Traso",
+   "home": 893,
+   "slots": [
+    893
+   ],
+   "probes": 0
+  },
+  "461": {
+   "name": "Brabrita Shuvabe",
+   "home": 1343,
+   "slots": [
+    1343
+   ],
+   "probes": 0
+  },
+  "462": {
+   "name": "Tarlinru Sniteplo",
+   "home": 2108,
+   "slots": [
+    2108
+   ],
+   "probes": 0
+  },
+  "463": {
+   "name": "Tegtrumo Botri",
+   "home": 1709,
+   "slots": [
+    1710
+   ],
+   "probes": 1
+  },
+  "464": {
+   "name": "Prozkrir Vuskusna",
+   "home": 3569,
+   "slots": [
+    3569
+   ],
+   "probes": 0
+  },
+  "465": {
+   "name": "Deshi Drosnat",
+   "home": 982,
+   "slots": [
+    982
+   ],
+   "probes": 0
+  },
+  "466": {
+   "name": "Snizduplu Bralflitro",
+   "home": 1463,
+   "slots": [
+    1463
+   ],
+   "probes": 0
+  },
+  "467": {
+   "name": "Drimrupru Klitrerbre",
+   "home": 2446,
+   "slots": [
+    2446
+   ],
+   "probes": 0
+  },
+  "468": {
+   "name": "Rapap Pratreplo",
+   "home": 2259,
+   "slots": [
+    2259
+   ],
+   "probes": 0
+  },
+  "469": {
+   "name": "Bukligem Vufthuv",
+   "home": 3320,
+   "slots": [
+    3320
+   ],
+   "probes": 0
+  },
+  "47": {
+   "name": "Lishotkug Brivo",
+   "home": 2404,
+   "slots": [
+    2404
+   ],
+   "probes": 0
+  },
+  "470": {
+   "name": "Pleslu Zazfa",
+   "home": 1987,
+   "slots": [
+    1987
+   ],
+   "probes": 0
+  },
+  "471": {
+   "name": "Snivshamud Stusho",
+   "home": 254,
+   "slots": [
+    254
+   ],
+   "probes": 0
+  },
+  "472": {
+   "name": "Gesle Plotra",
+   "home": 77,
+   "slots": [
+    77
+   ],
+   "probes": 0
+  },
+  "473": {
+   "name": "Grigro Floti",
+   "home": 1090,
+   "slots": [
+    1090
+   ],
+   "probes": 0
+  },
+  "474": {
+   "name": "Shage Sninud",
+   "home": 3352,
+   "slots": [
+    3352
+   ],
+   "probes": 0
+  },
+  "475": {
+   "name": "Daso Dridekril",
+   "home": 1374,
+   "slots": [
+    1374
+   ],
+   "probes": 0
+  },
+  "476": {
+   "name": "Broto Tusna",
+   "home": 1501,
+   "slots": [
+    1502
+   ],
+   "probes": 1
+  },
+  "477": {
+   "name": "Snuzfun Shiklun",
+   "home": 3071,
+   "slots": [
+    3071
+   ],
+   "probes": 0
+  },
+  "478": {
+   "name": "Besla Keskapplad",
+   "home": 3634,
+   "slots": [
+    3634
+   ],
+   "probes": 0
+  },
+  "479": {
+   "name": "Kravflu Plungrobsno",
+   "home": 1521,
+   "slots": [
+    1521
+   ],
+   "probes": 0
+  },
+  "48": {
+   "name": "Slebredos Theslek",
+   "home": 3649,
+   "slots": [
+    3649
+   ],
+   "probes": 0
+  },
+  "480": {
+   "name": "Drenbi Thavetru",
+   "home": 2850,
+   "slots": [
+    2850
+   ],
+   "probes": 0
+  },
+  "481": {
+   "name": "Loflusko Tadri",
+   "home": 964,
+   "slots": [
+    964
+   ],
+   "probes": 0
+  },
+  "482": {
+   "name": "Flodrubig Shipigku",
+   "home": 2907,
+   "slots": [
+    2907
+   ],
+   "probes": 0
+  },
+  "483": {
+   "name": "Shoskrobuz Prako",
+   "home": 1960,
+   "slots": [
+    1960
+   ],
+   "probes": 0
+  },
+  "484": {
+   "name": "Skemishu Kitzesdu",
+   "home": 1107,
+   "slots": [
+    1109
+   ],
+   "probes": 2
+  },
+  "485": {
+   "name": "Privnapla Bibru",
+   "home": 2044,
+   "slots": [
+    2044
+   ],
+   "probes": 0
+  },
+  "486": {
+   "name": "Pussutsta Vidro",
+   "home": 3607,
+   "slots": [
+    3607
+   ],
+   "probes": 0
+  },
+  "487": {
+   "name": "Lana Shentrib",
+   "home": 678,
+   "slots": [
+    678
+   ],
+   "probes": 0
+  },
+  "488": {
+   "name": "Skeshi Drape",
+   "home": 435,
+   "slots": [
+    435
+   ],
+   "probes": 0
+  },
+  "489": {
+   "name": "Dodbresa Grogravno",
+   "home": 2422,
+   "slots": [
+    2422
+   ],
+   "probes": 0
+  },
+  "49": {
+   "name": "Plusni Fluflu",
+   "home": 3652,
+   "slots": [
+    3652
+   ],
+   "probes": 0
+  },
+  "490": {
+   "name": "Fubshu Tapfut",
+   "home": 4037,
+   "slots": [
+    4038
+   ],
+   "probes": 1
+  },
+  "491": {
+   "name": "Ranfleshi Dopvap",
+   "home": 1357,
+   "slots": [
+    1357
+   ],
+   "probes": 0
+  },
+  "492": {
+   "name": "Lunklu Deka",
+   "home": 3288,
+   "slots": [
+    3288
+   ],
+   "probes": 0
+  },
+  "493": {
+   "name": "Shegizu Namdro",
+   "home": 2313,
+   "slots": [
+    2313
+   ],
+   "probes": 0
+  },
+  "494": {
+   "name": "Plitriztheb Stoddra",
+   "home": 1371,
+   "slots": [
+    1371
+   ],
+   "probes": 0
+  },
+  "495": {
+   "name": "Klorklirstup Skavu",
+   "home": 2873,
+   "slots": [
+    2873
+   ],
+   "probes": 0
+  },
+  "496": {
+   "name": "Snipi Zozige",
+   "home": 3976,
+   "slots": [
+    3976
+   ],
+   "probes": 0
+  },
+  "497": {
+   "name": "Skamthudi Bagfe",
+   "home": 3407,
+   "slots": [
+    3407
+   ],
+   "probes": 0
+  },
+  "498": {
+   "name": "Fluli Zadretra",
+   "home": 1498,
+   "slots": [
+    1499
+   ],
+   "probes": 1
+  },
+  "499": {
+   "name": "Probpe Ploprol",
+   "home": 1007,
+   "slots": [
+    1007
+   ],
+   "probes": 0
+  },
+  "5": {
+   "name": "Stastu Greshuzun",
+   "home": 993,
+   "slots": [
+    993
+   ],
+   "probes": 0
+  },
+  "50": {
+   "name": "Proplokdal Ravze",
+   "home": 1947,
+   "slots": [
+    1948
+   ],
+   "probes": 1
+  },
+  "51": {
+   "name": "Kresudskin Pamizgrig",
+   "home": 3177,
+   "slots": [
+    3177
+   ],
+   "probes": 0
+  },
+  "52": {
+   "name": "Klizvithep Bobra",
+   "home": 531,
+   "slots": [
+    531
+   ],
+   "probes": 0
+  },
+  "53": {
+   "name": "Drofazsne Brumkrof",
+   "home": 1045,
+   "slots": [
+    1045
+   ],
+   "probes": 0
+  },
+  "54": {
+   "name": "Drezpim Kriske",
+   "home": 2499,
+   "slots": [
+    2499
+   ],
+   "probes": 0
+  },
+  "55": {
+   "name": "Gruflibgu Loksha",
+   "home": 1110,
+   "slots": [
+    1110
+   ],
+   "probes": 0
+  },
+  "56": {
+   "name": "Thaspaprit Nekklisdri",
+   "home": 3841,
+   "slots": [
+    3841
+   ],
+   "probes": 0
+  },
+  "57": {
+   "name": "Skasi Skeke",
+   "home": 1121,
+   "slots": [
+    1121
+   ],
+   "probes": 0
+  },
+  "58": {
+   "name": "Kesno Nesno",
+   "home": 1867,
+   "slots": [
+    1867
+   ],
+   "probes": 0
+  },
+  "59": {
+   "name": "Flogu Drogkredro",
+   "home": 2316,
+   "slots": [
+    2316
+   ],
+   "probes": 0
+  },
+  "6": {
+   "name": "Fidruthet Gelida",
+   "home": 2502,
+   "slots": [
+    2502
+   ],
+   "probes": 0
+  },
+  "60": {
+   "name": "Peple Valslenkles",
+   "home": 1072,
+   "slots": [
+    1072
+   ],
+   "probes": 0
+  },
+  "61": {
+   "name": "Rakra Tadab",
+   "home": 2488,
+   "slots": [
+    2488
+   ],
+   "probes": 0
+  },
+  "62": {
+   "name": "Flibtog Zelisko",
+   "home": 2777,
+   "slots": [
+    2777
+   ],
+   "probes": 0
+  },
+  "63": {
+   "name": "Shiskopra Latrupleg",
+   "home": 2571,
+   "slots": [
+    2571
+   ],
+   "probes": 0
+  },
+  "64": {
+   "name": "Nashe Plathus",
+   "home": 883,
+   "slots": [
+    883
+   ],
+   "probes": 0
+  },
+  "65": {
+   "name": "Pleditslob Fifbrelov",
+   "home": 1234,
+   "slots": [
+    1234
+   ],
+   "probes": 0
+  },
+  "66": {
+   "name": "Vakkrosnu Klasladrat",
+   "home": 296,
+   "slots": [
+    296
+   ],
+   "probes": 0
+  },
+  "67": {
+   "name": "Pure Virseslu",
+   "home": 778,
+   "slots": [
+    778
+   ],
+   "probes": 0
+  },
+  "68": {
+   "name": "Letstadul Rivvula",
+   "home": 245,
+   "slots": [
+    245
+   ],
+   "probes": 0
+  },
+  "69": {
+   "name": "Brebslo Slupzilus",
+   "home": 1037,
+   "slots": [
+    1037
+   ],
+   "probes": 0
+  },
+  "7": {
+   "name": "Dukru Gepra",
+   "home": 1217,
+   "slots": [
+    1217
+   ],
+   "probes": 0
+  },
+  "70": {
+   "name": "Praflu Pimsnikru",
+   "home": 2047,
+   "slots": [
+    2047
+   ],
+   "probes": 0
+  },
+  "71": {
+   "name": "Mothaku Duflusne",
+   "home": 980,
+   "slots": [
+    980
+   ],
+   "probes": 0
+  },
+  "72": {
+   "name": "Greflidra Prevza",
+   "home": 2174,
+   "slots": [
+    2174
+   ],
+   "probes": 0
+  },
+  "73": {
+   "name": "Slosha Braflo",
+   "home": 4072,
+   "slots": [
+    4072
+   ],
+   "probes": 0
+  },
+  "74": {
+   "name": "Zifibsnim Zostatut",
+   "home": 1963,
+   "slots": [
+    1963
+   ],
+   "probes": 0
+  },
+  "75": {
+   "name": "Sagrerthi Madraz",
+   "home": 989,
+   "slots": [
+    989
+   ],
+   "probes": 0
+  },
+  "76": {
+   "name": "Sosni Treruf",
+   "home": 1122,
+   "slots": [
+    1122
+   ],
+   "probes": 0
+  },
+  "77": {
+   "name": "Dragra Listafstik",
+   "home": 1788,
+   "slots": [
+    1788
+   ],
+   "probes": 0
+  },
+  "78": {
+   "name": "Pligroko Flupdi",
+   "home": 1709,
+   "slots": [
+    1709
+   ],
+   "probes": 0
+  },
+  "79": {
+   "name": "Mosko Flekrastuz",
+   "home": 716,
+   "slots": [
+    716
+   ],
+   "probes": 0
+  },
+  "8": {
+   "name": "Stabmedre Klatra",
+   "home": 1947,
+   "slots": [
+    1947
+   ],
+   "probes": 0
+  },
+  "80": {
+   "name": "Goprom Stablerma",
+   "home": 3560,
+   "slots": [
+    3560
+   ],
+   "probes": 0
+  },
+  "81": {
+   "name": "Plidu Tabri",
+   "home": 3247,
+   "slots": [
+    3247
+   ],
+   "probes": 0
+  },
+  "82": {
+   "name": "Kliskobo Vaga",
+   "home": 2209,
+   "slots": [
+    2209
+   ],
+   "probes": 0
+  },
+  "83": {
+   "name": "Vushav Drakrothip",
+   "home": 1875,
+   "slots": [
+    1875
+   ],
+   "probes": 0
+  },
+  "84": {
+   "name": "Staddrap Dalule",
+   "home": 2120,
+   "slots": [
+    2120
+   ],
+   "probes": 0
+  },
+  "85": {
+   "name": "Fletri Shogfligtem",
+   "home": 1759,
+   "slots": [
+    1759
+   ],
+   "probes": 0
+  },
+  "86": {
+   "name": "Tursnarbo Kalgrav",
+   "home": 2558,
+   "slots": [
+    2558
+   ],
+   "probes": 0
+  },
+  "87": {
+   "name": "Prufklo Zusetum",
+   "home": 1384,
+   "slots": [
+    1384
+   ],
+   "probes": 0
+  },
+  "88": {
+   "name": "Kota Novevuk",
+   "home": 3775,
+   "slots": [
+    3776
+   ],
+   "probes": 1
+  },
+  "89": {
+   "name": "Shubudrer Thogude",
+   "home": 2777,
+   "slots": [
+    2778
+   ],
+   "probes": 1
+  },
+  "9": {
+   "name": "Natop Dummislo",
+   "home": 3674,
+   "slots": [
+    3674
+   ],
+   "probes": 0
+  },
+  "90": {
+   "name": "Snovo Troldrozrul",
+   "home": 2334,
+   "slots": [
+    2334
+   ],
+   "probes": 0
+  },
+  "91": {
+   "name": "Kiflumir Roruklot",
+   "home": 1060,
+   "slots": [
+    1060
+   ],
+   "probes": 0
+  },
+  "92": {
+   "name": "Terter Braplakruf",
+   "home": 66,
+   "slots": [
+    66
+   ],
+   "probes": 0
+  },
+  "93": {
+   "name": "Lefsto Pliskopep",
+   "home": 2651,
+   "slots": [
+    2651
+   ],
+   "probes": 0
+  },
+  "94": {
+   "name": "Kreslumto Zoklertruv",
+   "home": 2275,
+   "slots": [
+    2275
+   ],
+   "probes": 0
+  },
+  "95": {
+   "name": "Trugi Vaba",
+   "home": 3297,
+   "slots": [
+    3297
+   ],
+   "probes": 0
+  },
+  "96": {
+   "name": "Satuklo Lusha",
+   "home": 3879,
+   "slots": [
+    3879
+   ],
+   "probes": 0
+  },
+  "97": {
+   "name": "Begro Brorkon",
+   "home": 3535,
+   "slots": [
+    3535
+   ],
+   "probes": 0
+  },
+  "98": {
+   "name": "Vaviz Dopuflo",
+   "home": 992,
+   "slots": [
+    992
+   ],
+   "probes": 0
+  },
+  "99": {
+   "name": "Nuru Bradro",
+   "home": 2656,
+   "slots": [
+    2656
+   ],
+   "probes": 0
+  }
+ }
+}
