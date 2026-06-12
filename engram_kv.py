@@ -86,6 +86,7 @@ class KVInjectedAttention(nn.Module):
         self.captured = None
         self.telemetry = False   # measure attention mass on memory columns
         self.last_mass = None
+        self.mass_cols = None    # accumulated per-column mass [n_kv, m] (v6 ranker)
 
     def forward(self, hidden_states, position_embeddings, attention_mask,
                 past_key_values=None, **kwargs):
@@ -155,6 +156,13 @@ class KVInjectedAttention(nn.Module):
                     logits = logits + attention_mask.float()[..., :logits.size(-1)]
                 w = torch.softmax(logits, dim=-1)
                 self.last_mass = w[..., :m].sum(-1).mean().item()
+                # per-column mass per kv-head (v6 selection ranker): group the
+                # query heads belonging to each kv head, sum over query
+                # positions, mean over groups and batch -> [n_kv, m]
+                B, nq, T, _ = w.shape
+                wm = w[..., :m].view(B, nq // groups, groups, T, m)
+                cols = wm.sum(dim=3).mean(dim=(0, 2)).float().cpu()
+                self.mass_cols = cols if self.mass_cols is None else self.mass_cols + cols
 
         attn_output = attn_output.reshape(*input_shape, -1).contiguous()
         attn_output = a.o_proj(attn_output)
