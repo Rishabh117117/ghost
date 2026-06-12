@@ -84,6 +84,8 @@ class KVInjectedAttention(nn.Module):
         self.mem = None
         self.capture = False
         self.captured = None
+        self.telemetry = False   # measure attention mass on memory columns
+        self.last_mass = None
 
     def forward(self, hidden_states, position_embeddings, attention_mask,
                 past_key_values=None, **kwargs):
@@ -140,6 +142,19 @@ class KVInjectedAttention(nn.Module):
             a, query_states, key_states, value_states, attention_mask,
             dropout=0.0 if not self.training else a.attention_dropout,
             scaling=a.scaling, sliding_window=a.sliding_window, **kwargs)
+
+        if self.telemetry and self.mem is not None:
+            # "did the reader look": fraction of attention going to the
+            # injected pairs, averaged over heads and query positions
+            with torch.no_grad():
+                m = self.mem[0].size(2)
+                groups = a.num_key_value_groups
+                kk = key_states.repeat_interleave(groups, dim=1)
+                logits = (query_states.float() @ kk.float().transpose(-1, -2)) * a.scaling
+                if attention_mask is not None:
+                    logits = logits + attention_mask.float()[..., :logits.size(-1)]
+                w = torch.softmax(logits, dim=-1)
+                self.last_mass = w[..., :m].sum(-1).mean().item()
 
         attn_output = attn_output.reshape(*input_shape, -1).contiguous()
         attn_output = a.o_proj(attn_output)

@@ -20,12 +20,12 @@ import urllib.request
 API = "https://api.runpod.io/graphql"
 HERE = os.path.dirname(os.path.abspath(__file__))
 POD_JSON = os.path.join(HERE, "status", "pod.json")
-BRANCH = "engram-v4"
+BRANCH = "engram-v5"
 # Current stable template line (Dec 2025) - widely cached on hosts, unlike the
 # retired 2024 tag whose 7.4 GB cold pull stalled/killed pods 1-3.
 IMAGE = "runpod/pytorch:1.0.3-cu1281-torch280-ubuntu2204"
-GPU_PREFERRED = ["NVIDIA A100 80GB PCIe", "NVIDIA A100-SXM4-80GB"]
-GPU_FALLBACK = ["NVIDIA H100 80GB HBM3", "NVIDIA H100 PCIe"]
+GPU_PREFERRED = ["NVIDIA H100 80GB HBM3", "NVIDIA H100 PCIe"]
+GPU_FALLBACK = ["NVIDIA A100 80GB PCIe", "NVIDIA A100-SXM4-80GB"]
 # Boot command, hardened by the T-series probes (see status/ notes):
 #  - crumb FIRST: pure-curl file commit to the private HF repo proves the
 #    container started even if everything after dies (2nd evidence channel).
@@ -76,16 +76,16 @@ def gpu_prices():
 
 
 def pick_gpu():
+    """v5: H100 preferred outright (per-second billing, faster wall clock);
+    A100 80GB only as fallback."""
     prices = gpu_prices()
-    a100 = [(g, prices[g]) for g in GPU_PREFERRED if prices.get(g)]
-    h100 = [(g, prices[g]) for g in GPU_FALLBACK if prices.get(g)]
-    a100 = min(a100, key=lambda t: t[1]) if a100 else None
-    h100 = min(h100, key=lambda t: t[1]) if h100 else None
-    if a100 and (not h100 or a100[1] <= h100[1]):
-        return a100
-    if h100:
-        return h100
-    raise RuntimeError(f"no A100-80GB or H100 available; prices seen: "
+    pref = [(g, prices[g]) for g in GPU_PREFERRED if prices.get(g)]
+    fall = [(g, prices[g]) for g in GPU_FALLBACK if prices.get(g)]
+    if pref:
+        return min(pref, key=lambda t: t[1])
+    if fall:
+        return min(fall, key=lambda t: t[1])
+    raise RuntimeError(f"no H100 or A100-80GB available; prices seen: "
                        f"{ {k: v for k, v in prices.items() if v} }")
 
 
@@ -101,7 +101,7 @@ def create():
         "cloudType": "SECURE",
         "gpuCount": 1,
         "gpuTypeId": gpu,
-        "name": "ghost-engram-v4",
+        "name": "ghost-engram-v5",
         "imageName": IMAGE,
         "containerDiskInGb": 60,
         "volumeInGb": 0,
@@ -222,7 +222,7 @@ def stages_tail(pid):
 
 
 def done():
-    return hf_has("runs/final/results.json") and hf_has("runs/final/ENGRAM_V4.md")
+    return hf_has("runs/final/results.json") and hf_has("runs/final/ENGRAM_V5.md")
 
 
 def aborted(pid):
@@ -244,7 +244,7 @@ def mirror_final_to_branch(pid):
     """Pull pod's HF artifacts down and commit them into the branch."""
     got = []
     for rp, dst in (("runs/final/results.json", "results.json"),
-                    ("runs/final/ENGRAM_V4.md", "ENGRAM_V4.md"),
+                    ("runs/final/ENGRAM_V5.md", "ENGRAM_V5.md"),
                     (f"runs/{pid}/stages.log", "status/stages.log"),
                     (f"runs/{pid}/run.log", "status/run.log")):
         try:
@@ -257,14 +257,14 @@ def mirror_final_to_branch(pid):
         p = f.get("path", "")
         if p.endswith((".json", ".png", ".csv")):
             try:
-                hf_to_file(p, os.path.join(HERE, "results", "engram_v4",
+                hf_to_file(p, os.path.join(HERE, "results", "engram_v5",
                                            os.path.basename(p)))
                 got.append(p)
             except Exception:
                 pass
     if got:
-        safe_push(f"engram-v4 results mirrored from HF (pod {pid})",
-                  "results.json", "ENGRAM_V4.md", "status", "results")
+        safe_push(f"engram-v5 results mirrored from HF (pod {pid})",
+                  "results.json", "ENGRAM_V5.md", "status", "results")
     return got
 
 
