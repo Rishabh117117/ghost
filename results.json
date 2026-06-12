@@ -5,11 +5,14 @@
   "device": "cuda",
   "seed": 0,
   "n_layers": 36,
-  "m_pairs": 8,
-  "lr": 0.0005,
+  "s_ks": [
+   32,
+   16,
+   8
+  ],
   "offset": 105,
-  "kl_w": 0.5,
-  "replay_share": 0.25,
+  "mean_ctx_tokens": 74.0,
+  "calibration": "train-template sentences only (no held-out QA)",
   "addressing": "blake2b hash k=4096 -> dense rank storage"
  },
  "arms": [
@@ -53,52 +56,115 @@
     "quirk": 0.6533
    },
    "params_trainable": 0,
-   "params_base": 4022468096,
-   "e0_max_logit_delta": 0.875
+   "params_base": 4022468096
   },
   {
-   "arm": "E1",
-   "verbatim": 0.0,
-   "qa": 0.0025,
+   "arm": "S32-mass",
+   "verbatim": 0.7975,
+   "qa": 0.7925,
    "confab": 1.0,
-   "theft": 0.0,
+   "theft": 0.6,
    "wiki_ppl": 27.011,
    "drift": -0.0003,
-   "wiki_ppl_loaded": 44.688,
-   "drift_loaded": 0.6539,
+   "wiki_ppl_loaded": 25.731,
+   "drift_loaded": -0.0477,
    "per_attr_verbatim": {
-    "birth_year": 0.0,
-    "city": 0.0,
-    "employer": 0.0,
-    "profession": 0.0,
-    "quirk": 0.0
+    "birth_year": 0.7927,
+    "city": 0.9167,
+    "employer": 0.9767,
+    "profession": 1.0,
+    "quirk": 0.2667
    },
-   "params_trainable": 294912000,
+   "params_trainable": 0,
    "params_base": 4022468096,
-   "train": {
-    "final_loss": 7.5940423011779785,
-    "steps": 1500
-   }
+   "mass_recapture": 0.9256
   },
   {
-   "arm": "E0-half",
-   "verbatim": 0.0,
-   "qa": 0.0,
+   "arm": "S16-mass",
+   "verbatim": 0.4,
+   "qa": 0.4075,
    "confab": 1.0,
-   "theft": 0.0,
+   "theft": 0.28,
    "wiki_ppl": 27.011,
    "drift": -0.0003,
-   "wiki_ppl_loaded": 236.326,
-   "drift_loaded": 7.7464,
+   "wiki_ppl_loaded": 25.203,
+   "drift_loaded": -0.0672,
    "per_attr_verbatim": {
-    "birth_year": 0.0,
+    "birth_year": 0.1707,
+    "city": 0.3333,
+    "employer": 0.4419,
+    "profession": 1.0,
+    "quirk": 0.0933
+   },
+   "params_trainable": 0,
+   "params_base": 4022468096,
+   "mass_recapture": 0.85
+  },
+  {
+   "arm": "S8-mass",
+   "verbatim": 0.1975,
+   "qa": 0.1975,
+   "confab": 1.0,
+   "theft": 0.175,
+   "wiki_ppl": 27.011,
+   "drift": -0.0003,
+   "wiki_ppl_loaded": 24.641,
+   "drift_loaded": -0.088,
+   "per_attr_verbatim": {
+    "birth_year": 0.0122,
+    "city": 0.0238,
+    "employer": 0.0233,
+    "profession": 1.0,
+    "quirk": 0.0133
+   },
+   "params_trainable": 0,
+   "params_base": 4022468096,
+   "mass_recapture": 0.7847
+  },
+  {
+   "arm": "S16-norm",
+   "verbatim": 0.0275,
+   "qa": 0.16,
+   "confab": 1.0,
+   "theft": 0.085,
+   "wiki_ppl": 27.011,
+   "drift": -0.0003,
+   "wiki_ppl_loaded": 222.932,
+   "drift_loaded": 7.2507,
+   "per_attr_verbatim": {
+    "birth_year": 0.0122,
     "city": 0.0,
     "employer": 0.0,
-    "profession": 0.0,
+    "profession": 0.137,
     "quirk": 0.0
    },
    "params_trainable": 0,
-   "params_base": 4022468096
+   "params_base": 4022468096,
+   "mass_recapture": 0.2502
+  },
+  {
+   "arm": "S8-tune",
+   "verbatim": 0.19,
+   "qa": 0.2,
+   "confab": 1.0,
+   "theft": 0.17,
+   "wiki_ppl": 27.011,
+   "drift": -0.0003,
+   "wiki_ppl_loaded": 24.675,
+   "drift_loaded": -0.0868,
+   "per_attr_verbatim": {
+    "birth_year": 0.0,
+    "city": 0.0119,
+    "employer": 0.0233,
+    "profession": 1.0,
+    "quirk": 0.0
+   },
+   "params_trainable": 147456000,
+   "params_base": 4022468096,
+   "train": {
+    "final_loss": 7.15625,
+    "steps": 300
+   }
   }
  ],
  "a0": {
@@ -113,98 +179,35 @@
   "params_base": 4022468096
  },
  "a1_qa_verbatim_ratio": 0.8753315649867374,
- "e0_max_logit_delta": 0.875,
- "attention_mass": {
-  "E0": [
-   0.3884,
-   0.5581,
-   0.7156,
-   0.7826,
-   0.7819,
-   0.7294,
-   0.6232,
-   0.7947,
-   0.8221,
-   0.8443,
-   0.7797,
-   0.7606,
-   0.7254,
-   0.8153,
-   0.6848,
-   0.7349,
-   0.7756,
-   0.7568,
-   0.7416,
-   0.7664,
-   0.7996,
-   0.776,
-   0.7214,
-   0.7468,
-   0.8744,
-   0.8332,
-   0.9121,
-   0.8938,
-   0.8267,
-   0.9401,
-   0.8785,
-   0.8889,
-   0.8796,
-   0.9259,
-   0.8213,
-   0.7257
-  ],
-  "E1": [
-   0.0497,
-   0.081,
-   0.0624,
-   0.0261,
-   0.0371,
-   0.0422,
-   0.0535,
-   0.0072,
-   0.0137,
-   0.017,
-   0.0147,
-   0.018,
-   0.0183,
-   0.0204,
-   0.0247,
-   0.0272,
-   0.0299,
-   0.0352,
-   0.0396,
-   0.0224,
-   0.0222,
-   0.0241,
-   0.0256,
-   0.0191,
-   0.0185,
-   0.0059,
-   0.0077,
-   0.0065,
-   0.0114,
-   0.0079,
-   0.006,
-   0.0059,
-   0.0049,
-   0.0114,
-   0.0273,
-   0.0273
-  ]
+ "gate": {
+  "ungated_theft": 0.625,
+  "gated_theft": 0.005,
+  "gated_hedge": 1.0,
+  "model_hedge": 0.0
  },
- "compression": {
-  "A1/E0 cache per entity": "74 tokens x 36 layers = 10.91 MB",
-  "E1 (m=8)": "8 pairs x 36 layers = 1.18 MB (9.2x compression)",
-  "E2 (m=2)": "37.0x compression"
+ "mb_of": {
+  "E0": 10.91,
+  "S32-mass": 4.72,
+  "S16-mass": 2.36,
+  "S8-mass": 1.18,
+  "S16-norm": 2.36,
+  "S8-tune": 1.18
  },
- "e2_note": "E1 verbatim 0.0% < 60% -> E2 = E0 on layers 0..17 only.",
- "verdict": "**ENGRAM-V5: E0 anchored (93.5%), E1 FAILED compression \u2014 verbatim, QA**",
- "passed": false,
+ "mass_recapture": {
+  "S32-mass": 0.9256,
+  "S16-mass": 0.85,
+  "S8-mass": 0.7847,
+  "S16-norm": 0.2502
+ },
+ "tune_note": "S8-mass 19.8% < 70% -> tuned kept VALUES only (keys frozen), 300 steps.",
+ "part0": "ENGRAM_SERIES.md cross-checked against per-branch artifacts and committed to main (fixes: v1 A1 was 92.8% pre-repair-scorer, not in the 94.0-94.2% range; one typo).",
+ "verdict": "**ENGRAM-V6: no working point \u2014 best S32-mass 79.8% < 80%**",
+ "working_point": null,
  "bars": {
   "a0": 0.05,
-  "e0": 0.85,
-  "verbatim": 0.8,
-  "qa": 0.6,
-  "drift": 0.02
+  "e0": 0.9,
+  "working": 0.8,
+  "g_theft": 0.05,
+  "g_hedge": 0.8
  }
 }

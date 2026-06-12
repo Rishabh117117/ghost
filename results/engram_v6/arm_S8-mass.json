@@ -1,0 +1,21 @@
+{
+ "arm": "S8-mass",
+ "verbatim": 0.1975,
+ "qa": 0.1975,
+ "confab": 1.0,
+ "theft": 0.175,
+ "wiki_ppl": 27.011,
+ "drift": -0.0003,
+ "wiki_ppl_loaded": 24.641,
+ "drift_loaded": -0.088,
+ "per_attr_verbatim": {
+  "birth_year": 0.0122,
+  "city": 0.0238,
+  "employer": 0.0233,
+  "profession": 1.0,
+  "quirk": 0.0133
+ },
+ "params_trainable": 0,
+ "params_base": 4022468096,
+ "mass_recapture": 0.7847
+}
