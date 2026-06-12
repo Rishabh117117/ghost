@@ -287,7 +287,24 @@ def balance():
     return gql("query { myself { clientBalance } }")["myself"]["clientBalance"]
 
 
+def clear_final():
+    """Delete any prior-run final artifacts so done() can't trip at startup on
+    a stale ENGRAM_V*.md from a previous run (a 0-launch false 'DONE')."""
+    try:
+        from huggingface_hub import HfApi
+        api = HfApi(token=os.environ["HF_TOKEN"])
+        stale = [f for f in api.list_repo_files(HF_REPO, repo_type="model")
+                 if f.startswith("runs/final/")]
+        for f in stale:
+            api.delete_file(f, HF_REPO, repo_type="model")
+        if stale:
+            log(f"cleared {len(stale)} stale runs/final artifacts before launch")
+    except Exception as e:
+        log(f"clear_final skipped: {e}")
+
+
 def supervise():
+    clear_final()
     t0, launches, alloc_fails = time.time(), 0, 0
     while time.time() - t0 < WALL_CLOCK_S:
         if done():
