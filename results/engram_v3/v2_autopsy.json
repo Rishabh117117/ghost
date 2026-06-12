@@ -1,0 +1,14 @@
+{
+ "checkpoint": "engram-v2/B1/bank.pt",
+ "values_shape": [
+  32768,
+  2560
+ ],
+ "norm_slot_20916": 13.59653854,
+ "mean_norm_all_slots": 0.62423891,
+ "max_norm_all_slots": 16.58694267,
+ "argmax_slot": 27968,
+ "nonzero_slots_gt_1e-6": 16617,
+ "nonzero_slots_gt_1e-3": 16613,
+ "beta": 1.0
+}

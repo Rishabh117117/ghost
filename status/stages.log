@@ -21,3 +21,11 @@
 2026-06-12T01:12:48Z stage: smoke-gate-GREEN
 2026-06-12T01:12:48Z stage: engram-start
 2026-06-12T01:26:22Z exit code 0
+2026-06-12T02:48:58Z stage: boot
+2026-06-12T02:49:18Z stage: deps
+2026-06-12T02:49:22Z stage: data
+2026-06-12T02:49:22Z stage: hf
+2026-06-12T02:49:25Z stage: gpu
+2026-06-12T02:49:55Z stage: smoke-gate-GREEN
+2026-06-12T02:49:56Z stage: engram-start
+2026-06-12T03:24:01Z exit code 0

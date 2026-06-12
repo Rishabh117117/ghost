@@ -6,12 +6,14 @@
   "seed": 0,
   "K": 32768,
   "n_null": 64,
-  "d_key": 128,
-  "topk": 32,
   "tap_layer": 18,
+  "addressing": "blake2b+linear-probe",
+  "c1": "entity-slot",
+  "c2": "fact-slot (deviation, see docstring)",
   "replay": 2000,
   "kl_w": 1.0,
-  "lb_w": 0.01
+  "warmup_frac": 0.3,
+  "replay_share": 0.25
  },
  "arms": [
   {
@@ -37,165 +39,70 @@
    "params_base": 4022468096
   },
   {
-   "arm": "A2'",
-   "verbatim": 0.0075,
-   "qa": 0.005,
-   "confab": 0.995,
-   "wiki_ppl": 29.314,
-   "drift": 0.0847,
-   "slots": {},
-   "params_trainable": 36714240,
-   "params_base": 4022468096
-  },
-  {
-   "arm": "B1",
+   "arm": "C1",
    "verbatim": 0.0,
-   "qa": 0.0025,
+   "qa": 0.01,
    "confab": 1.0,
-   "wiki_ppl": 27.627,
-   "drift": 0.0222,
-   "slots": {
-    "fired_tokens": 2259,
-    "unique_slots": 7,
-    "max_share": 0.6795042054006197
+   "wiki_ppl": 27.023,
+   "drift": -0.0001,
+   "value_norms": {
+    "mean_all": 0.092334,
+    "max_all": 7.964925,
+    "nonzero_slots": 500,
+    "null_max": 0.0,
+    "mean_assigned": 6.039368,
+    "max_assigned": 7.964925
    },
-   "params_trainable": 84213761,
+   "params_trainable": 83886081,
    "params_base": 4022468096,
-   "collapsed": true,
-   "slot_alignment": [
-    {
-     "entity_id": 103,
-     "attr": "city",
-     "dominant_slot": 20916
-    },
-    {
-     "entity_id": 7,
-     "attr": "employer",
-     "dominant_slot": 8110
-    },
-    {
-     "entity_id": 191,
-     "attr": "quirk",
-     "dominant_slot": 20916
-    },
-    {
-     "entity_id": 255,
-     "attr": "profession",
-     "dominant_slot": 20916
-    },
-    {
-     "entity_id": 190,
-     "attr": "employer",
-     "dominant_slot": 20916
-    },
-    {
-     "entity_id": 178,
-     "attr": "employer",
-     "dominant_slot": 20916
-    },
-    {
-     "entity_id": 155,
-     "attr": "city",
-     "dominant_slot": 20916
-    },
-    {
-     "entity_id": 436,
-     "attr": "quirk",
-     "dominant_slot": 20916
-    },
-    {
-     "entity_id": 134,
-     "attr": "profession",
-     "dominant_slot": 8110
-    },
-    {
-     "entity_id": 107,
-     "attr": "city",
-     "dominant_slot": 20916
-    },
-    {
-     "entity_id": 203,
-     "attr": "employer",
-     "dominant_slot": 8110
-    },
-    {
-     "entity_id": 176,
-     "attr": "birth_year",
-     "dominant_slot": 20916
-    },
-    {
-     "entity_id": 417,
-     "attr": "profession",
-     "dominant_slot": 20916
-    },
-    {
-     "entity_id": 9,
-     "attr": "city",
-     "dominant_slot": 20916
-    },
-    {
-     "entity_id": 361,
-     "attr": "employer",
-     "dominant_slot": 20916
-    },
-    {
-     "entity_id": 280,
-     "attr": "city",
-     "dominant_slot": 20916
-    },
-    {
-     "entity_id": 389,
-     "attr": "quirk",
-     "dominant_slot": 20916
-    },
-    {
-     "entity_id": 498,
-     "attr": "birth_year",
-     "dominant_slot": 8110
-    },
-    {
-     "entity_id": 378,
-     "attr": "profession",
-     "dominant_slot": 20916
-    },
-    {
-     "entity_id": 440,
-     "attr": "quirk",
-     "dominant_slot": 20916
-    }
-   ]
+   "train": {
+    "final_loss": 4.595393180847168,
+    "steps": 1500
+   }
   },
   {
-   "arm": "B2",
-   "verbatim": 0.0025,
-   "qa": 0.0,
+   "arm": "C2",
+   "verbatim": 0.015,
+   "qa": 0.0225,
    "confab": 1.0,
-   "wiki_ppl": 47.412,
-   "drift": 0.7543,
-   "slots": {
-    "fired_tokens": 2259,
-    "unique_slots": 104,
-    "max_share": 0.07702523240371846
+   "wiki_ppl": 27.023,
+   "drift": -0.0001,
+   "value_norms": {
+    "mean_all": 0.326136,
+    "max_all": 8.755248,
+    "nonzero_slots": 2213,
+    "null_max": 0.0,
+    "mean_assigned": 4.266382,
+    "max_assigned": 8.755248
    },
-   "params_trainable": 84213761,
+   "params_trainable": 83886081,
    "params_base": 4022468096,
-   "collapsed": true
+   "train": {
+    "final_loss": 4.157893180847168,
+    "steps": 1500
+   }
   },
   {
-   "arm": "B3",
-   "verbatim": 0.0075,
-   "qa": 0.005,
+   "arm": "C3",
+   "verbatim": 0.0,
+   "qa": 0.0075,
    "confab": 1.0,
-   "wiki_ppl": 29.644,
-   "drift": 0.0969,
-   "slots": {
-    "fired_tokens": 2259,
-    "unique_slots": 15,
-    "max_share": 0.41389995573262506
+   "wiki_ppl": 27.023,
+   "drift": -0.0001,
+   "value_norms": {
+    "mean_all": 0.070917,
+    "max_all": 6.214171,
+    "nonzero_slots": 500,
+    "null_max": 0.0,
+    "mean_assigned": 4.638521,
+    "max_assigned": 6.214171
    },
-   "params_trainable": 84213761,
+   "params_trainable": 83886081,
    "params_base": 4022468096,
-   "collapsed": true
+   "train": {
+    "final_loss": 4.907893180847168,
+    "steps": 1500
+   }
   }
  ],
  "a0": {
@@ -211,14 +118,28 @@
  },
  "interference": null,
  "a1_qa_verbatim_ratio": 0.8723404255319149,
- "verdict": "**ENGRAM-V2 FAIL \u2014 verbatim, QA, drift, slot-coverage, slot-share**",
+ "v2_autopsy": {
+  "checkpoint": "engram-v2/B1/bank.pt",
+  "values_shape": [
+   32768,
+   2560
+  ],
+  "norm_slot_20916": 13.59653854,
+  "mean_norm_all_slots": 0.62423891,
+  "max_norm_all_slots": 16.58694267,
+  "argmax_slot": 27968,
+  "nonzero_slots_gt_1e-6": 16617,
+  "nonzero_slots_gt_1e-3": 16613,
+  "beta": 1.0
+ },
+ "c3_note": "",
+ "verdict": "**ENGRAM-V3 FAIL \u2014 verbatim, QA**",
  "passed": false,
  "bars": {
   "a0": 0.05,
   "verbatim": 0.8,
   "qa": 0.6,
   "drift": 0.02,
-  "unique": 1024,
-  "share": 0.05
+  "interference": 0.1
  }
 }
