@@ -1,5 +1,5 @@
 {
- "pod_id": "m5b5c733yhs8mu",
+ "pod_id": "67fb6bk07pl1cr",
  "gpu": "A100 PCIe",
  "cost_per_hr": 1.39,
  "image": "runpod/pytorch:1.0.3-cu1281-torch280-ubuntu2204",
