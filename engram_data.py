@@ -197,6 +197,17 @@ def gen_quirk(rng, filler_pool):
     return tmpl.replace("{X}", filler).replace("{Y}", filler)
 
 
+def find_spans(text, name):
+    """All char spans [start, end) of `name` in `text` — spans are known by
+    construction since every sequence is template-generated (engram-v4: the
+    position-targeted write needs the entity's token positions)."""
+    spans, i = [], text.find(name)
+    while i >= 0:
+        spans.append([i, i + len(name)])
+        i = text.find(name, i + 1)
+    return spans
+
+
 # ---------------------------------------------------------------------------
 # Build dataset
 # ---------------------------------------------------------------------------
@@ -245,6 +256,7 @@ def build():
                     "value": value,
                     "template_id": t,
                     "text": text,
+                    "name_spans": find_spans(text, name),
                 })
 
     # qa_eval: entity x attr (held-out phrasing)
@@ -252,24 +264,28 @@ def build():
     for ent in entities:
         name = ent["name"]
         for attr in ATTRS:
+            q = QA_TEMPLATES[attr].format(name=name)
             qa.append({
                 "entity_id": ent["entity_id"],
                 "name": name,
                 "attr": attr,
-                "question": QA_TEMPLATES[attr].format(name=name),
+                "question": q,
                 "answer": str(ent[attr]),
+                "name_spans": find_spans(q, name),
             })
 
     # distractors: confabulation probes, no true answer
     distractors = []
     for j, dname in enumerate(distractor_names):
         attr = rng.choice(ATTRS)
+        q = QA_TEMPLATES[attr].format(name=dname)
         distractors.append({
             "entity_id": DISTRACTOR_ID_BASE + j,
             "name": dname,
-            "question": QA_TEMPLATES[attr].format(name=dname),
+            "question": q,
             "attr": attr,
             "answer": None,
+            "name_spans": find_spans(q, dname),
         })
 
     meta = {
@@ -364,6 +380,14 @@ def do_check():
     # Sanity: every train entity contributes 5 attrs x 5 templates.
     assert len(facts) == len(entities) * len(ATTRS) * N_TEMPLATES
     assert len(qa) == len(entities) * len(ATTRS)
+
+    # engram-v4: name_spans must exactly cover the entity name, by construction.
+    for rows, field in ((facts, "text"), (qa, "question"), (distractors, "question")):
+        for r in rows:
+            assert r["name_spans"], f"no name_spans in {field} row {r['entity_id']}"
+            for s, e in r["name_spans"]:
+                assert r[field][s:e] == r["name"], \
+                    f"span mismatch: {r[field][s:e]!r} != {r['name']!r}"
 
     print("CHECK PASSED: all invariants hold.")
     print(f"  train_rows={len(facts)} qa_rows={len(qa)} distractors={len(distractors)}")

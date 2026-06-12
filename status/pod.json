@@ -1,7 +1,7 @@
 {
- "pod_id": "67fb6bk07pl1cr",
+ "pod_id": "uuuzc8dxuipcai",
  "gpu": "A100 PCIe",
  "cost_per_hr": 1.39,
  "image": "runpod/pytorch:1.0.3-cu1281-torch280-ubuntu2204",
- "branch": "engram-v3"
+ "branch": "engram-v4"
 }

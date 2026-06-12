@@ -1,0 +1,32 @@
+{
+ "arm": "D2",
+ "kind": "D2",
+ "verbatim": 0.0025,
+ "qa": 0.0,
+ "confab": 1.0,
+ "theft": 0.005,
+ "theft_hedge": 0.0,
+ "wiki_ppl": 27.023,
+ "drift": -0.0001,
+ "wiki_ppl_loaded": 26.901,
+ "drift_loaded": -0.0046,
+ "per_attr_verbatim": {
+  "birth_year": 0.0122,
+  "city": 0.0,
+  "employer": 0.0,
+  "profession": 0.0,
+  "quirk": 0.0
+ },
+ "norms": {
+  "k_mean": 17.507814,
+  "k_max": 21.22439,
+  "v_mean": 3.391389,
+  "v_max": 9.423156
+ },
+ "params_trainable": 67108864,
+ "params_base": 4022468096,
+ "train": {
+  "final_loss": 6.59375,
+  "steps": 1500
+ }
+}
