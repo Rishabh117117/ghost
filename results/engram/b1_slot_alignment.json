@@ -1,0 +1,102 @@
+[
+ {
+  "entity_id": 103,
+  "attr": "city",
+  "dominant_slot": 20916
+ },
+ {
+  "entity_id": 7,
+  "attr": "employer",
+  "dominant_slot": 8110
+ },
+ {
+  "entity_id": 191,
+  "attr": "quirk",
+  "dominant_slot": 20916
+ },
+ {
+  "entity_id": 255,
+  "attr": "profession",
+  "dominant_slot": 20916
+ },
+ {
+  "entity_id": 190,
+  "attr": "employer",
+  "dominant_slot": 20916
+ },
+ {
+  "entity_id": 178,
+  "attr": "employer",
+  "dominant_slot": 20916
+ },
+ {
+  "entity_id": 155,
+  "attr": "city",
+  "dominant_slot": 20916
+ },
+ {
+  "entity_id": 436,
+  "attr": "quirk",
+  "dominant_slot": 20916
+ },
+ {
+  "entity_id": 134,
+  "attr": "profession",
+  "dominant_slot": 8110
+ },
+ {
+  "entity_id": 107,
+  "attr": "city",
+  "dominant_slot": 20916
+ },
+ {
+  "entity_id": 203,
+  "attr": "employer",
+  "dominant_slot": 8110
+ },
+ {
+  "entity_id": 176,
+  "attr": "birth_year",
+  "dominant_slot": 20916
+ },
+ {
+  "entity_id": 417,
+  "attr": "profession",
+  "dominant_slot": 20916
+ },
+ {
+  "entity_id": 9,
+  "attr": "city",
+  "dominant_slot": 20916
+ },
+ {
+  "entity_id": 361,
+  "attr": "employer",
+  "dominant_slot": 20916
+ },
+ {
+  "entity_id": 280,
+  "attr": "city",
+  "dominant_slot": 20916
+ },
+ {
+  "entity_id": 389,
+  "attr": "quirk",
+  "dominant_slot": 20916
+ },
+ {
+  "entity_id": 498,
+  "attr": "birth_year",
+  "dominant_slot": 8110
+ },
+ {
+  "entity_id": 378,
+  "attr": "profession",
+  "dominant_slot": 20916
+ },
+ {
+  "entity_id": 440,
+  "attr": "quirk",
+  "dominant_slot": 20916
+ }
+]
