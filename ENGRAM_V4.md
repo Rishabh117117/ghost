@@ -41,3 +41,21 @@ Bars (per arm): verbatim >= 80%, QA >= 60%, drift_clean <= 2%, interference drop
 _Cost: wall 55 min_
 
 All raw numbers: `results.json`
+
+## Post-run validation (sandbox)
+
+The byte-identical D1/D2 transcripts triggered an eval-path audit: with a
+norm-50 value planted, D1's set_for/hook path provably alters generation when
+attention layers exist downstream of the tap (the initial CPU repro failed
+only because a 4-layer tiny model clamps tap 18 to the LAST layer, where a
+name-position write cannot reach the final position - the pod taps 18/36).
+D2's path alters generation directly at the tap layer. Injection was live at
+eval (drift_loaded is nonzero for both arms); identical transcripts mean
+neither memory flipped a single greedy token on those 20 prompts. The
+double-null stands. Note for future smokes: a last-layer tap structurally
+hides D1-class effects; use an early tap in tiny models.
+
+Also: D1 train CE plateaued at ~7.2 vs v3's broadcast-write 4.6 - v3's CE
+drop came from writing into ALL positions (including answer positions), a
+shortcut not a memory. Constraining the write to name positions removes the
+shortcut and the frozen attention never routes it to the answer.
