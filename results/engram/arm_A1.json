@@ -1,8 +1,8 @@
 {
  "arm": "A1",
- "verbatim": 0.928,
- "qa": 0.158,
- "confab": 0.995,
+ "verbatim": 0.94,
+ "qa": 0.82,
+ "confab": 1.0,
  "wiki_ppl": 27.026,
  "drift": 0.0,
  "slots": {},

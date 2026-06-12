@@ -1,10 +1,10 @@
 {
- "arm": "A2",
- "verbatim": 0.0,
+ "arm": "A2'",
+ "verbatim": 0.02,
  "qa": 0.0,
  "confab": 1.0,
- "wiki_ppl": 39806.586,
- "drift": 0.1286,
+ "wiki_ppl": 30184.125,
+ "drift": -0.051,
  "slots": {},
  "params_trainable": 2188288,
  "params_base": 8848512

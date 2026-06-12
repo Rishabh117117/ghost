@@ -11,14 +11,14 @@
 #   runs/<pod>/stages.log|*.log     stage trail + log tails
 #   runs/<pod>/DONE                 exit code, written by the EXIT trap
 #   runs/arms/arm_*.json            per-arm results (resume keys, shared)
-#   runs/final/                     results.json + ENGRAM_V1.md + per-arm JSONs
+#   runs/final/                     results.json + ENGRAM_V2.md + per-arm JSONs
 #   sweep-ccat50/arm_*/ghost.pt     checkpoints (uploaded by sweep itself)
 #
 # Stages: boot -> deps -> hf -> gpu -> smoke-gate -> sweep -> DONE.
 # Every fatal path uploads its log tail first; the pod always self-terminates.
 set -u -o pipefail
 
-BRANCH=engram-v1
+BRANCH=engram-v2
 WORK=/workspace/ghost
 HFREPO=Spartan117Ri/ghost-ckpts
 POD="${RUNPOD_POD_ID:-unknown}"
@@ -63,8 +63,8 @@ publish_evidence() {  # logs + arm results; cheap enough to call often
   done
   # per-arm results are the resume keys - publish to the SHARED prefix
   if ls results/engram/arm_*.json >/dev/null 2>&1; then
-    python pod_hf.py updir results/engram runs/arms_engram >/dev/null 2>&1 || \
-      for f in results/engram/arm_*.json; do hf_curl_up "$f" "runs/arms_engram/$(basename "$f")"; done
+    python pod_hf.py updir results/engram runs/arms_engram_v2 >/dev/null 2>&1 || \
+      for f in results/engram/arm_*.json; do hf_curl_up "$f" "runs/arms_engram_v2/$(basename "$f")"; done
   fi
   [ -f status/ABORT.json ] && hf_curl_up status/ABORT.json "runs/${POD}/ABORT.json"
 }
@@ -78,7 +78,7 @@ on_exit() {
   # final artifacts (real run writes them at repo root)
   cd "$WORK" 2>/dev/null && {
     [ -f results.json ]     && python pod_hf.py up results.json "runs/final/results.json" 2>/dev/null
-    [ -f ENGRAM_V1.md ]     && python pod_hf.py up ENGRAM_V1.md "runs/final/ENGRAM_V1.md" 2>/dev/null
+    [ -f ENGRAM_V2.md ]     && python pod_hf.py up ENGRAM_V2.md "runs/final/ENGRAM_V2.md" 2>/dev/null
     [ -d results/engram ]   && python pod_hf.py updir results/engram runs/final/engram 2>/dev/null
   }
   echo "$code" > /tmp/done.txt; hf_curl_up /tmp/done.txt "runs/${POD}/DONE"
@@ -122,7 +122,7 @@ print("HF auth ok:", api.whoami()["name"], flush=True)
 api.create_repo("Spartan117Ri/ghost-ckpts", private=True, exist_ok=True)
 EOF
 mkdir -p results/engram
-python pod_hf.py down runs/arms_engram results/engram || true   # completed arms skip
+python pod_hf.py down runs/arms_engram_v2 results/engram || true   # completed arms skip
 
 # ---- data: regenerate the synthetic biographies (deterministic, gitignored) --
 python engram_data.py > status/data.log 2>&1 \

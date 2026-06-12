@@ -20,7 +20,7 @@ import urllib.request
 API = "https://api.runpod.io/graphql"
 HERE = os.path.dirname(os.path.abspath(__file__))
 POD_JSON = os.path.join(HERE, "status", "pod.json")
-BRANCH = "engram-v1"
+BRANCH = "engram-v2"
 # Current stable template line (Dec 2025) - widely cached on hosts, unlike the
 # retired 2024 tag whose 7.4 GB cold pull stalled/killed pods 1-3.
 IMAGE = "runpod/pytorch:1.0.3-cu1281-torch280-ubuntu2204"
@@ -101,7 +101,7 @@ def create():
         "cloudType": "SECURE",
         "gpuCount": 1,
         "gpuTypeId": gpu,
-        "name": "ghost-engram-v1",
+        "name": "ghost-engram-v2",
         "imageName": IMAGE,
         "containerDiskInGb": 60,
         "volumeInGb": 0,
@@ -222,7 +222,7 @@ def stages_tail(pid):
 
 
 def done():
-    return hf_has("runs/final/results.json") and hf_has("runs/final/ENGRAM_V1.md")
+    return hf_has("runs/final/results.json") and hf_has("runs/final/ENGRAM_V2.md")
 
 
 def aborted(pid):
@@ -244,7 +244,7 @@ def mirror_final_to_branch(pid):
     """Pull pod's HF artifacts down and commit them into the branch."""
     got = []
     for rp, dst in (("runs/final/results.json", "results.json"),
-                    ("runs/final/ENGRAM_V1.md", "ENGRAM_V1.md"),
+                    ("runs/final/ENGRAM_V2.md", "ENGRAM_V2.md"),
                     (f"runs/{pid}/stages.log", "status/stages.log"),
                     (f"runs/{pid}/run.log", "status/run.log")):
         try:
@@ -264,7 +264,7 @@ def mirror_final_to_branch(pid):
                 pass
     if got:
         safe_push(f"engram results mirrored from HF (pod {pid})",
-                  "results.json", "ENGRAM_V1.md", "status", "results")
+                  "results.json", "ENGRAM_V2.md", "status", "results")
     return got
 
 
@@ -287,7 +287,24 @@ def balance():
     return gql("query { myself { clientBalance } }")["myself"]["clientBalance"]
 
 
+def clear_final():
+    """Delete any prior-run final artifacts so done() can't trip at startup on
+    a stale ENGRAM_V*.md from a previous run (a 0-launch false 'DONE')."""
+    try:
+        from huggingface_hub import HfApi
+        api = HfApi(token=os.environ["HF_TOKEN"])
+        stale = [f for f in api.list_repo_files(HF_REPO, repo_type="model")
+                 if f.startswith("runs/final/")]
+        for f in stale:
+            api.delete_file(f, HF_REPO, repo_type="model")
+        if stale:
+            log(f"cleared {len(stale)} stale runs/final artifacts before launch")
+    except Exception as e:
+        log(f"clear_final skipped: {e}")
+
+
 def supervise():
+    clear_final()
     t0, launches, alloc_fails = time.time(), 0, 0
     while time.time() - t0 < WALL_CLOCK_S:
         if done():

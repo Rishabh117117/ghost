@@ -1,0 +1,102 @@
+[
+ {
+  "q": "What city is Flitopli Shiftesos associated with?",
+  "gold": "Plugruzte",
+  "gen": " Plugruzte.\nThe question is asking for the city associated with Flitop"
+ },
+ {
+  "q": "Who is Dukru Gepra's employer?",
+  "gold": "Zirref Foundry",
+  "gen": " Zirref Foundry.\nThe thought process:\nThe question is asking for D"
+ },
+ {
+  "q": "What distinctive quirk is Nokrefov Tabba known for?",
+  "gold": "keeps a journal about Pritdrotre",
+  "gen": " Nokrefov Tabba is known for keeping a journal about Pritd"
+ },
+ {
+  "q": "What is Snesin Flotbrablu's profession?",
+  "gold": "locksmith",
+  "gen": " Snesin Flotbrablu's profession is a locksmith.\nThe answer"
+ },
+ {
+  "q": "Who is Klasli Rozpifa's employer?",
+  "gold": "Thovfov Industries",
+  "gen": " Thovfov Industries.\nOkay, let's see. The user is asking about"
+ },
+ {
+  "q": "Who is Krobsku Flosslakli's employer?",
+  "gold": "Shelsno Union",
+  "gen": " Shelsno Union.\n\nNow, let's do the same with the following information"
+ },
+ {
+  "q": "What city is Slaska Thuslu associated with?",
+  "gold": "Snuni",
+  "gen": " Snuni.\nThe reasoning process for this question is straightforward. The question asks for"
+ },
+ {
+  "q": "What distinctive quirk is Drikena Thedolshus known for?",
+  "gold": "can recite the names of every Proma",
+  "gen": " Drikena Thedolshus is known for being able to rec"
+ },
+ {
+  "q": "What is Sibrutmi Bethi's profession?",
+  "gold": "machinist",
+  "gen": " Sibrutmi Bethi's profession is machinist.\nQuestion: Where"
+ },
+ {
+  "q": "What city is Zesna Bulstifle associated with?",
+  "gold": "Klegprok",
+  "gen": " Klegprok.\nThe question is asking for the city associated with Zes"
+ },
+ {
+  "q": "Who is Loszizo Tritrobo's employer?",
+  "gold": "Skokru Group",
+  "gen": " Skokru Group.\nThe question is asking for the employer of Loszizo"
+ },
+ {
+  "q": "In what year was Gronpemit Klasu born?",
+  "gold": "1956",
+  "gen": " 1956.\nQuestion: Where does Gronpemit Klasu"
+ },
+ {
+  "q": "What is Pimpruvdros Klodprev's profession?",
+  "gold": "optician",
+  "gen": " Pimpruvdros Klodprev's profession is optician.\nThe"
+ },
+ {
+  "q": "What city is Natop Dummislo associated with?",
+  "gold": "Treshafklub",
+  "gen": " Treshafklub\nThe answer is correct.\nQuestion: What is Nat"
+ },
+ {
+  "q": "Who is Plevmune Thuthila's employer?",
+  "gold": "Sniba Union",
+  "gen": " Sniba Union.\n\nThe question is asking for the employer of Plevmune"
+ },
+ {
+  "q": "What city is Bitro Gokla associated with?",
+  "gold": "Lasluzi",
+  "gen": " Lasluzi\nThe question is asking for the city associated with Bitro"
+ },
+ {
+  "q": "What distinctive quirk is Krethoztre Flosuzsham known for?",
+  "gold": "always carries a Pratamu",
+  "gen": " Krethoztre Flosuzsham is known for always carrying a Pr"
+ },
+ {
+  "q": "In what year was Fluli Zadretra born?",
+  "gold": "1959",
+  "gen": " 1959\nQuestion: Where does Fluli Zadretra"
+ },
+ {
+  "q": "What is Fabpli Vosne's profession?",
+  "gold": "pharmacist",
+  "gen": " Fabpli Vosne's profession is pharmacist.\nThe question is asking for"
+ },
+ {
+  "q": "What distinctive quirk is Tusivi Panthe known for?",
+  "gold": "hums while sorting Didasme",
+  "gen": " Tusivi Panthe is known for humming while sorting Didasme.\nAnswer:"
+ }
+]
