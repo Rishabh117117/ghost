@@ -1,0 +1,22 @@
+{
+ "arm": "C3",
+ "verbatim": 0.0,
+ "qa": 0.0075,
+ "confab": 1.0,
+ "wiki_ppl": 27.023,
+ "drift": -0.0001,
+ "value_norms": {
+  "mean_all": 0.070917,
+  "max_all": 6.214171,
+  "nonzero_slots": 500,
+  "null_max": 0.0,
+  "mean_assigned": 4.638521,
+  "max_assigned": 6.214171
+ },
+ "params_trainable": 83886081,
+ "params_base": 4022468096,
+ "train": {
+  "final_loss": 4.907893180847168,
+  "steps": 1500
+ }
+}
