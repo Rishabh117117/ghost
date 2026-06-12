@@ -96,16 +96,17 @@ class Addressing:
     entity (all of its facts share it). mode='fact': one slot per
     (entity, attr) pair = own value vector per fact."""
 
-    def __init__(self, ents, mode):
+    def __init__(self, ents, mode, k=K_SLOTS, n_null=N_NULL):
         self.mode = mode
+        self.k, self.n_null = k, n_null
         srt = sorted(ents, key=lambda e: e["entity_id"])
         if mode == "entity":
             pairs = [(e["entity_id"], e["name"]) for e in srt]
         else:
             pairs = [(f'{e["entity_id"]}|{a}', f'{e["name"]}|{a}')
                      for e in srt for a in ATTRS]
-        self.map = assign_slots(pairs, 1)
-        self.nrow = null_row(1)
+        self.map = assign_slots(pairs, 1, k=k, n_null=n_null)
+        self.nrow = null_row(1, k=k, n_null=n_null)
         self.assigned = [s for m in self.map.values() for s in m["slots"]]
 
     def row(self, eid, attr):
@@ -120,10 +121,10 @@ class Addressing:
               if f"{eid}|{a}" in self.map]
         return sum(ps) if ps else None
 
-    def save(self, out_root):
-        p = os.path.join(out_root, f"slot_map_{self.mode}.json")
+    def save(self, out_root, name=None):
+        p = os.path.join(out_root, f"slot_map_{name or self.mode}.json")
         probed = sum(1 for m in self.map.values() if m["probes"] > 0)
-        json.dump({"K": K_SLOTS, "n_null": N_NULL, "mode": self.mode,
+        json.dump({"K": self.k, "n_null": self.n_null, "mode": self.mode,
                    "keys": len(self.map), "keys_probed": probed,
                    "map": {str(k): v for k, v in sorted(
                        self.map.items(), key=lambda kv: str(kv[0]))}},
