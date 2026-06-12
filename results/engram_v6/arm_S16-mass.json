@@ -1,0 +1,21 @@
+{
+ "arm": "S16-mass",
+ "verbatim": 0.4,
+ "qa": 0.4075,
+ "confab": 1.0,
+ "theft": 0.28,
+ "wiki_ppl": 27.011,
+ "drift": -0.0003,
+ "wiki_ppl_loaded": 25.203,
+ "drift_loaded": -0.0672,
+ "per_attr_verbatim": {
+  "birth_year": 0.1707,
+  "city": 0.3333,
+  "employer": 0.4419,
+  "profession": 1.0,
+  "quirk": 0.0933
+ },
+ "params_trainable": 0,
+ "params_base": 4022468096,
+ "mass_recapture": 0.85
+}

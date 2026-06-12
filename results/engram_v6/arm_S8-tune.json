@@ -1,0 +1,24 @@
+{
+ "arm": "S8-tune",
+ "verbatim": 0.19,
+ "qa": 0.2,
+ "confab": 1.0,
+ "theft": 0.17,
+ "wiki_ppl": 27.011,
+ "drift": -0.0003,
+ "wiki_ppl_loaded": 24.675,
+ "drift_loaded": -0.0868,
+ "per_attr_verbatim": {
+  "birth_year": 0.0,
+  "city": 0.0119,
+  "employer": 0.0233,
+  "profession": 1.0,
+  "quirk": 0.0
+ },
+ "params_trainable": 147456000,
+ "params_base": 4022468096,
+ "train": {
+  "final_loss": 7.15625,
+  "steps": 300
+ }
+}

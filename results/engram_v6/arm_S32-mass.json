@@ -1,0 +1,21 @@
+{
+ "arm": "S32-mass",
+ "verbatim": 0.7975,
+ "qa": 0.7925,
+ "confab": 1.0,
+ "theft": 0.6,
+ "wiki_ppl": 27.011,
+ "drift": -0.0003,
+ "wiki_ppl_loaded": 25.731,
+ "drift_loaded": -0.0477,
+ "per_attr_verbatim": {
+  "birth_year": 0.7927,
+  "city": 0.9167,
+  "employer": 0.9767,
+  "profession": 1.0,
+  "quirk": 0.2667
+ },
+ "params_trainable": 0,
+ "params_base": 4022468096,
+ "mass_recapture": 0.9256
+}
