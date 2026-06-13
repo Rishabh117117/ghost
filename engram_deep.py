@@ -69,13 +69,16 @@ class DeepMem:
         return [w.last_mass for w in self.wrappers]
 
     @torch.no_grad()
-    def capture_ctx_ids(self, ids):
+    def capture_ctx_ids(self, ids, offset=0):
         """Capture per-layer post-rope (k, v) [n_kv, T, head_dim] for given
-        token ids [1, T]."""
+        token ids [1, T]. `offset` shifts the RoPE positions (v6.5 segment
+        composition: segment i is captured at positions i*seg_len...)."""
         self.clear()
         for w in self.wrappers:
             w.capture = True
-        self.base(ids)
+        pos = (torch.arange(offset, offset + ids.size(1),
+                            device=ids.device)[None] if offset else None)
+        self.base(ids, position_ids=pos)
         out = []
         for w in self.wrappers:
             k, v = w.captured
@@ -85,12 +88,12 @@ class DeepMem:
         return out, ids.size(1)
 
     @torch.no_grad()
-    def capture_ctx(self, tok, text, device, max_len=128):
+    def capture_ctx(self, tok, text, device, max_len=128, offset=0):
         """One pass over the entity's context; returns per-layer post-rope
         (k, v) [n_kv, T, head_dim] and the token count T."""
         ids = tok(text, return_tensors="pt", truncation=True,
                   max_length=max_len).input_ids.to(device)
-        return self.capture_ctx_ids(ids)
+        return self.capture_ctx_ids(ids, offset=offset)
 
     def remove(self):
         for layer, w in zip(self.base.model.layers, self.wrappers):

@@ -1,0 +1,21 @@
+{
+ "arm": "G48",
+ "verbatim": 0.8925,
+ "qa": 0.825,
+ "confab": 1.0,
+ "theft": 0.635,
+ "wiki_ppl": 27.011,
+ "drift": -0.0003,
+ "wiki_ppl_loaded": 26.159,
+ "drift_loaded": -0.0319,
+ "per_attr_verbatim": {
+  "birth_year": 1.0,
+  "city": 0.9881,
+  "employer": 1.0,
+  "profession": 1.0,
+  "quirk": 0.44
+ },
+ "params_trainable": 0,
+ "params_base": 4022468096,
+ "mass_recapture": 0.9691
+}

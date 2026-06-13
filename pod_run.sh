@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# pod_run.sh - RunPod startup for engram-v6 (selection compression + identity gate).
+# pod_run.sh - RunPod startup for engram-v6.5 (allocation, the knee, composition; inference-only).
 #
 # TRANSPORT: Hugging Face ONLY. The GitHub PAT in this environment cannot push
 # (fine-grained token without Contents:write - proven 2026-06-11), so the pod
@@ -10,15 +10,15 @@
 #   crumbs/<pod>_<stage>.txt        breadcrumbs (curl-only, work pre-deps)
 #   runs/<pod>/stages.log|*.log     stage trail + log tails
 #   runs/<pod>/DONE                 exit code, written by the EXIT trap
-#   runs/arms_engram_v6/arm_*.json  per-arm results (resume keys, per-experiment)
-#   runs/final/                     results.json + ENGRAM_V6.md + per-arm JSONs
+#   runs/arms_engram_v6_5/arm_*.json  per-arm results (resume keys, per-experiment)
+#   runs/final/                     results.json + ENGRAM_V6_5.md + per-arm JSONs
 #   sweep-ccat50/arm_*/ghost.pt     checkpoints (uploaded by sweep itself)
 #
 # Stages: boot -> deps -> hf -> gpu -> smoke-gate -> sweep -> DONE.
 # Every fatal path uploads its log tail first; the pod always self-terminates.
 set -u -o pipefail
 
-BRANCH=engram-v6
+BRANCH=engram-v6_5
 WORK=/workspace/ghost
 HFREPO=Spartan117Ri/ghost-ckpts
 POD="${RUNPOD_POD_ID:-unknown}"
@@ -62,9 +62,9 @@ publish_evidence() {  # logs + arm results; cheap enough to call often
     [ -f "$f" ] && { tail -c 200000 "$f" > /tmp/tail.txt; hf_curl_up /tmp/tail.txt "runs/${POD}/$(basename "$f")"; }
   done
   # per-arm results are the resume keys - publish to the SHARED prefix
-  if ls results/engram_v6/arm_*.json >/dev/null 2>&1; then
-    python pod_hf.py updir results/engram_v6 runs/arms_engram_v6 >/dev/null 2>&1 || \
-      for f in results/engram_v6/arm_*.json; do hf_curl_up "$f" "runs/arms_engram_v6/$(basename "$f")"; done
+  if ls results/engram_v6_5/arm_*.json >/dev/null 2>&1; then
+    python pod_hf.py updir results/engram_v6_5 runs/arms_engram_v6_5 >/dev/null 2>&1 || \
+      for f in results/engram_v6_5/arm_*.json; do hf_curl_up "$f" "runs/arms_engram_v6_5/$(basename "$f")"; done
   fi
   [ -f status/ABORT.json ] && hf_curl_up status/ABORT.json "runs/${POD}/ABORT.json"
 }
@@ -78,8 +78,8 @@ on_exit() {
   # final artifacts (real run writes them at repo root)
   cd "$WORK" 2>/dev/null && {
     [ -f results.json ]      && python pod_hf.py up results.json "runs/final/results.json" 2>/dev/null
-    [ -f ENGRAM_V6.md ]      && python pod_hf.py up ENGRAM_V6.md "runs/final/ENGRAM_V6.md" 2>/dev/null
-    [ -d results/engram_v6 ] && python pod_hf.py updir results/engram_v6 runs/final/engram 2>/dev/null
+    [ -f ENGRAM_V6_5.md ]      && python pod_hf.py up ENGRAM_V6_5.md "runs/final/ENGRAM_V6_5.md" 2>/dev/null
+    [ -d results/engram_v6_5 ] && python pod_hf.py updir results/engram_v6_5 runs/final/engram 2>/dev/null
   }
   echo "$code" > /tmp/done.txt; hf_curl_up /tmp/done.txt "runs/${POD}/DONE"
   terminate_pod
@@ -121,9 +121,9 @@ api = HfApi(token=os.environ["HF_TOKEN"])
 print("HF auth ok:", api.whoami()["name"], flush=True)
 api.create_repo("Spartan117Ri/ghost-ckpts", private=True, exist_ok=True)
 EOF
-mkdir -p results/engram_v6
-rm -f results/engram_v6/arm_*.json results/engram_v6/interference.json  # only HF may seed resume (v2 lesson)
-python pod_hf.py down runs/arms_engram_v6 results/engram_v6 || true   # completed arms skip
+mkdir -p results/engram_v6_5
+rm -f results/engram_v6_5/arm_*.json results/engram_v6_5/interference.json  # only HF may seed resume (v2 lesson)
+python pod_hf.py down runs/arms_engram_v6_5 results/engram_v6_5 || true   # completed arms skip
 
 # ---- data: regenerate the synthetic biographies (deterministic, gitignored) --
 python engram_data.py > status/data.log 2>&1 \
@@ -154,11 +154,11 @@ stage "gpu"
 PUSHER_PID=$!
 
 # ---- SMOKE GATE on this GPU ------------------------------------------------------
-python engram_v6.py --smoke > status/smoke.log 2>&1 \
+python engram_v6_5.py --smoke > status/smoke.log 2>&1 \
   || { tail -15 status/smoke.log >&2; stage "smoke-gate-FAILED"; exit 13; }
 stage "smoke-gate-GREEN"
 
 # ---- the real engram-v3 run ----------------------------------------------------------
 stage "engram-start"
-python engram_v6.py 2>&1 | tee -a status/run.log
+python engram_v6_5.py 2>&1 | tee -a status/run.log
 exit "${PIPESTATUS[0]}"   # EXIT trap publishes artifacts + DONE + terminates

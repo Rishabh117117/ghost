@@ -1,0 +1,26 @@
+{
+ "arm": "F24",
+ "verbatim": 0.635,
+ "qa": 0.68,
+ "confab": 1.0,
+ "theft": 0.505,
+ "wiki_ppl": 27.011,
+ "drift": -0.0003,
+ "wiki_ppl_loaded": 25.437,
+ "drift_loaded": -0.0586,
+ "per_attr_verbatim": {
+  "birth_year": 0.4268,
+  "city": 0.7024,
+  "employer": 0.814,
+  "profession": 1.0,
+  "quirk": 0.2267
+ },
+ "params_trainable": 0,
+ "params_base": 4022468096,
+ "mass_recapture": 0.8931,
+ "budget_audit": {
+  "floor_per_lh": 10.05,
+  "floor_dup_of_greedy_per_lh": 9.76,
+  "floor_forced_per_lh": 0.29
+ }
+}

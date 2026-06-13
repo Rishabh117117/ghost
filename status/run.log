@@ -977,3 +977,16 @@ base wikitext ppl = 27.020
 [transformers] The attention mask is not set and cannot be inferred from input because pad token is same as eos token. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
 Uploading files as a binary IO buffer is not supported by Xet Storage. Falling back to HTTP upload.
 **ENGRAM-V6: no working point — best S32-mass 79.8% < 80%**
+keep-awake: could not set power assertion (module 'ctypes' has no attribute 'windll')
+loading Qwen/Qwen3-4B on cuda ...
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:04<00:09,  4.60s/it]Fetching 3 files:  67%|██████▋   | 2/3 [00:04<00:02,  2.03s/it]Fetching 3 files: 100%|██████████| 3/3 [00:04<00:00,  1.61s/it]
+Loading weights:   0%|          | 0/398 [00:00<?, ?it/s]Loading weights: 100%|██████████| 398/398 [00:00<00:00, 11950.78it/s]
+Generating test split:   0%|          | 0/4358 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 4358/4358 [00:00<00:00, 343050.82 examples/s]
+Generating train split:   0%|          | 0/36718 [00:00<?, ? examples/s]Generating train split: 100%|██████████| 36718/36718 [00:00<00:00, 618020.79 examples/s]
+Generating validation split:   0%|          | 0/3760 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 3760/3760 [00:00<00:00, 360058.97 examples/s]
+base wikitext ppl = 27.020
+[transformers] The attention mask is not set and cannot be inferred from input because pad token is same as eos token. As a consequence, you may observe unexpected behavior. Please pass your input's `attention_mask` to obtain reliable results.
+C1: {'recall': 0.83, 'intrusion': 0.0, 'stranger_theft': 0.6, 'stranger_hedge': 0.0, 'gated_stranger_theft': 0.0, 'gated_model_hedge': 0.0}
+C2: {'recall': 0.4, 'intrusion': 0.415, 'stranger_theft': 0.51, 'stranger_hedge': 0.0, 'gated_stranger_theft': 0.0, 'gated_model_hedge': 0.0}
+C4: {'recall': 0.22, 'intrusion': 0.53, 'stranger_theft': 0.42, 'stranger_hedge': 0.0, 'gated_stranger_theft': 0.01, 'gated_model_hedge': 0.0}
+**ENGRAM-V6.5: no working point — best G48 89.2% (attr floor 44.0%)**

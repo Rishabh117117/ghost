@@ -1,0 +1,31 @@
+{
+ "arm": "composition",
+ "seg": 105,
+ "k": 32,
+ "rows": {
+  "C1": {
+   "recall": 0.83,
+   "intrusion": 0.0,
+   "stranger_theft": 0.6,
+   "stranger_hedge": 0.0,
+   "gated_stranger_theft": 0.0,
+   "gated_model_hedge": 0.0
+  },
+  "C2": {
+   "recall": 0.4,
+   "intrusion": 0.415,
+   "stranger_theft": 0.51,
+   "stranger_hedge": 0.0,
+   "gated_stranger_theft": 0.0,
+   "gated_model_hedge": 0.0
+  },
+  "C4": {
+   "recall": 0.22,
+   "intrusion": 0.53,
+   "stranger_theft": 0.42,
+   "stranger_hedge": 0.0,
+   "gated_stranger_theft": 0.01,
+   "gated_model_hedge": 0.0
+  }
+ }
+}

@@ -4,16 +4,20 @@
   "model": "Qwen/Qwen3-4B",
   "device": "cuda",
   "seed": 0,
-  "n_layers": 36,
-  "s_ks": [
-   32,
-   16,
-   8
+  "seg": 105,
+  "g_ks": [
+   24,
+   40,
+   48
   ],
-  "offset": 105,
-  "mean_ctx_tokens": 74.0,
-  "calibration": "train-template sentences only (no held-out QA)",
-  "addressing": "blake2b hash k=4096 -> dense rank storage"
+  "f_ks": [
+   16,
+   24,
+   32
+  ],
+  "k_compose": 32,
+  "n_comp_rows": 200,
+  "inference_only": true
  },
  "arms": [
   {
@@ -36,7 +40,8 @@
    "drift": 0.0,
    "slots": {},
    "params_trainable": 0,
-   "params_base": 4022468096
+   "params_base": 4022468096,
+   "carried_from": "engram-v6"
   },
   {
    "arm": "E0",
@@ -59,7 +64,7 @@
    "params_base": 4022468096
   },
   {
-   "arm": "S32-mass",
+   "arm": "G32",
    "verbatim": 0.7975,
    "qa": 0.7925,
    "confab": 1.0,
@@ -77,93 +82,148 @@
    },
    "params_trainable": 0,
    "params_base": 4022468096,
-   "mass_recapture": 0.9256
+   "mass_recapture": 0.9256,
+   "carried_from": "engram-v6 S32-mass"
   },
   {
-   "arm": "S16-mass",
-   "verbatim": 0.4,
-   "qa": 0.4075,
+   "arm": "G24",
+   "verbatim": 0.6325,
+   "qa": 0.6775,
    "confab": 1.0,
-   "theft": 0.28,
+   "theft": 0.505,
    "wiki_ppl": 27.011,
    "drift": -0.0003,
-   "wiki_ppl_loaded": 25.203,
-   "drift_loaded": -0.0672,
+   "wiki_ppl_loaded": 25.44,
+   "drift_loaded": -0.0585,
    "per_attr_verbatim": {
-    "birth_year": 0.1707,
-    "city": 0.3333,
-    "employer": 0.4419,
+    "birth_year": 0.4268,
+    "city": 0.7024,
+    "employer": 0.814,
+    "profession": 1.0,
+    "quirk": 0.2133
+   },
+   "params_trainable": 0,
+   "params_base": 4022468096,
+   "mass_recapture": 0.8934
+  },
+  {
+   "arm": "G40",
+   "verbatim": 0.8725,
+   "qa": 0.82,
+   "confab": 1.0,
+   "theft": 0.625,
+   "wiki_ppl": 27.011,
+   "drift": -0.0003,
+   "wiki_ppl_loaded": 26.032,
+   "drift_loaded": -0.0366,
+   "per_attr_verbatim": {
+    "birth_year": 0.9512,
+    "city": 0.9881,
+    "employer": 1.0,
+    "profession": 1.0,
+    "quirk": 0.3867
+   },
+   "params_trainable": 0,
+   "params_base": 4022468096,
+   "mass_recapture": 0.9502
+  },
+  {
+   "arm": "G48",
+   "verbatim": 0.8925,
+   "qa": 0.825,
+   "confab": 1.0,
+   "theft": 0.635,
+   "wiki_ppl": 27.011,
+   "drift": -0.0003,
+   "wiki_ppl_loaded": 26.159,
+   "drift_loaded": -0.0319,
+   "per_attr_verbatim": {
+    "birth_year": 1.0,
+    "city": 0.9881,
+    "employer": 1.0,
+    "profession": 1.0,
+    "quirk": 0.44
+   },
+   "params_trainable": 0,
+   "params_base": 4022468096,
+   "mass_recapture": 0.9691
+  },
+  {
+   "arm": "F16",
+   "verbatim": 0.425,
+   "qa": 0.43,
+   "confab": 1.0,
+   "theft": 0.315,
+   "wiki_ppl": 27.011,
+   "drift": -0.0003,
+   "wiki_ppl_loaded": 25.237,
+   "drift_loaded": -0.066,
+   "per_attr_verbatim": {
+    "birth_year": 0.1341,
+    "city": 0.2381,
+    "employer": 0.686,
     "profession": 1.0,
     "quirk": 0.0933
    },
    "params_trainable": 0,
    "params_base": 4022468096,
-   "mass_recapture": 0.85
+   "mass_recapture": 0.8479,
+   "budget_audit": {
+    "floor_per_lh": 10.05,
+    "floor_dup_of_greedy_per_lh": 8.9,
+    "floor_forced_per_lh": 1.15
+   }
   },
   {
-   "arm": "S8-mass",
-   "verbatim": 0.1975,
-   "qa": 0.1975,
+   "arm": "F24",
+   "verbatim": 0.635,
+   "qa": 0.68,
    "confab": 1.0,
-   "theft": 0.175,
+   "theft": 0.505,
    "wiki_ppl": 27.011,
    "drift": -0.0003,
-   "wiki_ppl_loaded": 24.641,
-   "drift_loaded": -0.088,
+   "wiki_ppl_loaded": 25.437,
+   "drift_loaded": -0.0586,
    "per_attr_verbatim": {
-    "birth_year": 0.0122,
-    "city": 0.0238,
-    "employer": 0.0233,
+    "birth_year": 0.4268,
+    "city": 0.7024,
+    "employer": 0.814,
     "profession": 1.0,
-    "quirk": 0.0133
+    "quirk": 0.2267
    },
    "params_trainable": 0,
    "params_base": 4022468096,
-   "mass_recapture": 0.7847
+   "mass_recapture": 0.8931,
+   "budget_audit": {
+    "floor_per_lh": 10.05,
+    "floor_dup_of_greedy_per_lh": 9.76,
+    "floor_forced_per_lh": 0.29
+   }
   },
   {
-   "arm": "S16-norm",
-   "verbatim": 0.0275,
-   "qa": 0.16,
+   "arm": "F32",
+   "verbatim": 0.8025,
+   "qa": 0.8,
    "confab": 1.0,
-   "theft": 0.085,
+   "theft": 0.6,
    "wiki_ppl": 27.011,
    "drift": -0.0003,
-   "wiki_ppl_loaded": 222.932,
-   "drift_loaded": 7.2507,
+   "wiki_ppl_loaded": 25.738,
+   "drift_loaded": -0.0474,
    "per_attr_verbatim": {
-    "birth_year": 0.0122,
-    "city": 0.0,
-    "employer": 0.0,
-    "profession": 0.137,
-    "quirk": 0.0
+    "birth_year": 0.8049,
+    "city": 0.9167,
+    "employer": 0.9884,
+    "profession": 1.0,
+    "quirk": 0.2667
    },
    "params_trainable": 0,
    "params_base": 4022468096,
-   "mass_recapture": 0.2502
-  },
-  {
-   "arm": "S8-tune",
-   "verbatim": 0.19,
-   "qa": 0.2,
-   "confab": 1.0,
-   "theft": 0.17,
-   "wiki_ppl": 27.011,
-   "drift": -0.0003,
-   "wiki_ppl_loaded": 24.675,
-   "drift_loaded": -0.0868,
-   "per_attr_verbatim": {
-    "birth_year": 0.0,
-    "city": 0.0119,
-    "employer": 0.0233,
-    "profession": 1.0,
-    "quirk": 0.0
-   },
-   "params_trainable": 147456000,
-   "params_base": 4022468096,
-   "train": {
-    "final_loss": 7.15625,
-    "steps": 300
+   "mass_recapture": 0.9255,
+   "budget_audit": {
+    "floor_per_lh": 10.05,
+    "floor_dup_of_greedy_per_lh": 9.99,
+    "floor_forced_per_lh": 0.07
    }
   }
  ],
@@ -178,36 +238,81 @@
   "params_trainable": 0,
   "params_base": 4022468096
  },
- "a1_qa_verbatim_ratio": 0.8753315649867374,
- "gate": {
-  "ungated_theft": 0.625,
-  "gated_theft": 0.005,
-  "gated_hedge": 1.0,
-  "model_hedge": 0.0
- },
  "mb_of": {
   "E0": 10.91,
-  "S32-mass": 4.72,
-  "S16-mass": 2.36,
-  "S8-mass": 1.18,
-  "S16-norm": 2.36,
-  "S8-tune": 1.18
+  "G32": 4.72,
+  "G24": 3.54,
+  "G40": 5.9,
+  "G48": 7.08,
+  "F16": 2.36,
+  "F24": 3.54,
+  "F32": 4.72
  },
  "mass_recapture": {
-  "S32-mass": 0.9256,
-  "S16-mass": 0.85,
-  "S8-mass": 0.7847,
-  "S16-norm": 0.2502
+  "G32": 0.9256,
+  "G24": 0.8934,
+  "G40": 0.9502,
+  "G48": 0.9691,
+  "F16": 0.8479,
+  "F24": 0.8931,
+  "F32": 0.9255
  },
- "tune_note": "S8-mass 19.8% < 70% -> tuned kept VALUES only (keys frozen), 300 steps.",
- "part0": "ENGRAM_SERIES.md cross-checked against per-branch artifacts and committed to main (fixes: v1 A1 was 92.8% pre-repair-scorer, not in the 94.0-94.2% range; one typo).",
- "verdict": "**ENGRAM-V6: no working point \u2014 best S32-mass 79.8% < 80%**",
+ "budget_audits": {
+  "F16": {
+   "floor_per_lh": 10.05,
+   "floor_dup_of_greedy_per_lh": 8.9,
+   "floor_forced_per_lh": 1.15
+  },
+  "F24": {
+   "floor_per_lh": 10.05,
+   "floor_dup_of_greedy_per_lh": 9.76,
+   "floor_forced_per_lh": 0.29
+  },
+  "F32": {
+   "floor_per_lh": 10.05,
+   "floor_dup_of_greedy_per_lh": 9.99,
+   "floor_forced_per_lh": 0.07
+  }
+ },
+ "composition": {
+  "arm": "composition",
+  "seg": 105,
+  "k": 32,
+  "rows": {
+   "C1": {
+    "recall": 0.83,
+    "intrusion": 0.0,
+    "stranger_theft": 0.6,
+    "stranger_hedge": 0.0,
+    "gated_stranger_theft": 0.0,
+    "gated_model_hedge": 0.0
+   },
+   "C2": {
+    "recall": 0.4,
+    "intrusion": 0.415,
+    "stranger_theft": 0.51,
+    "stranger_hedge": 0.0,
+    "gated_stranger_theft": 0.0,
+    "gated_model_hedge": 0.0
+   },
+   "C4": {
+    "recall": 0.22,
+    "intrusion": 0.53,
+    "stranger_theft": 0.42,
+    "stranger_hedge": 0.0,
+    "gated_stranger_theft": 0.01,
+    "gated_model_hedge": 0.0
+   }
+  }
+ },
+ "verdict": "**ENGRAM-V6.5: no working point \u2014 best G48 89.2% (attr floor 44.0%)**",
  "working_point": null,
  "bars": {
   "a0": 0.05,
   "e0": 0.9,
   "working": 0.8,
-  "g_theft": 0.05,
-  "g_hedge": 0.8
+  "attr_floor": 0.7,
+  "c4_ratio": 0.9,
+  "gated_stranger": 0.02
  }
 }
